@@ -213,6 +213,12 @@ function showAnalysis(data,market,timeframe){
  panel.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
+/* ---- Retry helpers (added) ---- */
+const sleep=ms=>new Promise(resolve=>setTimeout(resolve,ms));
+function isBusy(status,text){
+ return [429,500,502,503,504].includes(status)||/high demand|overloaded|unavailable|try again later|rate limit|busy/i.test(String(text||""));
+}
+
 async function analyseChart(){
  const file=document.getElementById("chartFile").files[0];
  const button=document.getElementById("analyseButton");
@@ -230,9 +236,31 @@ async function analyseChart(){
    reader.readAsDataURL(file);
   });
   const payload={imageBase64,mimeType:file.type,market:selected.chart.market,timeframe:selected.chart.timeframe,notes:document.getElementById("chartNotes").value};
-  const response=await fetch(WORKER_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
-  let data;try{data=await response.json()}catch{throw new Error("The AI server returned an unreadable response.")}
-  if(!response.ok||!data.success){throw new Error(data.details||data.error||("Analysis request failed (HTTP "+response.status+")."))}
+
+  const maxTries=4;
+  let data=null,lastMsg="",wasBusy=false;
+  for(let attempt=1;attempt<=maxTries;attempt++){
+   let retryable=true;
+   try{
+    const response=await fetch(WORKER_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+    let parsed=null;try{parsed=await response.json()}catch{}
+    if(response.ok&&parsed&&parsed.success){data=parsed;break}
+    lastMsg=(parsed&&(parsed.details||parsed.error))||("Analysis request failed (HTTP "+response.status+").");
+    retryable=isBusy(response.status,lastMsg);
+   }catch(networkError){
+    lastMsg="Connection problem";
+    retryable=true;
+   }
+   wasBusy=retryable;
+   if(!retryable||attempt===maxTries)break;
+   const waitSeconds=attempt*2;
+   status.textContent="Server is busy. Retrying in "+waitSeconds+"s (attempt "+(attempt+1)+" of "+maxTries+")…";
+   await sleep(waitSeconds*1000);
+  }
+  if(!data){
+   throw new Error(wasBusy?"ZAIRVÉN AI is very busy right now":lastMsg);
+  }
+
   showAnalysis(data,payload.market,payload.timeframe);
   status.textContent="Analysis received. Review every level before making a trading decision.";
  }catch(error){
@@ -245,3 +273,4 @@ renderMarkets("chart");renderMarkets("engine");renderTimeframes("chart");renderT
 </script>
 </body>
 </html>
+ 
