@@ -2,407 +2,385 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#081321">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#050505">
 <title>ZAIRVÉN AI PRO | Global Financial Technology</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
 <style>
+/* ===== PALETTE: change the look here only =====
+   Optional navy look: --bg:#081321; --panel1:#102236; --panel2:#0a1727; --line:rgba(40,184,213,.22) */
 :root{
-  --bg:#081321;
-  --panel:#0e1d2f;
-  --panel2:#13283c;
-  --line:#1f3a52;
-  --cyan:#28b8d5;
-  --green:#19a875;
-  --red:#e16d72;
-  --gold:#c9a96e;
-  --white:#edf5fb;
-  --muted:#8da3b6;
-  --card:linear-gradient(160deg,#102236 0%,#0a1727 100%);
+  --bg:#050505;
+  --panel1:#17130b;
+  --panel2:#0a0907;
+  --line:rgba(217,182,107,.28);
+  --gold:#d9b66b;
+  --gold2:#f0d99b;
+  --text:#f5f1e8;
+  --muted:#9a9384;
+  --dim:#6d675b;
+  --green:#22c98b;
+  --red:#f16f76;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{
-  background:radial-gradient(1100px 520px at 75% -8%,#0f2d48 0%,var(--bg) 58%) fixed;
-  color:var(--white);
+  background:radial-gradient(900px 480px at 82% -10%,rgba(217,182,107,.13),transparent 60%),var(--bg);
+  color:var(--text);
   font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   min-height:100vh;
 }
-button{font:inherit;cursor:pointer}
-.cyan{color:var(--cyan)}.green{color:var(--green)}.red{color:var(--red)}.gold{color:var(--gold)}
+button,select{font:inherit}
+button{cursor:pointer}
+.gold{color:var(--gold)}.green{color:var(--green)}.red{color:var(--red)}
 
 /* ===== TOP BAR ===== */
 .topbar{
-  height:70px;padding:0 24px;border-bottom:1px solid var(--line);
-  display:flex;align-items:center;gap:22px;
-  background:rgba(8,19,33,.88);backdrop-filter:blur(10px);
-  position:sticky;top:0;z-index:10;
+  height:74px;padding:0 22px;display:flex;align-items:center;gap:18px;
+  border-bottom:1px solid var(--line);background:rgba(5,5,5,.92);
+  backdrop-filter:blur(10px);position:sticky;top:0;z-index:30;
 }
 .brand{display:flex;align-items:center;gap:12px}
-.brandmark{
-  width:40px;height:40px;border-radius:10px;display:grid;place-items:center;
-  font-family:'Cinzel',serif;font-size:24px;font-weight:700;color:var(--bg);
-  background:linear-gradient(135deg,#e6cf9f,var(--gold));
+.zlogo{width:46px;height:46px;display:block}
+.bname{font-family:'Cinzel',serif;font-size:22px;font-weight:700;letter-spacing:3px;line-height:1}
+.bname small{font-family:'Inter',sans-serif;font-size:14px;font-weight:500;letter-spacing:1px;color:var(--gold2)}
+.btag{font-size:9px;letter-spacing:3px;color:var(--muted);margin-top:6px}
+.vpill{
+  padding:6px 14px;border-radius:12px;border:1px solid var(--gold);
+  color:var(--gold2);font-weight:700;font-size:15px;letter-spacing:1px;
 }
-.brandname{font-family:'Cinzel',serif;font-size:21px;font-weight:700;letter-spacing:3px}
-.brandtag{font-size:9px;color:var(--cyan);letter-spacing:3px;margin-top:3px}
-.toptag{
-  font-size:12px;font-weight:600;letter-spacing:2px;color:var(--muted);
-  padding-left:22px;border-left:1px solid var(--line);
+.midtag{margin:0 auto;font-size:11px;letter-spacing:5px;color:var(--muted);white-space:nowrap}
+.topright{display:flex;align-items:center;gap:16px;margin-inline-start:auto}
+.midtag + .topright{margin-inline-start:0}
+.bell,.avatar{
+  width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+  color:var(--gold2);position:relative;
 }
-.topright{margin-left:auto;display:flex;align-items:center;gap:18px;font-size:12px;color:var(--muted)}
-.clock{color:var(--white);font-variant-numeric:tabular-nums}
-.pill{
-  padding:6px 12px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:1.5px;
-  background:#2a2f3f;color:var(--gold);border:1px solid #4a4230;
-}
-.founder{display:flex;align-items:center;gap:10px}
-.avatar{
-  width:36px;height:36px;border-radius:50%;display:grid;place-items:center;
-  font-weight:800;color:var(--bg);background:linear-gradient(135deg,var(--cyan),var(--gold));
-}
-.founder b{display:block;font-size:12px;color:var(--white)}
-.founder span{font-size:10px}
+.avatar{border:1.5px solid var(--gold)}
+.bell::after{content:"";position:absolute;top:6px;right:7px;width:8px;height:8px;border-radius:50%;background:var(--red)}
 
 /* ===== LAYOUT ===== */
-.layout{display:grid;grid-template-columns:230px 1fr;min-height:calc(100vh - 70px)}
+.layout{display:grid;grid-template-columns:236px 1fr;min-height:calc(100vh - 74px)}
 .sidebar{
-  border-right:1px solid var(--line);padding:18px 12px;
-  display:flex;flex-direction:column;gap:5px;background:rgba(8,19,33,.55);
+  border-right:1px solid var(--line);padding:16px 12px;display:flex;flex-direction:column;gap:4px;
+  background:rgba(5,5,5,.6);
 }
-.nav{
-  padding:12px 14px;border:1px solid transparent;border-radius:10px;
-  background:transparent;color:#b9cad8;text-align:left;font-size:13px;font-weight:500;
-  display:flex;align-items:center;gap:11px;transition:.2s;
+.navbtn{
+  display:flex;align-items:center;gap:12px;width:100%;text-align:start;
+  padding:12px 14px;border-radius:12px;border:1px solid transparent;background:transparent;
+  color:#cfc7b6;font-size:14px;font-weight:500;transition:.2s;
 }
-.nav i{font-style:normal;width:18px;text-align:center;font-size:15px}
-.nav:hover{background:rgba(40,184,213,.07);color:var(--white)}
-.nav.active{
-  color:#fff;border-color:var(--cyan);
-  background:linear-gradient(90deg,rgba(40,184,213,.22),rgba(40,184,213,.03));
+.navbtn i{font-style:normal;width:20px;text-align:center;font-size:16px;color:var(--muted)}
+.navbtn:hover{background:rgba(217,182,107,.08);color:#fff}
+.navbtn.active{
+  background:linear-gradient(100deg,#b58e43,#ecd28d);color:#14100a;font-weight:700;
+  box-shadow:0 0 18px rgba(217,182,107,.28);
 }
-.soon{margin-left:auto;font-size:9px;padding:2px 8px;border-radius:20px;background:var(--panel2);color:var(--cyan)}
-.sidebottom{
-  margin-top:auto;padding:14px;border-radius:12px;background:var(--card);
-  border:1px solid var(--line);color:var(--muted);font-size:11px;line-height:1.8;
+.navbtn.active i{color:#14100a}
+.sidefoot{
+  margin-top:auto;padding:14px;border-radius:14px;text-align:center;font-size:12px;line-height:1.8;
+  color:var(--muted);border:1px solid var(--gold);background:rgba(217,182,107,.06);
 }
-.sidebottom b{color:var(--white);font-size:13px;display:block;margin-bottom:2px}
-main{padding:22px;min-width:0;max-width:1700px;width:100%;margin:auto}
+.sidefoot b{display:block;color:var(--gold2);font-size:13px}
+main{padding:20px;min-width:0;max-width:1760px;width:100%;margin:0 auto}
 .page{display:none}.page.active{display:block}
 
-/* ===== HERO ===== */
-.hero{
-  border:1px solid #1f5470;border-radius:16px;padding:30px 32px;margin-bottom:16px;
-  background:linear-gradient(110deg,#10304a 0%,#0a1b2d 60%,#0f3248 100%);
-  position:relative;overflow:hidden;
-}
-.hero::before{
-  content:"";position:absolute;inset:0;opacity:.5;
-  background-image:
-    linear-gradient(rgba(40,184,213,.07) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(40,184,213,.07) 1px,transparent 1px);
-  background-size:38px 38px;
-  mask-image:linear-gradient(90deg,transparent 35%,#000 100%);
-  -webkit-mask-image:linear-gradient(90deg,transparent 35%,#000 100%);
-}
-.hero svg{position:absolute;right:20px;bottom:0;height:100%;width:46%;opacity:.9}
-.hero>div{position:relative;z-index:1}
-.eyebrow{font-size:11px;letter-spacing:3px;color:var(--cyan);font-weight:700}
-.hero h1{
-  font-family:'Cinzel',serif;font-size:clamp(28px,4.4vw,46px);margin:12px 0 6px;letter-spacing:3px;
-}
-.hero h1 em{font-style:normal;color:var(--gold)}
-.hero h2{font-size:clamp(12px,1.6vw,15px);letter-spacing:3px;font-weight:600;margin-bottom:12px}
-.hero p{color:#a8bdcd;font-size:13px;line-height:1.7;max-width:560px}
-.herofoot{margin-top:18px;color:var(--gold);font-size:11px;letter-spacing:3px}
-
 /* ===== CARDS ===== */
-.card{
-  background:var(--card);border:1px solid var(--line);
-  border-radius:14px;padding:16px;min-width:0;
+.panel,.card,.pcard,.stat,.minibot{
+  background:linear-gradient(160deg,var(--panel1) 0%,var(--panel2) 70%);
+  border:1px solid var(--line);border-radius:16px;
+  box-shadow:0 10px 30px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.04);
+  min-width:0;
 }
-.cardlabel{font-size:10px;color:var(--muted);letter-spacing:1.5px;font-weight:600}
-.cardnote{font-size:11px;color:var(--muted)}
-.homegrid{display:grid;grid-template-columns:1fr 310px;gap:16px;align-items:start}
-.col{display:flex;flex-direction:column;gap:16px;min-width:0}
-.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.pricecard{display:flex;align-items:center;gap:14px}
-.picon{
-  width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
-  font-size:13px;font-weight:800;background:var(--panel2);border:1px solid var(--line);
-}
-.pname{font-size:14px;font-weight:700}
-.pval{font-size:20px;font-weight:700;margin:3px 0 2px;color:#5f7488}
-.sectiontitle{font-size:15px;font-weight:700;margin:6px 0 12px}
+.panel,.card{padding:16px}
+.panel-head,.cardtitle{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.panel-head h2,.cardtitle b{font-size:16px;font-weight:700}
+.link{color:var(--gold);font-size:12px;background:none;border:0}
+.cardnote{font-size:12px;color:var(--muted);line-height:1.6}
+.tag{font-size:10px;letter-spacing:1.5px;color:var(--gold);font-weight:700}
+.pill{display:inline-block;padding:5px 11px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:1px;background:rgba(217,182,107,.1);border:1px solid var(--line);color:var(--gold2)}
+.pill.soon{color:var(--muted)}
+.pill.off{color:var(--red);border-color:rgba(241,111,118,.35);background:rgba(241,111,118,.08)}
 
-/* chart */
-.charthead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
-.charthead b{font-size:15px;margin-right:6px}
-.tfs{display:flex;gap:4px;flex-wrap:wrap}
-.tf{
-  padding:6px 11px;border-radius:7px;border:1px solid var(--line);
-  background:transparent;color:var(--muted);font-size:11px;font-weight:600;
+/* ===== PRICE STRIP ===== */
+.prices{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.pcard{display:flex;align-items:center;gap:12px;padding:13px 14px}
+.pic{
+  width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;
+  font-size:11px;font-weight:800;color:var(--gold2);border:1px solid var(--line);background:rgba(217,182,107,.08);
 }
-.tf.active{border-color:var(--cyan);color:var(--cyan);background:rgba(40,184,213,.12)}
+.pcard b{font-size:13px;display:block}
+.pcard em{font-style:normal;font-size:18px;font-weight:700;color:var(--dim);display:block;margin:2px 0}
+.pcard small{font-size:10px;color:var(--muted)}
+
+/* ===== WELCOME ===== */
+.welcome{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin:20px 0}
+.welcome h1{font-size:28px;font-weight:700}
+.welcome h1 em{font-style:normal;color:var(--gold2)}
+.welcome .sub{font-size:13px;color:var(--muted);margin-top:6px}
+.wr{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.datebox{padding:9px 14px;border-radius:12px;border:1px solid var(--line);font-size:12px;color:var(--text);font-variant-numeric:tabular-nums}
+.mstatus{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:12px;font-weight:700;font-size:13px;border:1px solid}
+.mstatus i{width:9px;height:9px;border-radius:50%;background:currentColor}
+.mstatus.open{color:var(--green);border-color:rgba(34,201,139,.5);background:rgba(34,201,139,.08)}
+.mstatus.closed{color:var(--red);border-color:rgba(241,111,118,.5);background:rgba(241,111,118,.08)}
+
+/* ===== STATS ===== */
+.stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:14px}
+.stat{padding:14px 16px;display:flex;align-items:center;gap:12px}
+.sic{
+  width:42px;height:42px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;
+  color:var(--gold);border:1px solid var(--line);font-size:18px;
+}
+.stat small{display:block;font-size:11px;color:var(--muted)}
+.stat strong{display:block;font-size:22px;color:var(--gold);margin:3px 0 1px}
+.stat span{font-size:10px;color:var(--dim)}
+
+/* ===== ROWS ===== */
+.row2{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:14px;margin-bottom:14px}
+.row3{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr);gap:14px}
+.analysis{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:12px}
 .chartbox{
-  height:270px;border-radius:10px;border:1px dashed #28506b;position:relative;
+  min-height:250px;border-radius:12px;border:1px dashed rgba(217,182,107,.35);
   background:
-    linear-gradient(rgba(40,184,213,.06) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(40,184,213,.06) 1px,transparent 1px);
-  background-size:60px 45px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
-  text-align:center;padding:20px;
+    linear-gradient(rgba(217,182,107,.06) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(217,182,107,.06) 1px,transparent 1px);
+  background-size:60px 46px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;padding:18px;
 }
 .chartbox strong{font-size:14px}
-.chartbox span{font-size:12px;color:var(--muted);max-width:340px;line-height:1.6}
-.emptyicon{font-size:28px;color:var(--cyan)}
-
-/* signal card */
-.sighead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.sighead b{font-size:15px}
-.badge{padding:6px 14px;border-radius:7px;font-size:11px;font-weight:800;letter-spacing:1px;background:#2a3547;color:#8da3b6}
-.sigrow{
-  display:flex;justify-content:space-between;padding:10px 0;
-  border-bottom:1px solid var(--line);font-size:13px;color:#b9cad8;
+.chartbox span{font-size:12px;color:var(--muted);max-width:320px;line-height:1.6}
+.ico{font-size:26px;color:var(--gold)}
+.result{border:1px solid var(--line);border-radius:12px;padding:12px;background:rgba(0,0,0,.25);display:flex;flex-direction:column}
+.result .rh{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-weight:700;font-size:13px}
+.kv{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line);font-size:12px;color:#cfc7b6}
+.kv span:last-child{color:var(--dim);font-weight:700}
+.goldbtn{
+  margin-top:auto;padding:11px;border-radius:10px;border:0;font-weight:700;font-size:13px;
+  background:linear-gradient(100deg,#b58e43,#ecd28d);color:#14100a;
 }
-.sigrow:last-child{border:0}
-.sigrow span:last-child{color:#5f7488;font-weight:700}
-.bar{height:6px;border-radius:4px;background:var(--panel2);width:90px;align-self:center}
-
-/* tabs + table */
-.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}
-.tab{
-  padding:9px 14px;border-radius:9px;border:1px solid transparent;
-  background:transparent;color:var(--muted);font-size:12px;font-weight:600;
-}
-.tab.active{color:var(--cyan);border-color:var(--cyan);background:rgba(40,184,213,.1)}
 .tablewrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:12px;min-width:640px}
-th{text-align:left;color:var(--muted);font-weight:600;padding:10px 8px;border-bottom:1px solid var(--line);font-size:11px}
-td.empty-row{padding:28px 8px;text-align:center;color:var(--muted)}
-
-/* right column rows */
-.mrow{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--line);font-size:13px}
-.mrow:last-child{border:0}
-.mrow span:last-child{color:#5f7488;font-size:12px}
-.ring{
-  width:96px;height:96px;border-radius:50%;margin:6px auto 12px;display:grid;place-items:center;
-  border:8px solid var(--panel2);font-size:20px;font-weight:800;color:#5f7488;
-}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:460px}
+th{text-align:start;color:var(--muted);font-weight:600;padding:9px 8px;border-bottom:1px solid var(--line);font-size:11px}
+td.emptyrow{padding:34px 8px;text-align:center;color:var(--muted);line-height:1.7}
+.minis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.minibot{padding:12px;display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.minibot b{font-size:15px;color:var(--gold2);letter-spacing:1px}
 .empty{
-  min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  text-align:center;color:var(--muted);gap:8px;padding:18px;
+  min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  text-align:center;color:var(--muted);padding:18px;border:1px dashed rgba(217,182,107,.28);border-radius:12px;
 }
-.empty strong{color:var(--white);font-size:14px}
+.empty strong{color:var(--text);font-size:14px}
 .empty span{font-size:12px;line-height:1.6}
+.bigdash{font-size:34px;font-weight:800;color:var(--dim)}
 
-/* other pages */
+/* ===== OTHER PAGES ===== */
 .pagehead{margin:4px 0 20px}
-.pagehead h2{font-size:25px;margin-bottom:7px}
+.pagehead h2{font-size:26px;margin-bottom:8px}
 .pagehead p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px}
-.status{display:inline-block;padding:5px 10px;border-radius:20px;background:#29394a;color:#b4c6d5;font-size:10px;font-weight:600}
-.status.offline{color:var(--red);background:#46272e}
-.cardvalue{font-size:22px;font-weight:750;margin:12px 0 8px}
-.marketrow{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:14px 0;border-bottom:1px solid var(--line);font-size:13px;gap:10px;
-}
-.marketrow:last-child{border:0}
-.field{
-  width:100%;padding:13px;background:#091827;color:var(--white);
-  border:1px solid var(--line);border-radius:8px;margin:8px 0 15px;font-size:16px;
-}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.botname{font-size:24px;font-weight:700;margin:10px 0 8px;color:var(--gold2);letter-spacing:2px}
+.botdesc{font-size:12px;color:var(--muted);line-height:1.7;min-height:56px;margin-bottom:10px}
+.mrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 0;border-bottom:1px solid var(--line);font-size:13px}
+.mrow:last-child{border:0}
 label{font-size:12px;color:var(--muted)}
-.action{
-  border:1px solid var(--cyan);background:#103348;color:var(--cyan);
-  border-radius:8px;padding:11px 16px;font-size:12px;font-weight:700;
+.field{
+  width:100%;padding:13px;background:#0b0a07;color:var(--text);border:1px solid var(--line);
+  border-radius:10px;margin:8px 0 15px;font-size:16px;
 }
-.action:hover{background:#17445b}
+.action{border:1px solid var(--gold);background:rgba(217,182,107,.1);color:var(--gold2);border-radius:10px;padding:11px 16px;font-size:12px;font-weight:700}
 
-/* footer */
+/* ===== FOOTER ===== */
+.motto{position:relative;height:120px;margin-top:26px}
+.ridge{position:absolute;inset:0;width:100%;height:100%}
+.mline{position:absolute;bottom:12px;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:16px}
+.mline span{height:1px;width:90px;background:var(--gold);opacity:.6}
+.mline b{letter-spacing:6px;font-size:12px;color:var(--gold2);font-weight:600}
 .footer{
-  border-top:1px solid var(--line);margin-top:24px;padding:18px 0;
-  color:var(--muted);font-size:11px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  border-top:1px solid var(--line);padding:16px 0 6px;color:var(--muted);font-size:11px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
 }
-.footer b{color:var(--cyan)}
+.footer b{color:var(--gold)}
+
+/* ===== RIGHT-TO-LEFT ===== */
+[dir=rtl] .navbtn{text-align:right}
+[dir=rtl] .bell::after{right:auto;left:7px}
 
 /* ===== RESPONSIVE ===== */
-@media(max-width:1180px){
-  .homegrid{grid-template-columns:1fr}
+@media(max-width:1300px){
+  .midtag{display:none}
+  .topright{margin-inline-start:auto}
+  .prices,.stats{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .row2,.row3{grid-template-columns:1fr}
 }
-@media(max-width:850px){
+@media(max-width:900px){
   .layout{grid-template-columns:1fr}
   .sidebar{
-    flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line);
-    padding:9px;position:sticky;top:70px;z-index:9;background:rgba(8,19,33,.95);
+    flex-direction:row;overflow-x:auto;gap:8px;padding:10px;border-right:0;border-bottom:1px solid var(--line);
+    position:sticky;top:74px;z-index:25;background:rgba(5,5,5,.96);
   }
-  .nav{white-space:nowrap;padding:10px 12px}
-  .sidebottom,.toptag,.founder div,.clock{display:none}
+  .navbtn{width:auto;white-space:nowrap;padding:10px 14px;border-radius:999px;border-color:var(--line)}
+  .sidefoot,.vpill{display:none}
   main{padding:14px}
-  .grid3{grid-template-columns:1fr}
-  .hero svg{display:none}
-  .hero{padding:22px}
+  .grid3,.minis{grid-template-columns:1fr}
+  .analysis{grid-template-columns:1fr}
 }
-@media(max-width:560px){
-  .topbar{padding:0 12px}
-  .brandname{font-size:17px}
-  .pill{font-size:9px;padding:5px 9px}
-  .chartbox{height:220px}
+@media(max-width:600px){
+  .topbar{padding:0 12px;height:66px;gap:10px}
+  .zlogo{width:38px;height:38px}
+  .bname{font-size:18px}
+  .btag{font-size:7px;letter-spacing:2px}
+  .prices,.stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .prices .pcard:last-child,.stats .stat:last-child{grid-column:1/-1}
+  .welcome h1{font-size:23px}
+  .sidebar{top:66px}
+  .mline span{width:40px}.mline b{letter-spacing:3px;font-size:11px}
 }
 </style>
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gz" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6e6b8"/><stop offset=".5" stop-color="#d9b66b"/><stop offset="1" stop-color="#8a6a32"/>
+    </linearGradient>
+    <linearGradient id="gc" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#28b8d5" stop-opacity="0"/><stop offset=".5" stop-color="#28b8d5"/><stop offset="1" stop-color="#7fe3f5"/>
+    </linearGradient>
+    <linearGradient id="gridge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d9b66b" stop-opacity=".5"/><stop offset="1" stop-color="#d9b66b" stop-opacity="0"/>
+    </linearGradient>
+    <symbol id="zmark" viewBox="0 0 100 100">
+      <polygon points="12,16 92,16 92,27 46,73 92,73 92,84 8,84 8,73 54,27 12,27" fill="url(#gz)"/>
+      <path d="M4 62 Q48 96 98 20" fill="none" stroke="url(#gc)" stroke-width="3" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
 <header class="topbar">
   <div class="brand">
-    <div class="brandmark">Z</div>
+    <svg class="zlogo"><use href="#zmark"/></svg>
     <div>
-      <div class="brandname">ZAIRVÉN</div>
-      <div class="brandtag">AI PRO</div>
+      <div class="bname">ZAIRVÉN <small>AI PRO</small></div>
+      <div class="btag"><span>GLOBAL FINANCIAL</span> <span>TECHNOLOGY</span></div>
     </div>
   </div>
-  <div class="toptag">GLOBAL FINANCIAL TECHNOLOGY</div>
+  <span class="vpill">V24</span>
+  <div class="midtag">AI • TRADING • ANALYSIS • AUTOMATION</div>
   <div class="topright">
-    <span class="clock" id="clock"></span>
-    <span class="pill">● IN DEVELOPMENT</span>
-    <div class="founder"><div class="avatar">Z</div><div><b>Founder</b><span>ZAIRVÉN</span></div></div>
+    <span class="bell" aria-label="Notifications">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg>
+    </span>
+    <span class="avatar" aria-label="Profile">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+    </span>
   </div>
 </header>
 
 <div class="layout">
   <aside class="sidebar">
-    <button class="nav active" data-page="home"><i>⌂</i>Home</button>
-    <button class="nav" data-page="markets"><i>◔</i>Live Markets</button>
-    <button class="nav" data-page="analyser"><i>▤</i>AI Chart Analyser</button>
-    <button class="nav" data-page="signals"><i>✦</i>Trading Signals</button>
-    <button class="nav" data-page="bots"><i>⚙</i>Trading Bots<span class="soon">Soon</span></button>
-    <button class="nav" data-page="academy"><i>◈</i>Academy</button>
-    <button class="nav" data-page="news"><i>☰</i>NewsIQ</button>
-    <button class="nav" data-page="account"><i>◯</i>My Account</button>
-    <div class="sidebottom"><b>ZAIRVÉN AI PRO</b>Version 22<br>Forex · Gold · Volatility 75</div>
+    <button class="navbtn active" data-page="home"><i>▦</i>Dashboard</button>
+    <button class="navbtn" data-page="markets"><i>▥</i>Live Markets</button>
+    <button class="navbtn" data-page="analyser"><i>◎</i>AI Chart Analyser</button>
+    <button class="navbtn" data-page="signals"><i>⇅</i>Trading Signals</button>
+    <button class="navbtn" data-page="bots"><i>⬡</i>Trading Systems</button>
+    <button class="navbtn" data-page="news"><i>☰</i>NewsIQ</button>
+    <button class="navbtn" data-page="academy"><i>◈</i>Academy</button>
+    <button class="navbtn" data-page="account"><i>◯</i>My Account</button>
+    <button class="navbtn" data-page="settings"><i>✱</i>Settings</button>
+    <div class="sidefoot"><b>Founder (Preview)</b>ZAIRVÉN AI PRO · v24<br>In development</div>
   </aside>
 
   <main>
-    <!-- ================= HOME ================= -->
+    <!-- ================= DASHBOARD ================= -->
     <section class="page active" id="home">
-      <div class="hero">
-        <svg viewBox="0 0 400 200" preserveAspectRatio="xMaxYMax meet" aria-hidden="true">
-          <g fill="none" stroke="#28b8d5" stroke-width="1.5" opacity=".7">
-            <polyline points="0,170 50,150 90,160 140,110 190,125 240,70 290,85 340,35 400,50"/>
-          </g>
-          <g stroke-width="2">
-            <line x1="60" y1="130" x2="60" y2="175" stroke="#19a875"/><rect x="55" y="140" width="10" height="25" fill="#19a875"/>
-            <line x1="120" y1="115" x2="120" y2="165" stroke="#e16d72"/><rect x="115" y="125" width="10" height="28" fill="#e16d72"/>
-            <line x1="180" y1="105" x2="180" y2="150" stroke="#19a875"/><rect x="175" y="112" width="10" height="26" fill="#19a875"/>
-            <line x1="240" y1="60" x2="240" y2="120" stroke="#19a875"/><rect x="235" y="70" width="10" height="34" fill="#19a875"/>
-            <line x1="300" y1="55" x2="300" y2="110" stroke="#e16d72"/><rect x="295" y="65" width="10" height="30" fill="#e16d72"/>
-            <line x1="360" y1="25" x2="360" y2="85" stroke="#19a875"/><rect x="355" y="35" width="10" height="38" fill="#19a875"/>
-          </g>
-        </svg>
+      <div class="prices">
+        <div class="pcard"><span class="pic">Au</span><div><b>XAUUSD</b><em>—</em><small>Awaiting data</small></div></div>
+        <div class="pcard"><span class="pic">EU</span><div><b>EURUSD</b><em>—</em><small>Awaiting data</small></div></div>
+        <div class="pcard"><span class="pic">GB</span><div><b>GBPUSD</b><em>—</em><small>Awaiting data</small></div></div>
+        <div class="pcard"><span class="pic">JP</span><div><b>USDJPY</b><em>—</em><small>Awaiting data</small></div></div>
+        <div class="pcard"><span class="pic">V75</span><div><b>V75</b><em>—</em><small>Awaiting data</small></div></div>
+      </div>
+
+      <div class="welcome">
         <div>
-          <div class="eyebrow">WELCOME TO THE NEXT GENERATION</div>
-          <h1>ZAIRV<em>É</em>N</h1>
-          <h2>GLOBAL FINANCIAL TECHNOLOGY</h2>
-          <p>AI-powered market intelligence. Structured trading systems. Advanced financial technology for global traders.</p>
-          <div class="herofoot">INTELLIGENCE. PRECISION. DISCIPLINE.</div>
+          <h1><span>Welcome back</span>, <em>Founder</em></h1>
+          <div class="sub">Market Intelligence • AI Analysis • Trading Systems • All in One</div>
+        </div>
+        <div class="wr">
+          <span class="datebox" id="clock"></span>
+          <span class="mstatus open" id="mstatus"><i></i><span id="mtext">Markets Open</span></span>
+          <span class="pill">In development</span>
         </div>
       </div>
 
-      <div class="homegrid">
-        <!-- LEFT / MAIN COLUMN -->
-        <div class="col">
-          <div class="grid3">
-            <div class="card pricecard">
-              <div class="picon cyan">EU</div>
-              <div><div class="pname">EURUSD</div><div class="pval">—</div><div class="cardnote">Awaiting data</div></div>
-            </div>
-            <div class="card pricecard">
-              <div class="picon gold">Au</div>
-              <div><div class="pname">XAUUSD · Gold</div><div class="pval">—</div><div class="cardnote">Awaiting data</div></div>
-            </div>
-            <div class="card pricecard">
-              <div class="picon cyan">V75</div>
-              <div><div class="pname">Volatility 75</div><div class="pval">—</div><div class="cardnote">Awaiting data</div></div>
-            </div>
-          </div>
+      <div class="stats">
+        <div class="stat"><span class="sic">◎</span><div><small>Today's Signals</small><strong>—</strong><span>Awaiting data</span></div></div>
+        <div class="stat"><span class="sic">⬡</span><div><small>Active Bots</small><strong>—</strong><span>Awaiting data</span></div></div>
+        <div class="stat"><span class="sic">▥</span><div><small>Win Rate (30D)</small><strong>—</strong><span>Awaiting data</span></div></div>
+        <div class="stat"><span class="sic">⚖</span><div><small>Avg. R:R</small><strong>—</strong><span>Awaiting data</span></div></div>
+        <div class="stat"><span class="sic">↗</span><div><small>Total Return (30D)</small><strong>—</strong><span>Awaiting data</span></div></div>
+      </div>
 
-          <div class="grid3" style="grid-template-columns:1.6fr 1fr">
-            <div class="card">
-              <div class="charthead">
-                <b>XAUUSD</b>
-                <div class="tfs" id="tfs">
-                  <button class="tf">M1</button><button class="tf">M5</button>
-                  <button class="tf active">M15</button><button class="tf">M30</button>
-                  <button class="tf">H1</button><button class="tf">H4</button>
-                </div>
-              </div>
-              <div class="chartbox">
-                <div class="emptyicon">⌁</div>
-                <strong>Awaiting market connection</strong>
-                <span>Live candles will appear here after System 02 is connected.</span>
-              </div>
+      <div class="row2">
+        <section class="panel">
+          <div class="panel-head"><h2>AI Chart Analyser</h2></div>
+          <div class="analysis">
+            <div class="chartbox">
+              <div class="ico">⌁</div>
+              <strong>Awaiting market connection</strong>
+              <span>Live candles, support and resistance zones will appear here after System 02 is connected.</span>
             </div>
-            <div class="card">
-              <div class="sighead"><b>AI Signal</b><span class="badge">NO SIGNAL</span></div>
-              <div class="sigrow"><span>Entry</span><span>—</span></div>
-              <div class="sigrow"><span>Stop Loss</span><span>—</span></div>
-              <div class="sigrow"><span>Take Profit 1</span><span>—</span></div>
-              <div class="sigrow"><span>Take Profit 2</span><span>—</span></div>
-              <div class="sigrow"><span>Take Profit 3</span><span>—</span></div>
-              <div class="sigrow"><span>Risk : Reward</span><span>—</span></div>
-              <div class="sigrow"><span>Setup Score</span><div class="bar"></div></div>
+            <div class="result">
+              <div class="rh"><span>AI Result</span></div>
+              <div class="kv"><span>Bias</span><span>—</span></div>
+              <div class="kv"><span>Confidence</span><span>—</span></div>
+              <div class="kv"><span>Entry</span><span>—</span></div>
+              <div class="kv"><span>Take Profit</span><span>—</span></div>
+              <div class="kv"><span>Stop Loss</span><span>—</span></div>
+              <div class="kv"><span>RR Ratio</span><span>—</span></div>
+              <button class="goldbtn" data-go="analyser" style="margin-top:12px">Full Analysis</button>
             </div>
           </div>
+        </section>
 
-          <div class="card">
-            <div class="tabs" id="tabs">
-              <button class="tab active">Live Signals</button>
-              <button class="tab">Active Trades</button>
-              <button class="tab">Trade History</button>
-              <button class="tab">Market Alerts</button>
-            </div>
-            <div class="tablewrap">
-              <table>
-                <thead><tr>
-                  <th>Market</th><th>TF</th><th>Signal</th><th>Entry</th><th>SL</th>
-                  <th>TP1</th><th>TP2</th><th>TP3</th><th>R:R</th><th>Status</th><th>Time</th>
-                </tr></thead>
-                <tbody><tr><td class="empty-row" colspan="11">No verified signals yet. Signals appear only when the data and strategy engines are running.</td></tr></tbody>
-              </table>
-            </div>
+        <section class="panel">
+          <div class="panel-head"><h2>Live Trading Signals</h2><button class="link" data-go="signals">View All</button></div>
+          <div class="tablewrap">
+            <table>
+              <thead><tr><th>#</th><th>Pair</th><th>TF</th><th>Signal</th><th>Entry</th><th>TP</th><th>SL</th><th>Conf.</th></tr></thead>
+              <tbody><tr><td class="emptyrow" colspan="8">No verified signals yet. Results appear here after real testing.</td></tr></tbody>
+            </table>
           </div>
-        </div>
+        </section>
+      </div>
 
-        <!-- RIGHT COLUMN -->
-        <div class="col">
-          <div class="card">
-            <div class="sectiontitle">Market Overview</div>
-            <div class="mrow"><span>Forex</span><span>Awaiting data</span></div>
-            <div class="mrow"><span class="gold">Gold (XAUUSD)</span><span>Awaiting data</span></div>
-            <div class="mrow"><span class="cyan">Volatility 75</span><span>Awaiting data</span></div>
+      <div class="row3">
+        <section class="panel">
+          <div class="panel-head"><h2>Trading Systems</h2><button class="link" data-go="bots">View All</button></div>
+          <div class="minis">
+            <div class="minibot"><b>NOVA</b><span class="tag">BEGINNER</span><span class="pill soon">COMING SOON</span></div>
+            <div class="minibot"><b>APEX</b><span class="tag">PROFESSIONAL</span><span class="pill soon">COMING SOON</span></div>
+            <div class="minibot"><b>SOVEREIGN</b><span class="tag">ADVANCED</span><span class="pill soon">COMING SOON</span></div>
           </div>
+        </section>
 
-          <div class="card">
-            <div class="sectiontitle">Trading Performance</div>
-            <div class="ring">—</div>
-            <div class="cardnote" style="text-align:center;line-height:1.6">Not verified yet.<br>Results are published only after real testing.</div>
+        <section class="panel">
+          <div class="panel-head"><h2>NewsIQ · Economic Calendar</h2><button class="link" data-go="news">View All</button></div>
+          <div class="empty">
+            <strong>News feed not connected</strong>
+            <span>High-impact events such as CPI and FOMC will appear here.</span>
           </div>
+        </section>
 
-          <div class="card">
-            <div class="sectiontitle">Live NewsIQ</div>
-            <div class="empty" style="min-height:110px">
-              <strong>News feed not connected</strong>
-              <span>High-impact events will appear here.</span>
-            </div>
+        <section class="panel">
+          <div class="panel-head"><h2>Account Performance</h2><span class="pill">Last 30 Days</span></div>
+          <div class="empty">
+            <div class="bigdash">—</div>
+            <span>Performance is published only after real, verified results.</span>
           </div>
-
-          <div class="card">
-            <div class="sectiontitle">Platform Status</div>
-            <div class="mrow"><span>Market Data</span><span class="red">Not connected</span></div>
-            <div class="mrow"><span>AI Analysis</span><span class="gold">In development</span></div>
-            <div class="mrow"><span>Automation</span><span class="gold">In development</span></div>
-          </div>
-        </div>
+        </section>
       </div>
     </section>
 
@@ -411,12 +389,12 @@ label{font-size:12px;color:var(--muted)}
       <div class="pagehead">
         <h2>Live Markets</h2>
         <p>Global market monitoring across our supported instruments.</p>
-        <span class="status offline">DATA FEED NOT CONNECTED</span>
+        <span class="pill off">DATA FEED NOT CONNECTED</span>
       </div>
       <div class="card">
-        <div class="marketrow"><strong>Forex</strong><span>Awaiting data</span></div>
-        <div class="marketrow"><strong>Gold · XAUUSD</strong><span>Awaiting data</span></div>
-        <div class="marketrow"><strong>Volatility 75</strong><span>Awaiting data</span></div>
+        <div class="mrow"><strong>Forex</strong><span class="cardnote">Awaiting data</span></div>
+        <div class="mrow"><strong>Gold · XAUUSD</strong><span class="cardnote">Awaiting data</span></div>
+        <div class="mrow"><strong>Volatility 75</strong><span class="cardnote">Awaiting data</span></div>
       </div>
     </section>
 
@@ -428,17 +406,13 @@ label{font-size:12px;color:var(--muted)}
       </div>
       <div class="card">
         <label for="market">Select market</label>
-        <select class="field" id="market">
-          <option>Forex</option><option>Gold (XAUUSD)</option><option>Volatility 75</option>
-        </select>
+        <select class="field" id="market"><option>Forex</option><option>Gold (XAUUSD)</option><option>Volatility 75</option></select>
         <label for="timeframe">Select timeframe</label>
-        <select class="field" id="timeframe">
-          <option>M5</option><option>M15</option><option>M30</option><option>H1</option><option>H4</option>
-        </select>
+        <select class="field" id="timeframe"><option>M5</option><option>M15</option><option>M30</option><option>H1</option><option>H4</option></select>
         <label for="chartfile">Upload chart image</label>
         <input class="field" type="file" id="chartfile" accept="image/png,image/jpeg,image/webp">
         <div id="preview" class="cardnote">No image selected.</div>
-        <p style="margin:12px 0"><span class="status offline">AI BACKEND NOT CONNECTED</span></p>
+        <p style="margin:12px 0"><span class="pill off">AI BACKEND NOT CONNECTED</span></p>
         <button class="action" id="analyseBtn">Analysis unavailable until backend connection</button>
       </div>
     </section>
@@ -449,33 +423,21 @@ label{font-size:12px;color:var(--muted)}
         <h2>Trading Signals</h2>
         <p>Verified setups, trade levels and transparent signal history.</p>
       </div>
-      <div class="card empty">
-        <div class="emptyicon">⇄</div>
-        <strong>No published signals</strong>
-        <span>Signals will be published after strategy validation and live data integration.</span>
-      </div>
+      <div class="card empty"><div class="ico">⇄</div><strong>No published signals</strong><span>Signals will be published after strategy validation and live data integration.</span></div>
     </section>
 
-    <!-- ================= BOTS ================= -->
+    <!-- ================= SYSTEMS ================= -->
     <section class="page" id="bots">
       <div class="pagehead">
         <h2>ZAIRVÉN Trading Systems</h2>
         <p>Trading automation products for Forex, Gold and Volatility 75.</p>
       </div>
       <div class="grid3">
-        <div class="card"><div class="cardlabel">ENTRY LEVEL</div><div class="cardvalue">NOVA</div><span class="status">PLANNED</span></div>
-        <div class="card"><div class="cardlabel">PROFESSIONAL</div><div class="cardvalue cyan">APEX</div><span class="status">PLANNED</span></div>
-        <div class="card"><div class="cardlabel">ADVANCED</div><div class="cardvalue gold">SOVEREIGN</div><span class="status">PLANNED</span></div>
+        <div class="card"><span class="tag">BEGINNER</span><div class="botname">NOVA</div><p class="botdesc">Guided trading tools and essential risk controls.</p><div class="cardnote" style="margin-bottom:12px">Forex · Gold · Volatility 75</div><span class="pill soon">COMING SOON</span></div>
+        <div class="card"><span class="tag">PROFESSIONAL</span><div class="botname">APEX</div><p class="botdesc">Advanced strategy options, scanning and trade management.</p><div class="cardnote" style="margin-bottom:12px">Forex · Gold · Volatility 75</div><span class="pill soon">COMING SOON</span></div>
+        <div class="card"><span class="tag">ADVANCED</span><div class="botname">SOVEREIGN</div><p class="botdesc">Multi-system intelligence and advanced risk management.</p><div class="cardnote" style="margin-bottom:12px">Forex · Gold · Volatility 75</div><span class="pill soon">COMING SOON</span></div>
       </div>
-    </section>
-
-    <!-- ================= ACADEMY ================= -->
-    <section class="page" id="academy">
-      <div class="pagehead">
-        <h2>ZAIRVÉN Academy</h2>
-        <p>Financial markets education, technical analysis, risk management and trading psychology.</p>
-      </div>
-      <div class="card empty"><strong>Academy coming soon</strong><span>Educational content is being developed.</span></div>
+      <p class="cardnote" style="margin-top:14px">Each tier is planned to support Forex, Gold and Volatility 75, subject to compatible data and broker support.</p>
     </section>
 
     <!-- ================= NEWS ================= -->
@@ -487,61 +449,92 @@ label{font-size:12px;color:var(--muted)}
       <div class="card empty"><strong>News feed not connected</strong><span>Economic events and verified market information will appear here once connected.</span></div>
     </section>
 
+    <!-- ================= ACADEMY ================= -->
+    <section class="page" id="academy">
+      <div class="pagehead">
+        <h2>ZAIRVÉN Academy</h2>
+        <p>Financial markets education, technical analysis, risk management and trading psychology.</p>
+      </div>
+      <div class="card empty"><strong>Academy coming soon</strong><span>Educational content is being developed.</span></div>
+    </section>
+
     <!-- ================= ACCOUNT ================= -->
     <section class="page" id="account">
       <div class="pagehead">
         <h2>My Account</h2>
         <p>Client accounts, preferences and subscription management.</p>
       </div>
-      <div class="card empty"><strong>Client portal in development</strong><span>Account registration and secure authentication will be added later.</span></div>
+      <div class="card empty"><strong>Client portal in development</strong><span>Account registration and secure sign-in will be added later.</span></div>
     </section>
+
+    <!-- ================= SETTINGS ================= -->
+    <section class="page" id="settings">
+      <div class="pagehead">
+        <h2>Settings</h2>
+        <p>Platform preferences and notifications.</p>
+      </div>
+      <div class="card empty"><strong>Settings coming soon</strong><span>Preferences will be added with the client portal.</span></div>
+    </section>
+
+    <div class="motto">
+      <svg class="ridge" viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0 95 L110 62 L210 84 L350 30 L470 78 L610 22 L750 72 L890 38 L1030 80 L1200 48 L1200 110 L0 110 Z" fill="url(#gridge)"/>
+        <path d="M0 95 L110 62 L210 84 L350 30 L470 78 L610 22 L750 72 L890 38 L1030 80 L1200 48" fill="none" stroke="#d9b66b" stroke-width="1.5" opacity=".8"/>
+      </svg>
+      <div class="mline"><span></span><b>IN ALLAH WE TRUST</b><span></span></div>
+    </div>
 
     <footer class="footer">
       <span>© 2026 ZAIRVÉN · GLOBAL FINANCIAL TECHNOLOGY</span>
       <span>Trading involves risk. Nothing here is financial advice.</span>
-      <b>ZAIRVÉN AI PRO · v22</b>
+      <b>ZAIRVÉN AI PRO · V24</b>
     </footer>
   </main>
 </div>
 
 <script>
 /* page navigation */
-document.querySelectorAll(".nav").forEach(button=>{
-  button.addEventListener("click",()=>{
-    document.querySelectorAll(".nav").forEach(b=>b.classList.remove("active"));
-    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
-    button.classList.add("active");
-    document.getElementById(button.dataset.page).classList.add("active");
-    window.scrollTo({top:0,behavior:"smooth"});
-  });
-});
-
-/* timeframe + tab highlight (visual only) */
-function bindGroup(selector){
-  const items=document.querySelectorAll(selector);
-  items.forEach(el=>el.addEventListener("click",()=>{
-    items.forEach(x=>x.classList.remove("active"));
-    el.classList.add("active");
-  }));
+function go(id){
+  document.querySelectorAll(".navbtn").forEach(function(b){b.classList.toggle("active",b.dataset.page===id)});
+  document.querySelectorAll(".page").forEach(function(p){p.classList.toggle("active",p.id===id)});
+  window.scrollTo({top:0,behavior:"smooth"});
 }
-bindGroup(".tf");
-bindGroup(".tab");
+document.querySelectorAll(".navbtn").forEach(function(b){
+  b.addEventListener("click",function(){go(b.dataset.page)});
+});
+document.querySelectorAll("[data-go]").forEach(function(b){
+  b.addEventListener("click",function(){go(b.dataset.go)});
+});
 
 /* clock in the visitor's own timezone */
 function tick(){
-  const d=new Date();
+  var d=new Date();
   document.getElementById("clock").textContent=
     d.toLocaleDateString("en-GB",{weekday:"short",day:"2-digit",month:"short",year:"numeric"})+"  "+
-    d.toLocaleTimeString("en-GB");
+    d.toLocaleTimeString("en-GB",{timeZoneName:"short"});
 }
-tick(); setInterval(tick,1000);
+
+/* approximate Forex hours, worked out from UTC time */
+function marketStatus(){
+  var d=new Date(), day=d.getUTCDay(), h=d.getUTCHours();
+  var open=(day>=1&&day<=4)||(day===0&&h>=22)||(day===5&&h<22);
+  var el=document.getElementById("mstatus");
+  var state=open?"open":"closed";
+  if(el.dataset.state!==state){
+    el.dataset.state=state;
+    el.className="mstatus "+state;
+    document.getElementById("mtext").textContent=open?"Markets Open":"Markets Closed";
+  }
+}
+function refresh(){tick();marketStatus();}
+refresh(); setInterval(refresh,1000);
 
 /* chart image preview */
-document.getElementById("chartfile").addEventListener("change",event=>{
-  const file=event.target.files[0];
-  const preview=document.getElementById("preview");
+document.getElementById("chartfile").addEventListener("change",function(event){
+  var file=event.target.files[0];
+  var preview=document.getElementById("preview");
   if(!file){preview.textContent="No image selected.";return;}
-  if(!["image/jpeg","image/png","image/webp"].includes(file.type)){
+  if(["image/jpeg","image/png","image/webp"].indexOf(file.type)===-1){
     preview.textContent="Please select a JPG, PNG or WebP image.";
     event.target.value="";
     return;
@@ -549,5 +542,7 @@ document.getElementById("chartfile").addEventListener("change",event=>{
   preview.textContent="Selected: "+file.name+" — image ready for backend integration.";
 });
 </script>
+<script src="i18n.js"></script>
+<script src="i18n-v24.js"></script>
 </body>
 </html>
