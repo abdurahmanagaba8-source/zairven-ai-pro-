@@ -3,162 +3,162 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0a0a0f">
+<meta name="theme-color" content="#07070a">
 <title>ZAIRVÉN AI PRO | V22 Dubai Edition</title>
 <style>
-:root{--ink:#2b2412;--muted:#6f6650;--goldD:#8a6a12;--gold:#d4af37;--gold2:#f3dc8a;--line:rgba(212,175,55,.35);--line2:rgba(212,175,55,.6);--dark:rgba(10,10,15,.7);--green:#1fa971}
+:root{--ink:#f6f3ea;--muted:#a39f94;--gold:#d4af37;--gold2:#f3dc8a;--goldD:#b8901f;--line:rgba(212,175,55,.35);--line2:rgba(212,175,55,.6);--green:#1fa971}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;min-height:100vh;color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,sans-serif;background:linear-gradient(160deg,#fbf3e2 0%,#f4e6c8 45%,#ead7ae 100%) fixed;overflow-x:hidden}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,sans-serif;background:radial-gradient(ellipse at 50% -10%,#2a2209 0%,#0b0a07 45%,#050507 85%) fixed;overflow-x:hidden}
 body.lock{overflow:hidden}
 button,input,select{font:inherit}button{cursor:pointer}[hidden]{display:none!important}
 .i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 
-/* ===== BACKGROUND (soft warm + faint Dubai skyline) ===== */
-.bgfx{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(circle at 85% 8%,rgba(212,175,55,.35),transparent 42%),radial-gradient(circle at 8% 85%,rgba(214,150,110,.22),transparent 45%),radial-gradient(circle at 50% 40%,rgba(255,255,255,.5),transparent 55%)}
-.bgfx svg{position:absolute;left:0;right:0;bottom:0;width:100%;height:46vh;fill:rgba(138,106,18,.14)}
+/* ===== LIVE BACKGROUND ===== */
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.sky{position:fixed;left:0;right:0;bottom:0;height:42vh;z-index:0;pointer-events:none}
+.sky svg{width:100%;height:100%;fill:rgba(212,175,55,.07)}
 
-/* ===== INTRO ===== */
+/* ===== INTRO (orbit style) ===== */
 .intro{position:fixed;inset:0;z-index:1000;overflow:hidden}
-.sh{position:absolute;left:0;right:0;height:50.3%;background:#050507;transition:transform .65s cubic-bezier(.77,0,.18,1)}
+.sh{position:absolute;left:0;right:0;height:50.3%;background:#030304;transition:transform .65s cubic-bezier(.77,0,.18,1)}
 .sh.t{top:0}.sh.b{bottom:0}
 .intro.out .sh.t{transform:translateY(-101%)}
 .intro.out .sh.b{transform:translateY(101%)}
-.stage{position:absolute;inset:0;z-index:2;--rs:min(40vmin,220px);transition:opacity .2s}
+.stage{position:absolute;inset:0;z-index:2;transition:opacity .2s;overflow:hidden}
 .intro.out .stage{opacity:0}
 #stars{position:absolute;inset:0;width:100%;height:100%}
-.ringwrap{position:absolute;left:50%;top:50%;width:var(--rs);aspect-ratio:1;opacity:0;transform:translate(-50%,-50%) scale(.3);animation:ringin .6s .1s cubic-bezier(.2,.8,.2,1) forwards,pulse 1.1s .7s ease-in-out infinite}
-.ringwrap::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,#000 56%,rgba(212,175,55,.16) 72%,transparent 74%)}
-.ringwrap::after{content:"";position:absolute;inset:-28%;border-radius:50%;background:radial-gradient(circle,transparent 52%,rgba(212,175,55,.28) 62%,transparent 75%)}
-.ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,#f3dc8a,#a8841f,#fff2b8,#7a5f12,#f3dc8a);-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 7px),#000 calc(100% - 6px));mask:radial-gradient(farthest-side,transparent calc(100% - 7px),#000 calc(100% - 6px));animation:spin 2.4s linear infinite}
-@keyframes ringin{to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
-@keyframes pulse{0%,100%{filter:drop-shadow(0 0 14px rgba(212,175,55,.7))}50%{filter:drop-shadow(0 0 36px rgba(255,226,140,1))}}
-@keyframes spin{to{transform:rotate(360deg)}}
-.zlogo{position:absolute;left:50%;top:50%;width:calc(var(--rs)*.5);opacity:0;transform:translate(-50%,-50%) scale(.6);filter:drop-shadow(0 0 12px rgba(243,220,138,.9));animation:zin .45s .45s ease-out forwards}
-@keyframes zin{to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
-.wordwrap{position:absolute;left:0;right:0;top:calc(50% + var(--rs)/2 + 22px);text-align:center}
-.word{display:flex;justify-content:center;perspective:700px;perspective-origin:50% calc(-1*(var(--rs)/2 + 22px));font:clamp(28px,8vw,46px) Georgia,serif;color:#f6e7a8}
-.word .l{display:block;margin:0 .07em;opacity:0;transform:translateZ(-3200px);animation:fly .4s cubic-bezier(.15,.75,.2,1) forwards;animation-delay:calc(.75s + var(--i)*.075s)}
-.word i{display:block;font-style:normal;text-shadow:0 0 14px rgba(212,175,55,.55);animation:land .4s ease-out forwards;animation-delay:calc(.75s + var(--i)*.075s + .36s)}
-@keyframes fly{0%{opacity:0;transform:translateZ(-3200px)}35%{opacity:1}100%{opacity:1;transform:translateZ(0)}}
-@keyframes land{0%{transform:translate(0,0);text-shadow:0 0 34px #fff2b8,0 0 12px #f3dc8a}20%{transform:translate(-3px,2px)}40%{transform:translate(3px,-2px)}60%{transform:translate(-2px,-1px)}80%{transform:translate(1px,1px)}100%{transform:none;text-shadow:0 0 14px rgba(212,175,55,.55)}}
-.sub{margin-top:14px;font-size:11px;letter-spacing:.4em;padding-left:.4em;color:var(--gold);opacity:0;animation:fadein .3s 1.6s forwards}
-@keyframes fadein{to{opacity:1}}
-.goldline{position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:linear-gradient(90deg,transparent,#f3dc8a 20%,#fff6cf 50%,#f3dc8a 80%,transparent);box-shadow:0 0 18px rgba(243,220,138,.9);transform:scaleX(0);animation:gline .4s 1.95s cubic-bezier(.7,0,.2,1) forwards}
+.bh{position:absolute;left:50%;top:50%;width:min(78vmin,420px);aspect-ratio:1;opacity:0;transform:translate(-50%,-50%) scale(.4);animation:bhin .8s .1s cubic-bezier(.2,.8,.2,1) forwards,bhpulse 1.6s .9s ease-in-out infinite}
+.ring{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,#000 0 50%,#fff3c4 53%,#f5cf5f 60%,rgba(212,175,55,.5) 69%,rgba(212,175,55,.12) 78%,transparent 86%);filter:blur(3px)}
+.disc{position:absolute;left:-18%;right:-18%;top:44%;height:12%;border-radius:50%;background:linear-gradient(90deg,transparent 0,rgba(122,90,28,.7) 18%,#e8c36a 50%,rgba(122,90,28,.7) 82%,transparent 100%);filter:blur(3px);transform:rotate(-24deg);opacity:.9}
+@keyframes bhin{to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@keyframes bhpulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.35)}}
+.word2{position:absolute;left:50%;top:50%;display:flex;white-space:nowrap;perspective:900px;transform:translate(-50%,-50%) rotate(-8deg);animation:zoomout .45s 2.3s cubic-bezier(.6,0,.9,.4) forwards}
+@keyframes zoomout{to{transform:translate(-50%,-50%) rotate(-8deg) scale(4.5);opacity:0;filter:blur(14px)}}
+.w{display:block;font:900 clamp(30px,11.5vw,92px)/1 "Arial Black","Helvetica Neue",Arial,sans-serif;color:#f7edc9;text-shadow:0 0 22px rgba(243,201,79,.45);opacity:0;transform:translateZ(-2600px) rotateY(480deg) rotateX(60deg) scaleX(1.15);filter:blur(10px);animation:tumble .75s cubic-bezier(.12,.8,.2,1) forwards;animation-delay:calc(.35s + var(--i)*.07s)}
+@keyframes tumble{60%{opacity:1}100%{opacity:1;transform:translateZ(0) rotateY(0) rotateX(0) scaleX(1.15);filter:blur(0)}}
+.tag3{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-6deg);text-align:center}
+.tl{display:block;font:900 clamp(32px,11vw,84px)/1.02 "Arial Black","Helvetica Neue",Arial,sans-serif;color:#f7edc9;text-shadow:0 0 26px rgba(243,201,79,.4);opacity:0;animation:slam .4s cubic-bezier(.1,.9,.2,1) forwards;animation-delay:calc(2.7s + var(--k)*.2s)}
+.tl.g{color:transparent;background:linear-gradient(90deg,#f3dc8a,#d4af37,#fff2b8);-webkit-background-clip:text;background-clip:text;text-shadow:none}
+@keyframes slam{0%{opacity:0;transform:scale(3.2,2.6);filter:blur(12px)}100%{opacity:1;transform:scale(1.12,1);filter:blur(0)}}
+.flash{position:absolute;inset:0;background:radial-gradient(circle,#fff6d6,#f3c94f 40%,transparent 70%);opacity:0;pointer-events:none;animation:flash .45s 2.3s ease-out}
+@keyframes flash{0%{opacity:0}30%{opacity:.55}100%{opacity:0}}
+.goldline{position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:linear-gradient(90deg,transparent,#f3dc8a 20%,#fff6cf 50%,#f3dc8a 80%,transparent);box-shadow:0 0 18px rgba(243,220,138,.9);transform:scaleX(0);animation:gline .4s 3.85s cubic-bezier(.7,0,.2,1) forwards}
 @keyframes gline{to{transform:scaleX(1)}}
 .count{position:absolute;left:max(18px,env(safe-area-inset-left));bottom:max(22px,env(safe-area-inset-bottom));font:12px ui-monospace,Menlo,Consolas,monospace;letter-spacing:.2em;color:#b8b2a0}
 .skip{position:absolute;right:max(18px,env(safe-area-inset-right));bottom:max(18px,env(safe-area-inset-bottom));background:none;border:0;color:var(--gold2);font-size:12px;letter-spacing:.18em;text-transform:uppercase;padding:8px 4px;border-bottom:1px solid transparent}
 .skip:hover{border-bottom-color:var(--gold)}
 
-/* ===== TOP BAR (glassy dark, no blur) ===== */
-.topbar{position:sticky;top:0;z-index:60;height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 24px;background:rgba(10,10,15,.82);border-bottom:1px solid var(--line)}
-.brand{display:flex;align-items:center;gap:12px;background:none;border:0;color:#f6f3ea;padding:0;min-width:0;text-align:start}
+/* ===== TOP BAR (solid, no see-through) ===== */
+.topbar{position:sticky;top:0;z-index:60;height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 24px;background:#08080b;border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:12px;background:none;border:0;color:var(--ink);padding:0;min-width:0;text-align:start}
 .brand-mark{width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--gold);border-radius:11px;color:var(--gold2);font:bold 29px Georgia;flex:none}
 .brand-name{font:21px Georgia,serif;letter-spacing:2px;white-space:nowrap}
 .brand-name span{font:10px Inter,sans-serif;letter-spacing:4px;color:var(--gold)}
 .top-actions{display:flex;gap:8px;align-items:center}
-.language-select{background:rgba(255,255,255,.06);color:var(--gold2);border:1px solid var(--line);border-radius:22px;padding:9px 12px}
+.language-select{background:#141418;color:var(--gold2);border:1px solid var(--line);border-radius:22px;padding:9px 12px}
 .language-select option{color:#222}
 .login-btn{background:linear-gradient(110deg,#a8841f,#f3dc8a,#c49a2a);color:#1a1204;font-weight:700;border:0;border-radius:22px;padding:10px 16px;white-space:nowrap}
 
 /* ===== LAYOUT ===== */
-.app{position:relative;z-index:1;display:grid;grid-template-columns:76px minmax(0,1fr) 300px;gap:24px;max-width:1700px;margin:0 auto;padding:24px}
-.side{position:sticky;top:88px;height:calc(100vh - 112px);display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 0;border-radius:16px;background:rgba(10,10,15,.7);border:1px solid var(--line);box-shadow:0 10px 30px rgba(40,30,5,.25);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
-.side button{position:relative;width:48px;height:48px;display:grid;place-items:center;border:0;border-radius:12px;background:transparent;color:#b9b3a0;transition:.2s}
+.app{position:relative;z-index:1;display:grid;grid-template-columns:92px minmax(0,1fr) 300px;gap:24px;max-width:1700px;margin:0 auto;padding:24px}
+.side{position:sticky;top:88px;height:calc(100vh - 112px);display:flex;flex-direction:column;align-items:center;gap:4px;padding:12px 0;border-radius:16px;background:rgba(10,10,15,.7);border:1px solid var(--line);box-shadow:0 10px 30px rgba(0,0,0,.5);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+.side button{position:relative;width:76px;height:62px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:0;border-radius:12px;background:transparent;color:#b9b3a0;transition:.2s;padding:0 2px;min-width:0}
+.side .lb{font-size:10.5px;letter-spacing:.2px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .side button:hover{color:var(--gold2);background:rgba(212,175,55,.1)}
 .side button.active{color:var(--gold2);background:rgba(212,175,55,.18)}
-.side button.active::before{content:"";position:absolute;inset-inline-start:-14px;top:12px;bottom:12px;width:3px;border-radius:3px;background:var(--gold)}
+.side button.active::before{content:"";position:absolute;inset-inline-start:-8px;top:14px;bottom:14px;width:3px;border-radius:3px;background:var(--gold)}
 .side .push{margin-top:auto}
 main{min-width:0}
 .rail{min-width:0}
 .rail .card{position:sticky;top:88px}
 
-/* pages: fully hidden when inactive (no ghosting) */
+/* pages fully hidden when inactive (no ghosting) */
 .page{display:none;visibility:hidden;height:0;overflow:hidden}
 .page.active{display:block;visibility:visible;height:auto;overflow:visible}
 .page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin:0 0 24px}
 .page-head h2{margin:0;font:clamp(26px,3.2vw,36px) Georgia,serif;color:var(--ink)}
 .page-head p{margin:8px 0 0;color:var(--muted);font-size:14px;line-height:1.6;max-width:620px}
-.tagpill{font-size:10px;letter-spacing:2px;color:var(--goldD);border:1px solid var(--line2);border-radius:30px;padding:8px 12px;white-space:nowrap}
+.tagpill{font-size:10px;letter-spacing:2px;color:var(--gold2);border:1px solid var(--line2);border-radius:30px;padding:8px 12px;white-space:nowrap}
 .row{display:grid;gap:24px;margin-top:24px}
 .r4{grid-template-columns:repeat(4,minmax(0,1fr))}
 .r3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .r2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .narrow{max-width:900px}
 
-/* ===== CARDS (frosted glass) ===== */
-.card{position:relative;background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:16px;padding:22px;color:var(--ink);box-shadow:0 10px 30px rgba(80,60,15,.14),inset 0 1px rgba(255,255,255,.35);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+/* ===== CARDS (dark frosted glass) ===== */
+.card{position:relative;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:16px;padding:22px;color:var(--ink);box-shadow:0 10px 30px rgba(0,0,0,.45),inset 0 1px rgba(255,255,255,.08);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
 .panel-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
 .panel-title h2{margin:0;font-size:19px}
-.panel-title span{font-size:9px;letter-spacing:2px;color:var(--goldD)}
+.panel-title span{font-size:9px;letter-spacing:2px;color:var(--gold)}
 .muted{color:var(--muted);font-size:13px;line-height:1.65;margin:0}
 .market-top{display:flex;justify-content:space-between;gap:8px;align-items:center}
 .symbol{font-weight:750;letter-spacing:.5px}
-.type{font-size:9px;letter-spacing:1.5px;color:var(--goldD)}
-.price{font-size:28px;margin:18px 0 4px;color:var(--ink);font-family:Georgia,serif}
+.type{font-size:9px;letter-spacing:1.5px;color:var(--gold)}
+.price{font-size:28px;margin:18px 0 4px;color:var(--gold2);font-family:Georgia,serif}
 .await{font-size:11px;color:var(--muted)}
-.system-icon{font-size:26px;color:var(--goldD);margin-bottom:12px}
-.system-card h3{margin:0 0 8px;font-size:19px;color:var(--ink)}
+.system-icon{font-size:26px;color:var(--gold2);margin-bottom:12px}
+.system-card h3{margin:0 0 8px;font-size:19px;color:var(--gold2)}
 .system-card .muted{margin-top:12px}
-.level{display:inline-block;font-size:9px;letter-spacing:1.5px;color:var(--goldD);border:1px solid var(--line2);border-radius:20px;padding:6px 10px}
+.level{display:inline-block;font-size:9px;letter-spacing:1.5px;color:var(--gold);border:1px solid var(--line2);border-radius:20px;padding:6px 10px}
 .stat-label{font-size:11px;color:var(--muted)}
-.stat-value{font-size:28px;color:var(--ink);margin:12px 0;font-family:Georgia,serif}
+.stat-value{font-size:28px;color:var(--gold2);margin:12px 0;font-family:Georgia,serif}
 .stat-note{font-size:10px;color:var(--muted)}
-.signal-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:10px;padding:14px 0;border-bottom:1px solid rgba(138,106,18,.15)}
+.signal-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:10px;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08)}
 .signal-row:last-child{border:0}
 .signal-name{font-size:13px;font-weight:700}
 .signal-note{font-size:10px;color:var(--muted);margin-top:4px}
-.tag{font-size:10px;border:1px solid var(--line2);border-radius:20px;padding:6px 10px;color:var(--muted)}
+.tag{font-size:10px;border:1px solid var(--line);border-radius:20px;padding:6px 10px;color:var(--muted)}
 .notice{font-size:11px;color:var(--muted);line-height:1.55;margin-top:14px}
-.ghost-btn{margin-top:16px;background:transparent;border:1px solid var(--goldD);color:var(--goldD);border-radius:10px;padding:10px 16px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase}
-.ghost-btn:hover{background:rgba(138,106,18,.1)}
+.ghost-btn{margin-top:16px;background:transparent;border:1px solid var(--gold);color:var(--gold2);border-radius:10px;padding:10px 16px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase}
+.ghost-btn:hover{background:rgba(212,175,55,.12)}
 .field-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
 .field label{display:block;font-size:11px;color:var(--muted);margin-bottom:7px}
-.field select,.field input{width:100%;background:rgba(255,255,255,.55);color:var(--ink);border:1px solid var(--line2);border-radius:10px;padding:12px;font-size:16px;min-width:0}
-.upload{border:1px dashed var(--goldD);border-radius:14px;padding:22px;margin-top:16px;text-align:center;background:rgba(212,175,55,.08)}
-.upload strong{display:block;color:var(--goldD);margin-bottom:7px}
+.field select,.field input{width:100%;background:#0a0a0d;color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:12px;font-size:16px;min-width:0}
+.upload{border:1px dashed var(--line2);border-radius:14px;padding:22px;margin-top:16px;text-align:center;background:rgba(212,175,55,.05)}
+.upload strong{display:block;color:var(--gold2);margin-bottom:7px}
 .upload small{color:var(--muted)}
 .upload input{max-width:100%;margin-top:12px;color:var(--muted);font-size:12px}
 .gold-btn{width:100%;border:1px solid var(--gold2);border-radius:11px;padding:13px;margin-top:14px;color:#1a1204;font-weight:800;background:linear-gradient(110deg,#a8841f,#f3dc8a,#c49a2a);box-shadow:0 7px 22px rgba(212,175,55,.25)}
 .table-wrap{overflow-x:auto}
 .history{width:100%;border-collapse:collapse;min-width:580px;font-size:12px}
-.history th,.history td{text-align:start;padding:13px 10px;border-bottom:1px solid rgba(138,106,18,.15)}
-.history th{color:var(--goldD);font-weight:600}
+.history th,.history td{text-align:start;padding:13px 10px;border-bottom:1px solid rgba(255,255,255,.08)}
+.history th{color:var(--gold);font-weight:600}
+.history td{color:#e4dfcf}
 .empty{text-align:center!important;color:var(--muted)!important;padding:26px!important}
 
 /* hero */
-.hero{background:linear-gradient(135deg,rgba(14,12,8,.93),rgba(44,34,10,.9));border-color:var(--line2);color:#f6f3ea;padding:40px;overflow:hidden}
-.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 20%,rgba(212,175,55,.3),transparent 50%);pointer-events:none}
+.hero{background:linear-gradient(135deg,rgba(18,15,8,.85),rgba(44,34,10,.8));border-color:var(--line2);padding:40px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 20%,rgba(212,175,55,.28),transparent 50%);pointer-events:none}
 .hero>*{position:relative}
 .badge{display:inline-flex;align-items:center;gap:9px;padding:8px 14px;border:1px solid var(--line2);border-radius:30px;font-size:11px;letter-spacing:.16em;color:var(--gold2);background:rgba(212,175,55,.1)}
 .badge b{width:7px;height:7px;border-radius:50%;background:var(--gold)}
 .hero h1{font:clamp(32px,4.4vw,56px)/1.05 Georgia,serif;margin:22px 0 16px;letter-spacing:-.5px;max-width:760px}
 .hero h1 .a{color:var(--gold2)}
-.hero h1 .b{display:block;color:#fff;opacity:.92}
+.hero h1 .b{display:block;color:#fff}
 .hero p{max-width:540px;color:#ddd8c6;font-size:15px;line-height:1.75;margin:0}
 .hero-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
 .pill{border:1px solid var(--line2);border-radius:30px;padding:8px 13px;color:var(--gold2);font-size:10px;letter-spacing:1px}
 
 /* collections rail */
-.col-item{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid rgba(138,106,18,.15);font-size:14px}
+.col-item{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.08);font-size:14px}
 .col-item:last-child{border:0}
 .col-item span:nth-child(2){flex:1}
-.col-item b{font-family:Georgia,serif;font-size:18px}
-.chk{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;border:1px solid rgba(138,106,18,.4);color:rgba(138,106,18,.5);flex:none}
+.col-item b{font-family:Georgia,serif;font-size:18px;color:var(--gold2)}
+.chk{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.35);flex:none}
 .chk.on{background:var(--green);border-color:var(--green);color:#fff}
-.wl{list-style:none;margin:0;padding:0 0 8px;border-bottom:1px solid rgba(138,106,18,.15)}
+.wl{list-style:none;margin:0;padding:0 0 8px;border-bottom:1px solid rgba(255,255,255,.08)}
 .wl li{display:flex;align-items:center;gap:10px;padding:7px 0 7px 8px;font-size:13px;color:var(--muted)}
 .wl .chk{width:18px;height:18px;font-size:10px}
 
 /* footer */
-.footer{position:relative;z-index:1;text-align:center;padding:26px 20px;background:rgba(10,10,15,.9);color:#b9b3a0;font-size:10px;letter-spacing:2px;line-height:1.9}
+.footer{position:relative;z-index:1;text-align:center;padding:26px 20px;background:#08080b;border-top:1px solid var(--line);color:var(--muted);font-size:10px;letter-spacing:2px;line-height:1.9}
 .footer strong{display:block;color:var(--gold2);font-size:12px;letter-spacing:3px}
 
-/* overlays (dark modals, no blur) */
-.overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.72);align-items:center;justify-content:center;padding:18px}
+/* overlays */
+.overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);align-items:center;justify-content:center;padding:18px}
 .overlay.open{display:flex}
-.box{width:min(100%,440px);max-height:90vh;overflow:auto;background:linear-gradient(145deg,#1c170b,#0c0c0f);border:1px solid var(--line2);border-radius:20px;padding:25px;color:#f6f3ea;box-shadow:0 25px 80px #000}
-.box .muted{color:#b9b3a0}
+.box{width:min(100%,440px);max-height:90vh;overflow:auto;background:linear-gradient(145deg,#1c170b,#0c0c0f);border:1px solid var(--line2);border-radius:20px;padding:25px;color:var(--ink);box-shadow:0 25px 80px #000}
 .box-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
 .box-top h2{margin:0;color:var(--gold2)}
 .auth-close{border:1px solid var(--line);background:#111114;color:var(--gold2);border-radius:50%;width:36px;height:36px}
@@ -166,17 +166,16 @@ main{min-width:0}
 .auth-tabs button{flex:1;padding:11px;border-radius:10px;border:1px solid var(--line);background:transparent;color:#ece6d2}
 .auth-tabs button.active{background:rgba(212,175,55,.16);color:var(--gold2)}
 .auth-field{margin:13px 0}
-.auth-field label{display:block;font-size:12px;color:#b9b3a0;margin-bottom:7px}
+.auth-field label{display:block;font-size:12px;color:var(--muted);margin-bottom:7px}
 .auth-field input{width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;background:#09090c;color:#fff;font-size:16px}
-.auth-foot{font-size:10px;color:#b9b3a0;line-height:1.6;margin-top:15px}
+.auth-foot{font-size:10px;color:var(--muted);line-height:1.6;margin-top:15px}
 .auth-message{font-size:12px;color:var(--gold2);margin-top:12px;line-height:1.5}
 .lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
-.lang-btn{padding:15px 10px;border-radius:12px;border:1px solid var(--line2);background:rgba(212,175,55,.08);color:var(--ink);font-size:16px}
-.box .lang-btn{color:#f1ecd9}
-.lang-btn:hover,.lang-btn.sel{border-color:var(--gold);background:rgba(212,175,55,.22)}
+.lang-btn{padding:15px 10px;border-radius:12px;border:1px solid var(--line);background:rgba(212,175,55,.06);color:var(--ink);font-size:16px}
+.lang-btn:hover,.lang-btn.sel{border-color:var(--gold);background:rgba(212,175,55,.2);color:var(--gold2)}
 
 @media(max-width:1180px){
- .app{grid-template-columns:76px minmax(0,1fr)}
+ .app{grid-template-columns:92px minmax(0,1fr)}
  .rail{grid-column:2}
  .rail .card{position:relative;top:0}
 }
@@ -184,24 +183,27 @@ main{min-width:0}
 @media(max-width:700px){
  .topbar{height:56px;padding:0 12px}.brand-mark{width:34px;height:34px;font-size:24px}.brand-name{font-size:16px;letter-spacing:1px}.brand-name span{font-size:8px;letter-spacing:2px}
  .language-select{padding:8px 8px;font-size:12px}.login-btn{padding:9px 12px;font-size:12px}
- .app{grid-template-columns:minmax(0,1fr);gap:20px;padding:16px 12px 96px}
+ .app{grid-template-columns:minmax(0,1fr);gap:20px;padding:16px 12px 100px}
  .rail{grid-column:1}
- .side{position:fixed;left:0;right:0;bottom:0;top:auto;height:auto;flex-direction:row;justify-content:space-around;gap:0;padding:6px 6px max(6px,env(safe-area-inset-bottom));border-radius:16px 16px 0 0;z-index:70}
- .side button{width:40px;height:44px}.side .push{margin-top:0}
- .side button.active::before{inset-inline-start:10px;inset-inline-end:10px;top:auto;bottom:0;width:auto;height:3px}
+ .side{position:fixed;left:0;right:0;bottom:0;top:auto;height:auto;flex-direction:row;justify-content:space-between;gap:0;padding:6px 4px max(6px,env(safe-area-inset-bottom));border-radius:16px 16px 0 0;z-index:70;background:rgba(10,10,15,.9)}
+ .side button{flex:1;width:auto;height:54px;min-width:0;gap:3px}
+ .side .lb{font-size:9px}
+ .side .push{margin-top:0}
+ .side button.active::before{inset-inline-start:12px;inset-inline-end:12px;top:auto;bottom:0;width:auto;height:3px}
  .r2,.r3{grid-template-columns:minmax(0,1fr)}
  .r4{gap:12px}.row{gap:16px;margin-top:16px}
  .card{padding:16px}.price{font-size:22px}
  .hero{padding:26px 20px}.hero p{font-size:14px}
  .field-grid{grid-template-columns:1fr}.signal-row{grid-template-columns:1fr auto}.signal-row .tag:last-child{grid-column:2}
- .footer{padding-bottom:90px}
+ .footer{padding-bottom:96px}
 }
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body class="lock">
 
-<div class="bgfx" aria-hidden="true">
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="sky" aria-hidden="true">
  <svg viewBox="0 0 1200 300" preserveAspectRatio="xMidYMax slice">
   <polygon points="560,300 560,130 574,70 586,0 598,70 612,130 612,300"/>
   <rect x="40" y="190" width="50" height="110"/><rect x="100" y="150" width="40" height="150"/><rect x="150" y="210" width="60" height="90"/>
@@ -210,7 +212,6 @@ main{min-width:0}
   <rect x="640" y="160" width="50" height="140"/><rect x="700" y="110" width="40" height="190"/><rect x="750" y="190" width="70" height="110"/>
   <rect x="830" y="130" width="46" height="170"/><rect x="890" y="175" width="58" height="125"/><rect x="960" y="95" width="36" height="205"/>
   <rect x="1010" y="165" width="60" height="135"/><rect x="1080" y="145" width="44" height="155"/><rect x="1140" y="200" width="60" height="100"/>
-  <rect x="367" y="70" width="2" height="30"/><rect x="977" y="65" width="2" height="30"/>
  </svg>
 </div>
 
@@ -219,15 +220,10 @@ main{min-width:0}
  <div class="sh t"></div><div class="sh b"></div>
  <div class="stage">
   <canvas id="stars"></canvas>
-  <div class="ringwrap"><div class="ring"></div></div>
-  <svg class="zlogo" viewBox="0 0 100 100" aria-hidden="true">
-   <defs><linearGradient id="gzi" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff2b8"/><stop offset=".5" stop-color="#d4af37"/><stop offset="1" stop-color="#94741a"/></linearGradient></defs>
-   <polygon points="20,20 80,20 80,30 44,70 80,70 80,80 20,80 20,70 56,30 20,30" fill="url(#gzi)"/>
-  </svg>
-  <div class="wordwrap">
-   <div class="word" aria-label="ZAIRVÉN"><span class="l" style="--i:0"><i style="--i:0">Z</i></span><span class="l" style="--i:1"><i style="--i:1">A</i></span><span class="l" style="--i:2"><i style="--i:2">I</i></span><span class="l" style="--i:3"><i style="--i:3">R</i></span><span class="l" style="--i:4"><i style="--i:4">V</i></span><span class="l" style="--i:5"><i style="--i:5">É</i></span><span class="l" style="--i:6"><i style="--i:6">N</i></span></div>
-   <div class="sub">DUBAI • TRADER • FOUNDER</div>
-  </div>
+  <div class="bh"><div class="ring"></div><div class="disc"></div></div>
+  <div class="word2" aria-label="ZAIRVÉN"><span class="w" style="--i:0">Z</span><span class="w" style="--i:1">A</span><span class="w" style="--i:2">I</span><span class="w" style="--i:3">R</span><span class="w" style="--i:4">V</span><span class="w" style="--i:5">É</span><span class="w" style="--i:6">N</span></div>
+  <div class="tag3"><span class="tl" style="--k:0">DUBAI</span><span class="tl g" style="--k:1">TRADER</span><span class="tl" style="--k:2">FOUNDER</span></div>
+  <div class="flash"></div>
   <div class="goldline"></div>
   <div class="count" id="count">000</div>
   <button class="skip" id="skipIntro" data-i18n="skip">Skip</button>
@@ -244,14 +240,14 @@ main{min-width:0}
 
 <div class="app">
  <aside class="side" id="side">
-  <button class="active" data-go="home" data-t="home"><svg class="i" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg></button>
-  <button data-go="markets" data-t="markets"><svg class="i" viewBox="0 0 24 24"><path d="M5 21V11M12 21V4M19 21v-7"/></svg></button>
-  <button data-go="chart-ai" data-t="chart"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg></button>
-  <button data-go="signals" data-t="signals"><svg class="i" viewBox="0 0 24 24"><path d="M2 12h4l3-8 4 16 3-8h6"/></svg></button>
-  <button data-go="systems" data-t="systems"><svg class="i" viewBox="0 0 24 24"><path d="M12 2l9 5-9 5-9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/></svg></button>
-  <button data-go="academy" data-t="academy"><svg class="i" viewBox="0 0 24 24"><path d="M2 8l10-5 10 5-10 5z"/><path d="M6 10.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-5.5"/></svg></button>
-  <button data-go="newsiq" data-t="newsiq"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h10M7 17h6"/></svg></button>
-  <button class="push" data-go="settings" data-t="settings"><svg class="i" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg></button>
+  <button class="active" data-go="home" data-t="home"><svg class="i" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span class="lb" data-i18n="home"></span></button>
+  <button data-go="markets" data-t="markets"><svg class="i" viewBox="0 0 24 24"><path d="M5 21V11M12 21V4M19 21v-7"/></svg><span class="lb" data-i18n="markets"></span></button>
+  <button data-go="chart-ai" data-t="chart"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg><span class="lb" data-i18n="chart"></span></button>
+  <button data-go="signals" data-t="signals"><svg class="i" viewBox="0 0 24 24"><path d="M2 12h4l3-8 4 16 3-8h6"/></svg><span class="lb" data-i18n="signals"></span></button>
+  <button data-go="systems" data-t="systems"><svg class="i" viewBox="0 0 24 24"><path d="M12 2l9 5-9 5-9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/></svg><span class="lb" data-i18n="systems"></span></button>
+  <button data-go="academy" data-t="academy"><svg class="i" viewBox="0 0 24 24"><path d="M2 8l10-5 10 5-10 5z"/><path d="M6 10.5V16c0 1.5 3 3 6 3s6-1.5 6-3v-5.5"/></svg><span class="lb" data-i18n="academy"></span></button>
+  <button data-go="newsiq" data-t="newsiq"><svg class="i" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h10M7 17h6"/></svg><span class="lb" data-i18n="newsiq"></span></button>
+  <button class="push" data-go="settings" data-t="settings"><svg class="i" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg><span class="lb" data-i18n="settings"></span></button>
  </aside>
 
  <main>
@@ -370,7 +366,7 @@ en:{home:"Home",markets:"Markets",chart:"Chart AI",signals:"Signals",systems:"Sy
 ar:{home:"الرئيسية",markets:"الأسواق",chart:"تحليل الرسم",signals:"الإشارات",systems:"الأنظمة",academy:"الأكاديمية",newsiq:"أخبار السوق",settings:"الإعدادات",dashboard:"لوحة التحكم",open:"فتح",collections:"المجموعات",myWatchlist:"قائمة المراقبة",liveSignals:"إشارات مباشرة",welcome:"مرحباً بك في ZAIRVÉN",heroTitle:"ذكاء للأسواق في",heroAccent:"سوق عالمي.",heroDubai:"يُتداول من دبي.",heroDesc:"بيئة موحدة للتكنولوجيا المالية تجمع معلومات الأسواق وتحليل الرسوم بمساعدة الذكاء الاصطناعي وأنظمة التداول والتنفيذ المنضبط.",pill1:"معلومات الأسواق العالمية",pill2:"تحليل بمساعدة الذكاء الاصطناعي",pill3:"نسخة قيد التطوير",marketTitle:"نظرة عامة على الأسواق العالمية",marketDesc:"الأدوات المختارة · بانتظار بيانات سوق معتمدة",marketTag:"أسواق الإطلاق",awaitData:"بانتظار بيانات معتمدة",chartTitle:"✧ محلل الرسوم بالذكاء الاصطناعي",chartDesc:"ارفع صورة الرسم البياني للتحليل بعد ربط خدمة الذكاء الاصطناعي الآمنة. هذه نسخة تجريبية ولا تقدم توصيات تداول.",marketGroup:"مجموعة السوق",instrument:"الأداة",timeframe:"الإطار الزمني",uploadTitle:"＋ تحميل صورة الرسم",uploadDesc:"PNG أو JPG أو WebP · اختر صورة للرسم البياني",analyse:"✧ تجهيز الرسم للتحليل",analysisNotice:"خدمة التحليل الآمنة غير متصلة بعد.",signalTitle:"إشارات التداول",signalNotice:"ستظهر الإشارات بعد ربط الأنظمة واختبارها.",pending:"قيد الانتظار",awaiting:"بانتظار بيانات موثوقة",systemTitle:"أنظمة ZAIRVÉN للتداول",systemDesc:"ثلاثة مستويات للمنتجات · جميع أسواق الإطلاق مدعومة",beginner:"مبتدئ",professional:"احترافي",advanced:"متقدم",novaDesc:"أدوات تداول إرشادية وشرح واضح وضوابط أساسية للمخاطر.",apexDesc:"فحص أسواق متعددة وإدارة منظمة للصفقات.",sovereignDesc:"أدوات متقدمة للتحليل والتنفيذ وإدارة مخاطر المحفظة.",platformTitle:"نظرة عامة على المنصة",platformDesc:"ستظهر أرقام الأداء الموثوقة بعد الربط والاختبار",todaySignals:"إشارات اليوم",activeBots:"الروبوتات النشطة",winRate:"نسبة النجاح (30 يوماً)",averageRR:"متوسط العائد إلى المخاطرة",awaitSignal:"بانتظار محرك الإشارات",awaitBots:"بانتظار ربط الروبوتات",noResults:"لا توجد نتائج موثقة",awaitHistory:"بانتظار سجل موثوق",historyTitle:"سجل الإشارات",direction:"الاتجاه",entry:"الدخول",stopLoss:"وقف الخسارة",takeProfit:"جني الأرباح",result:"النتيجة",emptyHistory:"لا يوجد سجل إشارات موثوق بعد.",academyTitle:"أكاديمية ZAIRVÉN",academyDesc:"بيئة تعليمية منظمة من الأساسيات إلى المعرفة المتقدمة وإدارة المخاطر وعلم نفس التداول.",development:"قيد التطوير",newsTitle:"أخبار السوق NewsIQ",newsDesc:"تقويم اقتصادي وأحداث سوق مهمة وملخصات أخبار بمساعدة الذكاء الاصطناعي.",dataDisclaimer:"لن تظهر الأسعار والإشارات حتى يتم ربط مصادر بيانات موثوقة ومعتمدة.",footerRisk:"التداول ينطوي على مخاطر. هذا المحتوى ليس نصيحة مالية.",signin:"تسجيل الدخول",signup:"إنشاء حساب",languageSettings:"إعدادات اللغة",authWelcome:"مرحباً بعودتك",authSigninDesc:"سجل الدخول للوصول إلى مساحة ZAIRVÉN الخاصة بك.",authSignupDesc:"أنشئ ملف العميل الخاص بك للبدء.",fullName:"الاسم الكامل",email:"البريد الإلكتروني",password:"كلمة المرور",authFoot:"واجهة تجريبية. سيتم تفعيل الدخول الآمن وإنشاء الحساب بعد ربط خدمة المصادقة. هذا النموذج لا يرسل كلمة المرور ولا يحفظها.",previewOnly:"معاينة فقط: المصادقة غير متصلة. لم يتم إرسال أو حفظ أي شيء. لا تُدخل كلمة مرور حقيقية.",login:"دخول / تسجيل",close:"إغلاق",yourName:"اسمك الكامل",passwordHint:"ثمانية أحرف على الأقل",chartSelected:"تم اختيار الرسم",pleaseSelect:"يرجى اختيار صورة الرسم أولاً.",serviceMissing:"يجب ربط خدمة الذكاء الاصطناعي الآمنة قبل التحليل.",selected:"تم الاختيار",skip:"تخطي",pickLang:"اختر لغتك",pickLangDesc:"يمكنك تغييرها في أي وقت من أعلى الصفحة."},
 sw:{home:"Nyumbani",markets:"Masoko",chart:"Chati AI",signals:"Ishara",systems:"Mifumo",academy:"Chuo",newsiq:"Habari",settings:"Mipangilio",dashboard:"Dashibodi",open:"Fungua",collections:"Makusanyo",myWatchlist:"Orodha Yangu ya Kufuatilia",liveSignals:"Ishara za Moja kwa Moja",welcome:"Karibu ZAIRVÉN",heroTitle:"Akili kwa",heroAccent:"soko la dunia.",heroDubai:"Inafanyiwa biashara kutoka Dubai.",heroDesc:"Jukwaa la teknolojia ya kifedha linalounganisha taarifa za masoko, uchambuzi wa chati kwa AI, mifumo ya biashara na utekelezaji wenye nidhamu.",pill1:"TAARIFA ZA MASOKO YA DUNIA",pill2:"UCHAMBUZI KWA AI",pill3:"BADO LINATENGENEZWA",marketTitle:"Muhtasari wa Masoko ya Dunia",marketDesc:"Masoko yaliyochaguliwa · yanasubiri data iliyoidhinishwa",marketTag:"MASOKO YA AWALI",awaitData:"Inasubiri data iliyoidhinishwa",chartTitle:"✧ Mchambuzi wa Chati wa AI",chartDesc:"Pakia picha ya chati kwa uchambuzi baada ya huduma salama ya AI kuunganishwa. Huu ni mwonekano wa majaribio.",marketGroup:"Kundi la soko",instrument:"Chombo cha biashara",timeframe:"Muda wa chati",uploadTitle:"＋ Pakia Picha ya Chati",uploadDesc:"PNG, JPG au WebP · Chagua picha ya chati",analyse:"✧ Andaa Chati kwa Uchambuzi",analysisNotice:"Huduma salama ya uchambuzi bado haijaunganishwa.",signalTitle:"Ishara za Biashara",signalNotice:"Ishara zitaonekana baada ya mifumo kuunganishwa na kupimwa.",pending:"Inasubiri",awaiting:"Inasubiri data iliyothibitishwa",systemTitle:"Mifumo ya Biashara ya ZAIRVÉN",systemDesc:"Viwango vitatu vya bidhaa · masoko yote ya awali yanaungwa mkono",beginner:"MWANZO",professional:"KITAALAMU",advanced:"KINA",novaDesc:"Zana za biashara zinazoelekezwa, maelezo rahisi na udhibiti wa hatari.",apexDesc:"Uchanganuzi wa masoko mengi na usimamizi wa biashara uliopangwa.",sovereignDesc:"Uchambuzi wa juu, utekelezaji na zana za kudhibiti hatari za uwekezaji.",platformTitle:"Muhtasari wa Jukwaa",platformDesc:"Takwimu zilizothibitishwa zitaonekana baada ya kuunganishwa na kupimwa",todaySignals:"Ishara za Leo",activeBots:"Boti Zinazotumika",winRate:"Kiwango cha Ushindi (Siku 30)",averageRR:"Uwiano wa Faida na Hatari",awaitSignal:"Inasubiri injini ya ishara",awaitBots:"Inasubiri muunganisho wa boti",noResults:"Hakuna matokeo yaliyothibitishwa",awaitHistory:"Inasubiri historia iliyothibitishwa",historyTitle:"Historia ya Ishara",direction:"Mwelekeo",entry:"Bei ya Kuingia",stopLoss:"Stop Loss",takeProfit:"Take Profit",result:"Matokeo",emptyHistory:"Hakuna historia ya ishara iliyothibitishwa bado.",academyTitle:"Chuo cha ZAIRVÉN",academyDesc:"Mazingira ya kujifunza kutoka misingi hadi maarifa ya juu, usimamizi wa hatari na saikolojia ya biashara.",development:"INAENDELEZWA",newsTitle:"Habari za Soko NewsIQ",newsDesc:"Kalenda ya uchumi, matukio muhimu na muhtasari wa habari unaosaidiwa na AI.",dataDisclaimer:"Bei na ishara hazitaonyeshwa hadi huduma za data zilizoidhinishwa ziunganishwe.",footerRisk:"Biashara ina hatari. Haya siyo mashauri ya kifedha.",signin:"Ingia",signup:"Fungua akaunti",languageSettings:"Mipangilio ya lugha",authWelcome:"Karibu tena",authSigninDesc:"Ingia ili kufikia akaunti yako ya ZAIRVÉN.",authSignupDesc:"Tengeneza wasifu wako wa mteja ili kuanza.",fullName:"Jina kamili",email:"Barua pepe",password:"Nenosiri",authFoot:"Hii ni sehemu ya majaribio. Kuingia salama na usajili vitawezeshwa baada ya kuunganisha huduma ya uthibitishaji. Fomu hii haitumi wala kuhifadhi nenosiri lako.",previewOnly:"Majaribio tu: uthibitishaji haujaunganishwa. Hakuna kilichotumwa wala kuhifadhiwa. Usiweke nenosiri halisi.",login:"Ingia / Jisajili",close:"Funga",yourName:"Jina lako kamili",passwordHint:"Angalau herufi 8",chartSelected:"Chati imechaguliwa",pleaseSelect:"Tafadhali chagua picha ya chati kwanza.",serviceMissing:"Huduma salama ya AI lazima iunganishwe kabla ya uchambuzi.",selected:"Imechaguliwa",skip:"Ruka",pickLang:"Chagua lugha yako",pickLangDesc:"Unaweza kubadilisha wakati wowote juu ya ukurasa."},
 fr:{home:"Accueil",markets:"Marchés",chart:"Analyse IA",signals:"Signaux",systems:"Systèmes",academy:"Académie",newsiq:"Actualités",settings:"Paramètres",dashboard:"Tableau de bord",open:"Ouvrir",collections:"Collections",myWatchlist:"Ma liste de suivi",liveSignals:"Signaux en direct",welcome:"Bienvenue chez ZAIRVÉN",heroTitle:"L’intelligence au service du",heroAccent:"marché mondial.",heroDubai:"Tradé depuis Dubaï.",heroDesc:"Un environnement unifié de technologie financière dédié à l’intelligence des marchés, à l’analyse graphique assistée par l’IA, aux systèmes de trading et à une exécution rigoureuse.",pill1:"INTELLIGENCE DES MARCHÉS MONDIAUX",pill2:"ANALYSE ASSISTÉE PAR L’IA",pill3:"APERÇU EN DÉVELOPPEMENT",marketTitle:"Vue d’ensemble des marchés mondiaux",marketDesc:"Instruments sélectionnés · en attente de flux autorisés",marketTag:"MARCHÉS DE LANCEMENT",awaitData:"En attente de données autorisées",chartTitle:"✧ Analyseur de graphiques IA",chartDesc:"Importez une capture d’écran pour une analyse structurée lorsque le service IA sécurisé sera connecté. Cet aperçu ne génère pas de recommandations.",marketGroup:"Groupe de marché",instrument:"Instrument",timeframe:"Unité de temps",uploadTitle:"＋ Importer une image",uploadDesc:"PNG, JPG ou WebP · Choisissez une capture d’écran",analyse:"✧ Préparer le graphique",analysisNotice:"Le service d’analyse sécurisé n’est pas encore connecté.",signalTitle:"Signaux de trading",signalNotice:"Les signaux apparaîtront lorsque les systèmes seront connectés et testés.",pending:"En attente",awaiting:"En attente de données vérifiées",systemTitle:"Systèmes de trading ZAIRVÉN",systemDesc:"Trois niveaux de produits · tous les marchés de lancement sont pris en charge",beginner:"DÉBUTANT",professional:"PROFESSIONNEL",advanced:"AVANCÉ",novaDesc:"Outils guidés, explications claires et contrôles essentiels des risques.",apexDesc:"Analyse multi-marchés et gestion structurée des transactions.",sovereignDesc:"Outils avancés d’analyse, d’exécution et de gestion des risques.",platformTitle:"Vue d’ensemble de la plateforme",platformDesc:"Les indicateurs vérifiés seront affichés après connexion et tests",todaySignals:"Signaux du jour",activeBots:"Bots actifs",winRate:"Taux de réussite (30 j)",averageRR:"Ratio rendement/risque moyen",awaitSignal:"En attente du moteur de signaux",awaitBots:"En attente de connexion des bots",noResults:"Aucun résultat vérifié",awaitHistory:"En attente d’un historique vérifié",historyTitle:"Historique des signaux",direction:"Direction",entry:"Entrée",stopLoss:"Stop-loss",takeProfit:"Take-profit",result:"Résultat",emptyHistory:"Aucun historique vérifié disponible.",academyTitle:"Académie ZAIRVÉN",academyDesc:"Un parcours structuré des bases aux connaissances avancées, à la gestion des risques et à la psychologie du trading.",development:"EN DÉVELOPPEMENT",newsTitle:"Actualités des marchés NewsIQ",newsDesc:"Calendrier économique, événements importants et résumés assistés par l’IA.",dataDisclaimer:"Les cours et signaux restent masqués jusqu’à la connexion de sources autorisées et vérifiées.",footerRisk:"Le trading comporte des risques. Ceci ne constitue pas un conseil financier.",signin:"Se connecter",signup:"Créer un compte",languageSettings:"Paramètres de langue",authWelcome:"Bon retour",authSigninDesc:"Connectez-vous à votre espace client ZAIRVÉN.",authSignupDesc:"Créez votre profil client pour commencer.",fullName:"Nom complet",email:"Adresse e-mail",password:"Mot de passe",authFoot:"Interface de démonstration. La connexion sécurisée et la création de compte seront activées après connexion du service d’authentification. Ce formulaire n’envoie ni n’enregistre votre mot de passe.",previewOnly:"Aperçu uniquement : l’authentification n’est pas connectée. Rien n’a été envoyé ni enregistré. N’entrez pas de vrai mot de passe.",login:"Connexion / Inscription",close:"Fermer",yourName:"Votre nom complet",passwordHint:"Au moins 8 caractères",chartSelected:"Graphique sélectionné",pleaseSelect:"Veuillez d’abord sélectionner une image.",serviceMissing:"Le service IA sécurisé doit être connecté avant l’analyse.",selected:"Sélectionné",skip:"Passer",pickLang:"Choisissez votre langue",pickLangDesc:"Vous pouvez la modifier à tout moment depuis l’en-tête."},
-pt:{home:"Início",markets:"Mercados",chart:"Gráfico IA",signals:"Sinais",systems:"Sistemas",academy:"Academia",newsiq:"Notícias",settings:"Configurações",dashboard:"Painel",open:"Abrir",collections:"Coleções",myWatchlist:"Minha Lista de Observação",liveSignals:"Sinais ao Vivo",welcome:"Bem-vindo à ZAIRVÉN",heroTitle:"Inteligência para um",heroAccent:"mercado global.",heroDubai:"Negociado a partir de Dubai.",heroDesc:"Um ambiente unificado de tecnologia financeira para inteligência de mercado, análise de gráficos com IA, sistemas de trading e execução disciplinada.",pill1:"INTELIGÊNCIA DE MERCADO GLOBAL",pill2:"ANÁLISE ASSISTIDA POR IA",pill3:"PRÉVIA EM DESENVOLVIMENTO",marketTitle:"Visão Geral do Mercado Global",marketDesc:"Instrumentos de lançamento · aguardando dados autorizados",marketTag:"MERCADOS DE LANÇAMENTO",awaitData:"Aguardando dados autorizados",chartTitle:"✧ Analisador de Gráficos IA",chartDesc:"Envie uma captura de tela do gráfico para análise estruturada quando o serviço seguro de IA estiver conectado. Esta prévia não gera recomendações.",marketGroup:"Grupo de mercado",instrument:"Instrumento",timeframe:"Período",uploadTitle:"＋ Enviar Imagem do Gráfico",uploadDesc:"PNG, JPG ou WebP · Escolha uma captura de tela",analyse:"✧ Preparar Gráfico para Análise",analysisNotice:"O serviço seguro de análise ainda não está conectado.",signalTitle:"Sinais de Trading",signalNotice:"Os sinais aparecerão depois que o motor de estratégia, a fonte de dados e o acompanhamento forem conectados e testados.",pending:"Pendente",awaiting:"Aguardando dados verificados",systemTitle:"Sistemas de Trading ZAIRVÉN",systemDesc:"Três níveis de produto · todos os mercados de lançamento suportados",beginner:"INICIANTE",professional:"PROFISSIONAL",advanced:"AVANÇADO",novaDesc:"Ferramentas guiadas, explicações claras e controles essenciais de risco.",apexDesc:"Varredura multimercado, estratégias avançadas e gestão estruturada de operações.",sovereignDesc:"Inteligência multissistema com análise avançada, execução e gestão de risco de carteira.",platformTitle:"Visão Geral da Plataforma",platformDesc:"Números de desempenho verificados aparecem somente após conexão e testes",todaySignals:"Sinais de Hoje",activeBots:"Bots Ativos",winRate:"Taxa de Acerto (30D)",averageRR:"R:R Médio",awaitSignal:"Aguardando motor de sinais",awaitBots:"Aguardando conexão dos bots",noResults:"Sem resultados verificados",awaitHistory:"Aguardando histórico verificado",historyTitle:"Histórico de Sinais",direction:"Direção",entry:"Entrada",stopLoss:"Stop Loss",takeProfit:"Take Profit",result:"Resultado",emptyHistory:"Nenhum histórico verificado disponível.",academyTitle:"Academia ZAIRVÉN",academyDesc:"Aprendizado estruturado, dos fundamentos ao conhecimento avançado, risco e psicologia do trading.",development:"EM DESENVOLVIMENTO",newsTitle:"Notícias de Mercado NewsIQ",newsDesc:"Calendário econômico, eventos importantes e resumos de notícias com IA e atenção ao risco.",dataDisclaimer:"Preços e sinais ficam em branco até que fontes de dados autorizadas e verificadas sejam conectadas.",footerRisk:"Trading envolve risco. Nada aqui é aconselhamento financeiro.",signin:"Entrar",signup:"Criar conta",languageSettings:"Idioma",authWelcome:"Bem-vindo de volta",authSigninDesc:"Entre para acessar seu espaço ZAIRVÉN.",authSignupDesc:"Crie seu perfil de cliente para começar.",fullName:"Nome completo",email:"E-mail",password:"Senha",authFoot:"Interface de demonstração. Login seguro e criação de conta serão ativados após a conexão do serviço de autenticação. Este formulário não envia nem salva sua senha.",previewOnly:"Somente prévia: a autenticação não está conectada. Nada foi enviado ou salvo. Não digite uma senha real.",login:"Entrar / Cadastrar",close:"Fechar",yourName:"Seu nome completo",passwordHint:"Pelo menos 8 caracteres",chartSelected:"Gráfico selecionado",pleaseSelect:"Selecione primeiro uma imagem do gráfico.",serviceMissing:"O serviço seguro de IA precisa estar conectado antes da análise.",selected:"Selecionado",skip:"Pular",pickLang:"Escolha seu idioma",pickLangDesc:"Você pode mudar a qualquer momento no cabeçalho."},
+pt:{home:"Início",markets:"Mercados",chart:"Gráfico IA",signals:"Sinais",systems:"Sistemas",academy:"Academia",newsiq:"Notícias",settings:"Config.",dashboard:"Painel",open:"Abrir",collections:"Coleções",myWatchlist:"Minha Lista de Observação",liveSignals:"Sinais ao Vivo",welcome:"Bem-vindo à ZAIRVÉN",heroTitle:"Inteligência para um",heroAccent:"mercado global.",heroDubai:"Negociado a partir de Dubai.",heroDesc:"Um ambiente unificado de tecnologia financeira para inteligência de mercado, análise de gráficos com IA, sistemas de trading e execução disciplinada.",pill1:"INTELIGÊNCIA DE MERCADO GLOBAL",pill2:"ANÁLISE ASSISTIDA POR IA",pill3:"PRÉVIA EM DESENVOLVIMENTO",marketTitle:"Visão Geral do Mercado Global",marketDesc:"Instrumentos de lançamento · aguardando dados autorizados",marketTag:"MERCADOS DE LANÇAMENTO",awaitData:"Aguardando dados autorizados",chartTitle:"✧ Analisador de Gráficos IA",chartDesc:"Envie uma captura de tela do gráfico para análise estruturada quando o serviço seguro de IA estiver conectado. Esta prévia não gera recomendações.",marketGroup:"Grupo de mercado",instrument:"Instrumento",timeframe:"Período",uploadTitle:"＋ Enviar Imagem do Gráfico",uploadDesc:"PNG, JPG ou WebP · Escolha uma captura de tela",analyse:"✧ Preparar Gráfico para Análise",analysisNotice:"O serviço seguro de análise ainda não está conectado.",signalTitle:"Sinais de Trading",signalNotice:"Os sinais aparecerão depois que o motor de estratégia, a fonte de dados e o acompanhamento forem conectados e testados.",pending:"Pendente",awaiting:"Aguardando dados verificados",systemTitle:"Sistemas de Trading ZAIRVÉN",systemDesc:"Três níveis de produto · todos os mercados de lançamento suportados",beginner:"INICIANTE",professional:"PROFISSIONAL",advanced:"AVANÇADO",novaDesc:"Ferramentas guiadas, explicações claras e controles essenciais de risco.",apexDesc:"Varredura multimercado, estratégias avançadas e gestão estruturada de operações.",sovereignDesc:"Inteligência multissistema com análise avançada, execução e gestão de risco de carteira.",platformTitle:"Visão Geral da Plataforma",platformDesc:"Números de desempenho verificados aparecem somente após conexão e testes",todaySignals:"Sinais de Hoje",activeBots:"Bots Ativos",winRate:"Taxa de Acerto (30D)",averageRR:"R:R Médio",awaitSignal:"Aguardando motor de sinais",awaitBots:"Aguardando conexão dos bots",noResults:"Sem resultados verificados",awaitHistory:"Aguardando histórico verificado",historyTitle:"Histórico de Sinais",direction:"Direção",entry:"Entrada",stopLoss:"Stop Loss",takeProfit:"Take Profit",result:"Resultado",emptyHistory:"Nenhum histórico verificado disponível.",academyTitle:"Academia ZAIRVÉN",academyDesc:"Aprendizado estruturado, dos fundamentos ao conhecimento avançado, risco e psicologia do trading.",development:"EM DESENVOLVIMENTO",newsTitle:"Notícias de Mercado NewsIQ",newsDesc:"Calendário econômico, eventos importantes e resumos de notícias com IA e atenção ao risco.",dataDisclaimer:"Preços e sinais ficam em branco até que fontes de dados autorizadas e verificadas sejam conectadas.",footerRisk:"Trading envolve risco. Nada aqui é aconselhamento financeiro.",signin:"Entrar",signup:"Criar conta",languageSettings:"Idioma",authWelcome:"Bem-vindo de volta",authSigninDesc:"Entre para acessar seu espaço ZAIRVÉN.",authSignupDesc:"Crie seu perfil de cliente para começar.",fullName:"Nome completo",email:"E-mail",password:"Senha",authFoot:"Interface de demonstração. Login seguro e criação de conta serão ativados após a conexão do serviço de autenticação. Este formulário não envia nem salva sua senha.",previewOnly:"Somente prévia: a autenticação não está conectada. Nada foi enviado ou salvo. Não digite uma senha real.",login:"Entrar / Cadastrar",close:"Fechar",yourName:"Seu nome completo",passwordHint:"Pelo menos 8 caracteres",chartSelected:"Gráfico selecionado",pleaseSelect:"Selecione primeiro uma imagem do gráfico.",serviceMissing:"O serviço seguro de IA precisa estar conectado antes da análise.",selected:"Selecionado",skip:"Pular",pickLang:"Escolha seu idioma",pickLangDesc:"Você pode mudar a qualquer momento no cabeçalho."},
 es:{home:"Inicio",markets:"Mercados",chart:"Gráfico IA",signals:"Señales",systems:"Sistemas",academy:"Academia",newsiq:"Noticias",settings:"Ajustes",dashboard:"Panel",open:"Abrir",collections:"Colecciones",myWatchlist:"Mi Lista de Seguimiento",liveSignals:"Señales en Vivo",welcome:"Bienvenido a ZAIRVÉN",heroTitle:"Inteligencia para un",heroAccent:"mercado global.",heroDubai:"Operado desde Dubái.",heroDesc:"Un entorno unificado de tecnología financiera para inteligencia de mercado, análisis de gráficos con IA, sistemas de trading y ejecución disciplinada.",pill1:"INTELIGENCIA DE MERCADO GLOBAL",pill2:"ANÁLISIS ASISTIDO POR IA",pill3:"VISTA PREVIA EN DESARROLLO",marketTitle:"Resumen del Mercado Global",marketDesc:"Instrumentos de lanzamiento · en espera de datos autorizados",marketTag:"MERCADOS DE LANZAMIENTO",awaitData:"En espera de datos autorizados",chartTitle:"✧ Analizador de Gráficos IA",chartDesc:"Sube una captura del gráfico para un análisis estructurado cuando el servicio seguro de IA esté conectado. Esta vista previa no genera recomendaciones.",marketGroup:"Grupo de mercado",instrument:"Instrumento",timeframe:"Temporalidad",uploadTitle:"＋ Subir Imagen del Gráfico",uploadDesc:"PNG, JPG o WebP · Elige una captura de pantalla",analyse:"✧ Preparar Gráfico para Análisis",analysisNotice:"El servicio seguro de análisis aún no está conectado.",signalTitle:"Señales de Trading",signalNotice:"Las señales aparecerán cuando el motor de estrategia, la fuente de datos y el seguimiento estén conectados y probados.",pending:"Pendiente",awaiting:"En espera de datos verificados",systemTitle:"Sistemas de Trading ZAIRVÉN",systemDesc:"Tres niveles de producto · todos los mercados de lanzamiento compatibles",beginner:"PRINCIPIANTE",professional:"PROFESIONAL",advanced:"AVANZADO",novaDesc:"Herramientas guiadas, explicaciones claras y controles esenciales de riesgo.",apexDesc:"Escaneo multimercado, estrategias avanzadas y gestión estructurada de operaciones.",sovereignDesc:"Inteligencia multisistema con análisis avanzado, ejecución y gestión de riesgo de cartera.",platformTitle:"Resumen de la Plataforma",platformDesc:"Las cifras verificadas aparecen solo tras la conexión y las pruebas",todaySignals:"Señales de Hoy",activeBots:"Bots Activos",winRate:"Tasa de Acierto (30D)",averageRR:"R:R Promedio",awaitSignal:"En espera del motor de señales",awaitBots:"En espera de conexión de bots",noResults:"Sin resultados verificados",awaitHistory:"En espera de historial verificado",historyTitle:"Historial de Señales",direction:"Dirección",entry:"Entrada",stopLoss:"Stop Loss",takeProfit:"Take Profit",result:"Resultado",emptyHistory:"Aún no hay historial verificado.",academyTitle:"Academia ZAIRVÉN",academyDesc:"Aprendizaje estructurado desde lo básico hasta conocimiento avanzado, riesgo y psicología del trading.",development:"EN DESARROLLO",newsTitle:"Noticias de Mercado NewsIQ",newsDesc:"Calendario económico, eventos importantes y resúmenes de noticias con IA y conciencia del riesgo.",dataDisclaimer:"Los precios y señales permanecen en blanco hasta conectar fuentes de datos autorizadas y verificadas.",footerRisk:"El trading implica riesgo. Nada aquí es asesoramiento financiero.",signin:"Iniciar sesión",signup:"Crear cuenta",languageSettings:"Idioma",authWelcome:"Bienvenido de nuevo",authSigninDesc:"Inicia sesión para acceder a tu espacio ZAIRVÉN.",authSignupDesc:"Crea tu perfil de cliente para empezar.",fullName:"Nombre completo",email:"Correo electrónico",password:"Contraseña",authFoot:"Interfaz de demostración. El inicio de sesión seguro y la creación de cuentas se activarán al conectar el servicio de autenticación. Este formulario no envía ni guarda tu contraseña.",previewOnly:"Solo vista previa: la autenticación no está conectada. No se envió ni guardó nada. No escribas una contraseña real.",login:"Entrar / Registrarse",close:"Cerrar",yourName:"Tu nombre completo",passwordHint:"Al menos 8 caracteres",chartSelected:"Gráfico seleccionado",pleaseSelect:"Primero selecciona una imagen del gráfico.",serviceMissing:"El servicio seguro de IA debe estar conectado antes del análisis.",selected:"Seleccionado",skip:"Omitir",pickLang:"Elige tu idioma",pickLangDesc:"Puedes cambiarlo en cualquier momento desde el encabezado."}
 };
 const LANGS=[["en","English"],["ar","العربية"],["sw","Kiswahili"],["fr","Français"],["pt","Português"],["es","Español"]];
@@ -432,21 +428,20 @@ function route(){show((location.hash||"#home").slice(1))}
 addEventListener("hashchange",route);route();
 document.addEventListener("click",e=>{const t=e.target.closest("[data-go]");if(!t)return;const id=t.dataset.go;if(location.hash==="#"+id)show(id);else location.hash=id});
 
-/* intro: warp stars */
+/* intro: warp streaks */
 function startStars(intro){
- const c=$("#stars"),x=c.getContext("2d");let w=0,h=0;const S=[];
- const d=Math.min(devicePixelRatio||1,2);w=c.width=innerWidth*d;h=c.height=innerHeight*d;
- const m=Math.hypot(w,h)/2;
- for(let i=0;i<170;i++)S.push({a:Math.random()*6.2832,r:Math.random()*m,v:.6+Math.random()*1.4});
+ const c=$("#stars"),x=c.getContext("2d");
+ const d=Math.min(devicePixelRatio||1,2),w=c.width=innerWidth*d,h=c.height=innerHeight*d,m=Math.hypot(w,h)/2,S=[];
+ for(let i=0;i<190;i++)S.push({a:Math.random()*6.2832,r:Math.random()*m,v:.6+Math.random()*1.4});
  const t0=performance.now();
  (function f(now){
   if(!intro.isConnected)return;
-  const t=(now-t0)/1000,warp=.7+Math.min(t,2.2)*2.1,cx=w/2,cy=h/2;
+  const t=(now-t0)/1000,warp=t<2.3?.5+t*1.1:7,cx=w/2,cy=h/2;
   x.clearRect(0,0,w,h);
   for(const s of S){
-   const step=s.v*warp*(.6+s.r/m*6),prev=Math.max(0,s.r-step*2.2);s.r+=step;
+   const step=s.v*warp*(.6+s.r/m*6),prev=Math.max(0,s.r-step*2.4);s.r+=step;
    if(s.r>m){s.r=Math.random()*40;s.a=Math.random()*6.2832;continue}
-   const ca=Math.cos(s.a),sa=Math.sin(s.a),al=Math.min(1,s.r/m*1.6);
+   const ca=Math.cos(s.a),sa=Math.sin(s.a),al=Math.min(1,s.r/m*1.8);
    x.strokeStyle="rgba(255,255,255,"+al.toFixed(2)+")";x.lineWidth=(1+s.r/m*1.6)*d*.7;
    x.beginPath();x.moveTo(cx+ca*prev,cy+sa*prev);x.lineTo(cx+ca*s.r,cy+sa*s.r);x.stroke();
   }
@@ -454,18 +449,45 @@ function startStars(intro){
  })(t0);
 }
 
-/* intro: sequence (about 3 seconds) */
-const intro=$("#intro");let introTimer=null;
+/* intro sequence (about 4.3 seconds, Skip any time) */
+const intro=$("#intro"),TOTAL=4300;let introTimer=null;
 function afterIntro(){document.body.classList.remove("lock");if(!store.get("zv_lang"))openLang()}
 function finishIntro(){if(introDone)return;introDone=true;clearTimeout(introTimer);intro.classList.add("out");setTimeout(()=>{intro.remove();afterIntro()},700)}
 let seen=false;try{seen=sessionStorage.getItem("zv_intro")==="1";sessionStorage.setItem("zv_intro","1")}catch(e){}
 if(seen||reduced){introDone=true;intro.remove();afterIntro()}else{
  startStars(intro);
- introTimer=setTimeout(finishIntro,2350);
+ introTimer=setTimeout(finishIntro,TOTAL);
  const t0=performance.now(),cnt=$("#count");
- (function tick(now){if(introDone)return;const p=Math.min(1,(now-t0)/2350);cnt.textContent=String(Math.round(p*100)).padStart(3,"0");if(p<1)requestAnimationFrame(tick)})(t0);
+ (function tick(now){if(introDone)return;const p=Math.min(1,(now-t0)/TOTAL);cnt.textContent=String(Math.round(p*100)).padStart(3,"0");if(p<1)requestAnimationFrame(tick)})(t0);
 }
 $("#skipIntro").addEventListener("click",finishIntro);
+
+/* live particle background (follows mouse / finger) */
+const cv=$("#bg"),ctx=cv.getContext("2d");let W=0,H=0,P=[];const mouse={x:-9999,y:-9999};
+const mk=()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,r:Math.random()*1.5+.6});
+function sizeCanvas(){const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0);const n=Math.round(Math.min(110,Math.max(38,W*H/16000)));while(P.length<n)P.push(mk());P.length=n}
+sizeCanvas();addEventListener("resize",sizeCanvas);
+function frame(){
+ ctx.clearRect(0,0,W,H);
+ for(const p of P){
+  const dx=mouse.x-p.x,dy=mouse.y-p.y,d=Math.hypot(dx,dy);
+  if(d<180&&d>1){p.x+=dx*.012;p.y+=dy*.012}
+  p.x+=p.vx;p.y+=p.vy;
+  if(p.x<0)p.x=W;else if(p.x>W)p.x=0;if(p.y<0)p.y=H;else if(p.y>H)p.y=0;
+ }
+ for(let i=0;i<P.length;i++){
+  const a=P[i];
+  ctx.fillStyle="rgba(243,220,138,.85)";ctx.beginPath();ctx.arc(a.x,a.y,a.r,0,6.283);ctx.fill();
+  for(let j=i+1;j<P.length;j++){const b=P[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<115){ctx.strokeStyle="rgba(212,175,55,"+(.22*(1-d/115)).toFixed(3)+")";ctx.lineWidth=.7;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}}
+  const md=Math.hypot(a.x-mouse.x,a.y-mouse.y);
+  if(md<170){ctx.strokeStyle="rgba(243,220,138,"+(.5*(1-md/170)).toFixed(3)+")";ctx.lineWidth=.9;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(mouse.x,mouse.y);ctx.stroke()}
+ }
+}
+function loop(){if(!document.hidden)frame();requestAnimationFrame(loop)}
+if(reduced)frame();else loop();
+addEventListener("pointermove",e=>{mouse.x=e.clientX;mouse.y=e.clientY},{passive:true});
+addEventListener("pointerup",e=>{if(e.pointerType!=="mouse")setTimeout(()=>{mouse.x=mouse.y=-9999},900)});
+document.documentElement.addEventListener("mouseleave",()=>{mouse.x=mouse.y=-9999});
 
 /* chart upload */
 const fileInput=$("#chartFile");
