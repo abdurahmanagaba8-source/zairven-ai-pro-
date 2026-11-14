@@ -410,4 +410,195 @@ const instruments=[["EURUSD","FOREX"],["GBPUSD","FOREX"],["XAUUSD","GOLD"],["Vol
 const systems=[["01","NOVA","beginner","novaDesc"],["02","APEX","professional","apexDesc"],["03","SOVEREIGN","advanced","sovereignDesc"]];
 function renderMarkets(box){instruments.forEach(([n,t])=>{const el=document.createElement("div");el.className="card market-card";el.innerHTML='<div class="market-top"><span class="symbol"></span><span class="type"></span></div><div class="price">—</div><div class="await" data-i18n="awaitData"></div>';el.querySelector(".symbol").textContent=n;el.querySelector(".type").textContent=t;box.appendChild(el)})}
 function renderSignals(box){instruments.forEach(([n])=>{const row=document.createElement("div");row.className="signal-row";row.innerHTML='<div><div class="signal-name"></div><div class="signal-note" data-i18n="awaiting"></div></div><span class="tag">—</span><span class="tag" data-i18n="pending"></span>';row.querySelector(".signal-name").textContent=n;box.appendChild(row)})}
-function renderSystems(box){systems.forEach(([no,n,lv,ds])=>{const el=document.createElement("div");el.className="card system-card";el.innerHTML='<div class="system-icon"></div><h3></h3><span class="level" data-i18n="'+lv+'"></span><span class="level dim" data-i18n="development"></span><p class="muted" data-i18n="'+ds+'">
+function renderSystems(box){systems.forEach(([no,n,lv,ds])=>{const el=document.createElement("div");el.className="card system-card";el.innerHTML='<div class="system-icon"></div><h3></h3><span class="level" data-i18n="'+lv+'"></span><span class="level dim" data-i18n="development"></span><p class="muted" data-i18n="'+ds+'"></p>';el.querySelector(".system-icon").textContent="BOT "+no;el.querySelector("h3").textContent=n;box.appendChild(el)})}
+renderMarkets($("#homeMarkets"));renderMarkets($("#marketGrid"));
+renderSignals($("#homeSignals"));renderSignals($("#signalList"));
+renderSystems($("#homeSystems"));renderSystems($("#systemGrid"));
+
+/* collections: real counts only */
+const counts={watch:instruments.length,sig:0,col:0};
+$("#cWatch").textContent=counts.watch;$("#cSig").textContent=counts.sig;$("#cCol").textContent=counts.col;
+$("#chkSig").classList.toggle("on",counts.sig>0);$("#chkCol").classList.toggle("on",counts.col>0);
+instruments.forEach(([n])=>{const li=document.createElement("li");li.innerHTML='<span class="chk on">✓</span><span></span>';li.lastChild.textContent=n;$("#wl").appendChild(li)});
+
+/* live Dubai clock: HH:MM:SS, full date with GMT+4, country */
+const LOC={en:"en-GB",ar:"ar-u-nu-latn",sw:"sw",fr:"fr",pt:"pt",es:"es"};
+function tickClock(){
+ const now=new Date();
+ try{
+  $("#clkT").textContent=new Intl.DateTimeFormat("en-GB",{hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23",timeZone:"Asia/Dubai"}).format(now);
+ }catch(e){$("#clkT").textContent="--:--:--"}
+ let ds="";
+ try{
+  const parts=new Intl.DateTimeFormat(LOC[lang]||"en-GB",{weekday:"long",day:"numeric",month:"long",year:"numeric",timeZone:"Asia/Dubai"}).formatToParts(now);
+  const g=t=>(parts.find(p=>p.type===t)||{}).value||"";
+  ds=g("weekday")+", "+g("day")+" "+g("month")+" "+g("year")+" (GMT+4)";
+ }catch(e){ds="(GMT+4)"}
+ const d=$("#clkD");if(d.textContent!==ds)d.textContent=ds;
+}
+tickClock();setInterval(tickClock,1000);
+
+/* language */
+function mkLang(box,onPick){LANGS.forEach(([c,name])=>{const b=document.createElement("button");b.className="lang-btn";b.dataset.code=c;b.textContent=name;b.addEventListener("click",()=>{applyLanguage(c,true);if(onPick)onPick()});box.appendChild(b)})}
+LANGS.forEach(([c])=>{const o=document.createElement("option");o.value=c;o.textContent=c.toUpperCase();$("#languageSelect").appendChild(o)});
+mkLang($("#langGrid"),()=>closeLang());mkLang($("#settingsLang"));
+function renderAuth(){const s=authMode==="signup";$("#authTitle").textContent=tr(s?"signup":"authWelcome");$("#authSubtitle").textContent=tr(s?"authSignupDesc":"authSigninDesc");$("#authSubmit").textContent=tr(s?"signup":"signin")}
+function applyLanguage(code,save){
+ if(!T[code])code="en";lang=code;if(save)store.set("zv_lang",code);
+ document.documentElement.lang=code;document.documentElement.dir=code==="ar"?"rtl":"ltr";
+ $$("[data-i18n]").forEach(el=>{el.textContent=tr(el.dataset.i18n)});
+ $$("[data-ph]").forEach(el=>{el.placeholder=tr(el.dataset.ph)});
+ $$("[data-t]").forEach(el=>{const t=tr(el.dataset.t);el.title=t;el.setAttribute("aria-label",t)});
+ $("#languageSelect").value=code;$("#authClose").setAttribute("aria-label",tr("close"));
+ $$(".lang-btn").forEach(b=>b.classList.toggle("sel",b.dataset.code===code));
+ renderAuth();tickClock();
+}
+function detect(){const l=(navigator.language||"en").slice(0,2).toLowerCase();return T[l]?l:"en"}
+function openLang(){$("#langOverlay").classList.add("open")}
+function closeLang(){store.set("zv_lang",lang);$("#langOverlay").classList.remove("open")}
+$("#languageSelect").addEventListener("change",e=>applyLanguage(e.target.value,true));
+$("#langClose").addEventListener("click",closeLang);
+$("#langOverlay").addEventListener("click",e=>{if(e.target.id==="langOverlay")closeLang()});
+const saved=store.get("zv_lang");applyLanguage(saved&&T[saved]?saved:detect(),false);
+
+/* page-by-page navigation */
+const sideBtns=$$(".side button");
+function show(id){
+ if(!PAGES.includes(id))id="home";
+ $$(".page").forEach(p=>p.classList.toggle("active",p.dataset.page===id));
+ sideBtns.forEach(b=>b.classList.toggle("active",b.dataset.go===id));
+ window.scrollTo({top:0,behavior:"instant"});
+}
+function route(){show((location.hash||"#home").slice(1))}
+addEventListener("hashchange",route);route();
+document.addEventListener("click",e=>{const t=e.target.closest("[data-go]");if(!t)return;const id=t.dataset.go;if(location.hash==="#"+id)show(id);else location.hash=id});
+
+/* search bar */
+const PAGE_KEY={home:"home",markets:"markets","chart-ai":"chart",signals:"signals",systems:"systems",academy:"academy",newsiq:"newsiq",settings:"settings"};
+const PAGE_KW={markets:"forex gold market prices",systems:"bot bots robot automated automation nova apex sovereign",signals:"signal alerts buy sell","chart-ai":"chart analyser analyzer screenshot upload ai",academy:"learn course education lessons",newsiq:"news calendar economic events",settings:"language langue idioma lugha"};
+const MARKET_KW={"EURUSD":"euro dollar forex","GBPUSD":"pound sterling forex","XAUUSD":"gold xau","Volatility 75":"synthetic vix v75 volatility"};
+const norm=s=>String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+function searchItems(){
+ const out=[];
+ PAGES.forEach(id=>{const k=PAGE_KEY[id];out.push({label:tr(k),hint:tr("searchPage"),go:id,hay:norm(tr(k)+" "+T.en[k]+" "+(PAGE_KW[id]||""))})});
+ instruments.forEach(([n,t])=>out.push({label:n,hint:tr("searchMarket")+" · "+t,go:"markets",hay:norm(n+" "+t+" "+(MARKET_KW[n]||""))}));
+ systems.forEach(([no,n])=>out.push({label:n,hint:tr("searchBot"),go:"systems",hay:norm(n+" bot bots "+tr("systems"))}));
+ return out;
+}
+const sIn=$("#searchInput"),sOut=$("#searchResults");
+function clearSearch(){sIn.value="";sOut.hidden=true;sOut.textContent=""}
+function doSearch(){
+ const q=norm(sIn.value.trim());
+ if(!q){sOut.hidden=true;sOut.textContent="";return}
+ const hits=searchItems().filter(x=>x.hay.includes(q)).slice(0,6);
+ sOut.textContent="";
+ if(!hits.length){const d=document.createElement("div");d.className="none";d.textContent=tr("noMatch");sOut.appendChild(d)}
+ hits.forEach(h=>{const b=document.createElement("button");b.type="button";b.dataset.go=h.go;const s=document.createElement("span");s.textContent=h.label;const m=document.createElement("small");m.textContent=h.hint;b.append(s,m);sOut.appendChild(b)});
+ sOut.hidden=false;
+}
+sIn.addEventListener("input",doSearch);
+sIn.addEventListener("focus",doSearch);
+sIn.addEventListener("keydown",e=>{
+ if(e.key==="Enter"){e.preventDefault();const f=sOut.querySelector("button");if(f){f.click();sIn.blur()}}
+ else if(e.key==="Escape")clearSearch();
+});
+sOut.addEventListener("click",()=>setTimeout(clearSearch,0));
+document.addEventListener("click",e=>{if(!e.target.closest(".searchbox"))sOut.hidden=true});
+
+/* opening (about 2 seconds) */
+const intro=$("#intro"),TOTAL=1950;let introTimer=null;
+function afterIntro(){document.body.classList.remove("lock");if(!store.get("zv_lang"))openLang()}
+function finishIntro(){if(introDone)return;introDone=true;clearTimeout(introTimer);intro.classList.add("out");setTimeout(()=>{intro.remove();afterIntro()},750)}
+let seen=false;try{seen=sessionStorage.getItem("zv_intro")==="1";sessionStorage.setItem("zv_intro","1")}catch(e){}
+if(seen||reduced){introDone=true;intro.remove();afterIntro()}else{
+ introTimer=setTimeout(finishIntro,TOTAL);
+ const t0=performance.now(),cnt=$("#count");
+ (function tick(now){if(introDone)return;const p=Math.min(1,(now-t0)/TOTAL);cnt.textContent=String(Math.round(p*100)).padStart(3,"0");if(p<1)requestAnimationFrame(tick)})(t0);
+}
+$("#skipIntro").addEventListener("click",finishIntro);
+
+/* live background: slow dust that drifts toward your finger or mouse */
+const cv=$("#bg"),ctx=cv.getContext("2d");let W=0,H=0,P=[];const mouse={x:-9999,y:-9999};
+const mk=()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,r:Math.random()*1.3+.5,o:.25+Math.random()*.45});
+function sizeCanvas(){const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0);const n=Math.round(Math.min(90,Math.max(36,W*H/18000)));while(P.length<n)P.push(mk());P.length=n}
+sizeCanvas();addEventListener("resize",sizeCanvas);
+function dust(){
+ ctx.clearRect(0,0,W,H);
+ for(const p of P){
+  const dx=mouse.x-p.x,dy=mouse.y-p.y,d=Math.hypot(dx,dy);
+  if(d<170&&d>1){p.x+=dx*.01;p.y+=dy*.01}
+  p.x+=p.vx;p.y+=p.vy;
+  if(p.x<0)p.x=W;else if(p.x>W)p.x=0;if(p.y<0)p.y=H;else if(p.y>H)p.y=0;
+  ctx.fillStyle="rgba(236,212,136,"+p.o.toFixed(2)+")";ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,6.283);ctx.fill();
+ }
+}
+function dustLoop(){if(!document.hidden)dust();requestAnimationFrame(dustLoop)}
+if(reduced)dust();else dustLoop();
+addEventListener("pointermove",e=>{mouse.x=e.clientX;mouse.y=e.clientY},{passive:true});
+addEventListener("pointerup",e=>{if(e.pointerType!=="mouse")setTimeout(()=>{mouse.x=mouse.y=-9999},900)});
+document.documentElement.addEventListener("mouseleave",()=>{mouse.x=mouse.y=-9999});
+
+/* 3D ring in the hero (Three.js) */
+function initRing(){
+ if(typeof THREE==="undefined")return;
+ const host=$("#ringHost");let R;
+ try{R=new THREE.WebGLRenderer({antialias:true,alpha:true,powerPreference:"low-power"})}catch(e){return}
+ R.setPixelRatio(Math.min(devicePixelRatio||1,1.75));R.setClearColor(0x000000,0);
+ R.domElement.style.cssText="display:block;width:100%;height:100%";host.appendChild(R.domElement);
+ const scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(38,1,.1,100);cam.position.z=10;
+ const group=new THREE.Group(),disc=new THREE.Group();scene.add(group);group.add(disc);
+ const U={t:{value:0}};
+ const VS="varying vec3 vP;void main(){vP=position;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}";
+ const HALO="varying vec3 vP;uniform float t;void main(){float r=length(vP.xy);float a=atan(vP.y,vP.x);float d=clamp((r-1.0)/1.7,0.0,1.0);float I=pow(1.0-d,2.6)*(0.82+0.18*sin(a*3.0+t*0.7));float e=smoothstep(0.0,0.04,d);vec3 c=mix(vec3(1.0,0.96,0.80),vec3(0.86,0.64,0.14),pow(d,0.6));gl_FragColor=vec4(c,clamp(I*1.5,0.0,1.0)*e);}";
+ const DISC="varying vec3 vP;uniform float t;void main(){float r=length(vP.xy);float a=atan(vP.y,vP.x);float u=clamp((r-1.12)/2.68,0.0,1.0);float sw=0.65+0.35*sin(a*5.0-t*1.4+r*5.0);float I=pow(1.0-u,1.6)*sw;float al=smoothstep(0.0,0.06,u)*(1.0-smoothstep(0.55,1.0,u))*I;vec3 c=mix(vec3(1.0,0.93,0.72),vec3(0.55,0.36,0.10),pow(u,0.5));gl_FragColor=vec4(c,clamp(al*1.5,0.0,1.0));}";
+ const mat=f=>new THREE.ShaderMaterial({uniforms:U,vertexShader:VS,fragmentShader:f,transparent:true,depthWrite:false,side:THREE.DoubleSide});
+ const halo=new THREE.Mesh(new THREE.RingGeometry(.98,2.7,160,1),mat(HALO));halo.position.z=-.3;group.add(halo);
+ group.add(new THREE.Mesh(new THREE.CircleGeometry(1,96),new THREE.MeshBasicMaterial({color:0x000000})));
+ const dm=new THREE.Mesh(new THREE.RingGeometry(1.12,3.8,200,8),mat(DISC));dm.rotation.x=1.25;disc.add(dm);disc.rotation.z=-.42;
+ const N=300,pos=new Float32Array(N*3);
+ for(let i=0;i<N;i++){pos[i*3]=(Math.random()-.5)*40;pos[i*3+1]=(Math.random()-.5)*20;pos[i*3+2]=-4-Math.random()*26}
+ const sg=new THREE.BufferGeometry();sg.setAttribute("position",new THREE.BufferAttribute(pos,3));
+ const stars=new THREE.Points(sg,new THREE.PointsMaterial({color:0xf2ead0,size:.06,transparent:true,opacity:.7}));scene.add(stars);
+ let tx=0,ty=0;
+ function size(){
+  const w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;
+  R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();
+  const wide=w/h>1.15;group.position.set(wide?2.9:0,wide?0:-.3,0);group.scale.setScalar(wide?1:Math.min(.85,w/h*.9));
+  R.domElement.style.opacity=wide?"1":".6";
+ }
+ new ResizeObserver(size).observe(host);size();
+ addEventListener("pointermove",e=>{const b=host.getBoundingClientRect();if(!b.width)return;tx=((e.clientX-b.left)/b.width-.5)*2;ty=((e.clientY-b.top)/b.height-.5)*2},{passive:true});
+ (function loop(now){
+  requestAnimationFrame(loop);
+  if(document.hidden||!host.offsetParent)return;
+  U.t.value=now/1000*(reduced?.15:1);
+  group.rotation.y+=(tx*.35-group.rotation.y)*.05;group.rotation.x+=(ty*.22-group.rotation.x)*.05;
+  stars.position.x=-tx*.8;stars.position.y=ty*.5;
+  R.render(scene,cam);
+ })(0);
+}
+initRing();
+
+/* chart upload */
+const fileInput=$("#chartFile");
+fileInput.addEventListener("change",()=>{
+ const f=fileInput.files&&fileInput.files[0],pv=$("#chartPreview");
+ $("#fileName").textContent=f?tr("selected")+": "+f.name:"";
+ if(pv.src&&pv.src.startsWith("blob:"))URL.revokeObjectURL(pv.src);
+ if(f&&["image/png","image/jpeg","image/webp"].includes(f.type)){pv.src=URL.createObjectURL(f);pv.hidden=false}else{pv.hidden=true}
+});
+$("#analyseBtn").addEventListener("click",()=>{const f=fileInput.files&&fileInput.files[0];$("#analysisNotice").textContent=f?tr("chartSelected")+": "+f.name+". "+tr("serviceMissing"):tr("pleaseSelect")});
+
+/* auth */
+const authOverlay=$("#authOverlay");
+function setAuthMode(m){authMode=m;const s=m==="signup";$("#nameField").hidden=!s;$("#authName").required=s;$("#authPassword").autocomplete=s?"new-password":"current-password";$("#signInTab").classList.toggle("active",!s);$("#signUpTab").classList.toggle("active",s);$("#authMessage").textContent="";renderAuth()}
+$("#loginBtn").addEventListener("click",()=>{authOverlay.classList.add("open");setAuthMode("signin")});
+$("#signInTab").addEventListener("click",()=>setAuthMode("signin"));
+$("#signUpTab").addEventListener("click",()=>setAuthMode("signup"));
+$("#authClose").addEventListener("click",()=>authOverlay.classList.remove("open"));
+authOverlay.addEventListener("click",e=>{if(e.target===authOverlay)authOverlay.classList.remove("open")});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){authOverlay.classList.remove("open");if($("#langOverlay").classList.contains("open"))closeLang()}});
+$("#authForm").addEventListener("submit",e=>{e.preventDefault();$("#authMessage").textContent=tr("previewOnly")});
+</script>
+</body>
+</html>
