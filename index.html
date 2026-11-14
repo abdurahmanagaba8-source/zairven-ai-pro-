@@ -1,1095 +1,417 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#050912">
+<meta name="theme-color" content="#07070a">
 <title>ZAIRVÉN AI PRO | Global Financial Technology</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cinzel:wght@600;700&display=swap" rel="stylesheet">
 <style>
-/* ===== PALETTE: change the look here only ===== */
-:root{
-  --bg:#050912;
-  --glass:linear-gradient(145deg,rgba(255,255,255,.075),rgba(255,255,255,.018));
-  --line:rgba(217,184,108,.27);
-  --line2:rgba(255,255,255,.08);
-  --gold:#d9b86c;
-  --gold2:#f3dda0;
-  --text:#f4f0e6;
-  --muted:#98a0ad;
-  --dim:#667080;
-  --green:#24c78b;
-  --red:#f16c70;
-  --r:20px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;background:var(--bg)}
-body{
-  background:
-    radial-gradient(900px 600px at 0% 0%,rgba(217,184,108,.15),transparent 55%),
-    radial-gradient(800px 600px at 100% 100%,rgba(217,184,108,.10),transparent 55%),
-    radial-gradient(700px 520px at 62% 28%,rgba(28,56,100,.38),transparent 70%),
-    var(--bg);
-  background-attachment:fixed;
-  color:var(--text);
-  font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  min-height:100vh;position:relative;
-}
-body::before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.14;
-  background-image:radial-gradient(rgba(243,221,160,.7) 1px,transparent 1.3px);
-  background-size:86px 86px;
-  -webkit-mask-image:radial-gradient(ellipse at 70% 0%,#000,transparent 70%);
-  mask-image:radial-gradient(ellipse at 70% 0%,#000,transparent 70%);
-}
-button,input,select{font:inherit;color:inherit}
-button{cursor:pointer;background:none;border:0}
-a{color:inherit;text-decoration:none}
-.gold{color:var(--gold)}.green{color:var(--green)}.red{color:var(--red)}
+:root{--bg:#07070a;--panel:#111114;--gold:#d4af37;--gold2:#f3dc8a;--muted:#a39f94;--line:rgba(212,175,55,.24);--line2:rgba(212,175,55,.55);--green:#22c98b;--red:#ff737d;--white:#f6f3ea;--topH:110px;--px:0;--py:0}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--topH) + 12px)}
+body{margin:0;background:radial-gradient(ellipse at 50% -10%,#2a2209 0%,#0b0a07 45%,#050507 85%) fixed;color:var(--white);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,sans-serif;overflow-x:hidden}
+body.lock{overflow:hidden}
+button,input,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}[hidden]{display:none!important}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main,footer{position:relative;z-index:1}
 
-/* ===== GLASS ===== */
-.glass,.card{
-  background:var(--glass);border:1px solid var(--line);
-  backdrop-filter:blur(18px) saturate(140%);-webkit-backdrop-filter:blur(18px) saturate(140%);
-  box-shadow:0 24px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.09);
-}
-.card{border-radius:var(--r);padding:18px;min-width:0;transition:border-color .25s,box-shadow .25s,transform .25s}
-.card:hover{border-color:rgba(217,184,108,.5);box-shadow:0 24px 60px rgba(0,0,0,.5),0 0 34px rgba(217,184,108,.12),inset 0 1px 0 rgba(255,255,255,.12)}
-.ni{width:20px;height:20px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+/* INTRO */
+.intro{position:fixed;inset:0;z-index:1000;background:radial-gradient(circle at 50% 45%,#1d1707,#050507 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .7s,visibility .7s}
+.intro.out{opacity:0;visibility:hidden}
+.intro svg{width:min(46vw,190px);height:auto;filter:drop-shadow(0 0 18px rgba(212,175,55,.55))}
+.intro .ring,.intro .z{fill:none;stroke:url(#g);stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+.intro .ring{stroke-width:2;animation:draw 1.3s ease forwards}
+.intro .z{stroke-width:6;animation:draw 1.4s .6s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.intro .word{margin-top:26px;padding-left:.35em;font:clamp(26px,7vw,40px) Georgia,serif;letter-spacing:.35em;color:var(--gold2);opacity:0;animation:rise .9s 1.7s forwards}
+.intro .sub{margin-top:10px;padding-left:.5em;font-size:11px;letter-spacing:.5em;color:var(--gold);opacity:0;animation:rise .9s 2s forwards}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.skip{position:absolute;bottom:max(28px,env(safe-area-inset-bottom));background:transparent;border:1px solid var(--line);color:var(--gold2);border-radius:30px;padding:10px 22px;font-size:13px;letter-spacing:1px}
+.skip:hover{border-color:var(--gold)}
 
-/* ===== SHELL ===== */
-.shell{display:grid;grid-template-columns:268px minmax(0,1fr);gap:18px;padding:16px;max-width:1780px;margin:0 auto;position:relative;z-index:1}
-.content{min-width:0;display:flex;flex-direction:column;gap:16px}
+/* TOP BAR */
+.top{position:sticky;top:0;z-index:50;background:rgba(7,7,10,.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.header-inner{max-width:1500px;margin:auto;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brand-mark{width:46px;height:46px;display:grid;place-items:center;border:1px solid var(--gold);border-radius:12px;color:var(--gold2);font:bold 34px Georgia;box-shadow:0 0 22px rgba(212,175,55,.2),inset 0 0 14px rgba(212,175,55,.12);flex:none}
+.brand-name{font:24px Georgia,serif;letter-spacing:2px;white-space:nowrap}
+.brand-name span{font:11px Inter,sans-serif;letter-spacing:4px;color:var(--gold)}
+.brand-sub{font-size:9px;letter-spacing:2.5px;color:var(--muted);margin-top:4px}
+.header-actions{display:flex;gap:8px;align-items:center}
+.language-select,.account-button{background:#111114;color:var(--gold2);border:1px solid var(--line);border-radius:24px;padding:10px 13px}
+.account-button{white-space:nowrap}
+.account-wrap{position:relative}
+.account-menu{display:none;position:absolute;inset-inline-end:0;top:50px;width:190px;background:#15151a;border:1px solid var(--line);border-radius:14px;padding:8px;z-index:100;box-shadow:0 15px 40px #000c}
+.account-menu.open{display:block}
+.account-menu button{display:block;width:100%;text-align:start;background:transparent;color:#f1ecd9;border:0;padding:12px;border-radius:8px}
+.account-menu button:hover{background:rgba(212,175,55,.12)}
+.nav-wrap{border-top:1px solid rgba(212,175,55,.12)}
+.nav{max-width:1450px;margin:auto;display:flex;gap:2px;padding:0 12px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav button{flex:1 0 auto;background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);padding:10px 14px;font-size:13px;display:flex;align-items:center;justify-content:center;gap:7px;transition:.2s;white-space:nowrap}
+.nav button .ico{font-size:15px}
+.nav button:hover{color:var(--gold2)}
+.nav button.active{color:var(--gold2);border-bottom-color:var(--gold)}
 
-/* ===== SIDEBAR ===== */
-.sidebar{
-  position:sticky;top:16px;height:calc(100vh - 32px);border-radius:28px;padding:20px 14px 14px;
-  display:flex;flex-direction:column;overflow:hidden;z-index:40;
-  background:linear-gradient(180deg,rgba(16,22,36,.82),rgba(7,11,19,.88));
-}
-.slogo{text-align:center}
-.zlogo{display:block;width:62px;height:62px;margin:0 auto 4px;filter:drop-shadow(0 0 14px rgba(217,184,108,.4))}
-.sname{font-family:'Cinzel',serif;font-size:24px;font-weight:700;letter-spacing:5px;padding-inline-start:5px}
-.sname2{color:var(--gold2);letter-spacing:4px;font-size:14px;margin-top:4px;font-weight:600}
-.stag{font-size:8px;letter-spacing:3px;color:var(--muted);margin-top:8px;line-height:1.7}
-.snav{display:flex;flex-direction:column;gap:4px;margin-top:22px;flex:1;overflow-y:auto;scrollbar-width:none}
-.snav::-webkit-scrollbar{display:none}
-.navbtn{
-  display:flex;align-items:center;gap:12px;width:100%;text-align:start;padding:12px 14px;border-radius:14px;
-  border:1px solid transparent;color:#c9cfda;font-size:14px;font-weight:500;transition:.2s;
-}
-.navbtn:hover{background:rgba(217,184,108,.08);color:#fff}
-.navbtn.active{
-  background:linear-gradient(100deg,#b58e43,#f0d99b);color:#14100a;font-weight:700;
-  box-shadow:0 0 22px rgba(217,184,108,.32);
-}
-.globecard{
-  margin-top:12px;border-radius:22px;border:1px solid var(--line);height:150px;position:relative;overflow:hidden;
-  background:radial-gradient(circle at 50% 120%,rgba(217,184,108,.3),transparent 62%),rgba(0,0,0,.32);
-  display:grid;place-items:end center;padding-bottom:16px;flex-shrink:0;
-}
-.globecard svg{position:absolute;top:-34%;left:-10%;width:120%;opacity:.85}
-.globecard b{position:relative;font-size:10px;letter-spacing:4px;color:var(--gold2);text-align:center;line-height:1.9;font-weight:600}
+/* HERO */
+main{max-width:1500px;margin:auto;padding:24px 24px 60px}
+.hero{position:relative;min-height:510px;border:1px solid var(--line2);border-radius:25px;overflow:hidden;background:#09080a;box-shadow:0 25px 70px #000b;isolation:isolate}
+.hero-art{position:absolute;inset:-4%;z-index:-2;background:radial-gradient(circle at 78% 35%,rgba(212,175,55,.28),transparent 45%),radial-gradient(circle at 20% 90%,rgba(212,175,55,.12),transparent 40%),repeating-linear-gradient(90deg,rgba(212,175,55,.06) 0 1px,transparent 1px 64px),repeating-linear-gradient(0deg,rgba(212,175,55,.06) 0 1px,transparent 1px 64px);transform:translate3d(calc(var(--px)*-10px),calc(var(--py)*-8px),0);transition:transform .3s ease-out}
+.candles{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.6}
+.candle{position:absolute;transform:translate3d(calc(var(--px)*var(--d)*1px),calc(var(--py)*var(--d)*1px),0);transition:transform .3s ease-out}
+.c{display:block;position:relative;width:14px;height:var(--h);border:1px solid var(--gold);border-radius:2px;animation:bob 6s ease-in-out infinite alternate}
+.c::before{content:"";position:absolute;left:50%;top:-16px;bottom:-16px;width:1px;background:var(--gold);transform:translateX(-50%)}
+.c.up{background:linear-gradient(180deg,var(--gold2),var(--gold));box-shadow:0 0 16px rgba(212,175,55,.45)}
+.c.dn{background:rgba(212,175,55,.06)}
+@keyframes bob{to{transform:translateY(-16px)}}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,7,10,.9) 0%,rgba(7,7,10,.55) 45%,transparent 80%);z-index:-1;pointer-events:none}
+.hero-content{position:relative;max-width:630px;padding:58px 42px 35px}
+.eyebrow{font-size:11px;letter-spacing:5px;color:var(--gold2);font-weight:700}
+.hero h1{font:clamp(40px,6vw,74px)/1 Georgia,serif;letter-spacing:-1px;margin:18px 0 15px;text-shadow:0 5px 24px #000}
+.hero h1 span:last-child{color:var(--gold2)}
+.hero p{max-width:490px;color:#ddd8c6;font-size:16px;line-height:1.75}
+.hero-pills{display:flex;flex-wrap:wrap;gap:9px;margin-top:26px}
+.pill{border:1px solid var(--line2);border-radius:30px;padding:9px 13px;background:rgba(7,7,10,.7);color:var(--gold2);font-size:10px;letter-spacing:1px}
 
-/* ===== TOP BAR ===== */
-.topbar{
-  display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:22px;
-  position:sticky;top:16px;z-index:30;flex-wrap:wrap;
-}
-.burger{display:none;width:40px;height:40px;border-radius:12px;border:1px solid var(--line);place-items:center;color:var(--gold2)}
-.mbrand{display:none;align-items:center;gap:8px;font-family:'Cinzel',serif;font-weight:700;letter-spacing:2px;font-size:17px}
-.mbrand .zlogo{width:34px;height:34px;margin:0;filter:none}
-.toplinks{display:flex;gap:2px}
-.toplinks button{padding:10px 14px;border-radius:12px;font-size:13px;font-weight:500;color:#c9cfda;white-space:nowrap}
-.toplinks button:hover{color:var(--gold2);background:rgba(217,184,108,.08)}
-.search{position:relative;flex:1;max-width:430px;margin-inline-start:auto}
-.search input{
-  width:100%;padding:11px 62px 11px 42px;border-radius:999px;border:1px solid var(--line);
-  background:rgba(0,0,0,.35);font-size:14px;outline:none;
-}
-.search input::placeholder{color:var(--dim)}
-.search input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(217,184,108,.15)}
-.search .si{position:absolute;inset-inline-start:14px;top:50%;transform:translateY(-50%);color:var(--gold2);pointer-events:none}
-.search kbd{
-  position:absolute;inset-inline-end:12px;top:50%;transform:translateY(-50%);font-family:inherit;font-size:10px;
-  color:var(--muted);border:1px solid var(--line2);border-radius:6px;padding:2px 6px;pointer-events:none;
-}
-.sres{
-  display:none;position:absolute;top:calc(100% + 8px);inset-inline-start:0;inset-inline-end:0;z-index:50;
-  border-radius:16px;border:1px solid var(--line);padding:6px;max-height:320px;overflow-y:auto;
-  background:rgba(8,13,22,.97);box-shadow:0 20px 50px rgba(0,0,0,.6);
-}
-.sres.open{display:block}
-.sres button{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:start;padding:10px 12px;border-radius:10px;font-size:13px}
-.sres button:hover{background:rgba(217,184,108,.1)}
-.sres small{font-size:10px;color:var(--gold);letter-spacing:1px}
-.nores{padding:12px;font-size:13px;color:var(--muted)}
-.topright{display:flex;align-items:center;gap:8px}
-.bell,.avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:var(--gold2);position:relative}
-.avatar{border:1.5px solid var(--gold)}
-.bell::after{content:"";position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--red)}
-.zl,.fld,.field{
-  appearance:none;-webkit-appearance:none;background:#0a1019 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' fill='none' stroke='%23d9b86c' stroke-width='1.6'/></svg>") no-repeat right 12px center;
-  color:var(--text);border:1px solid var(--line);border-radius:12px;padding:11px 32px 11px 12px;font-size:14px;outline:none;width:100%;min-width:0;
-}
-[dir=rtl] .zl,[dir=rtl] .fld,[dir=rtl] .field{background-position:left 12px center;padding:11px 12px 11px 32px}
-.zl{width:auto;max-width:128px;font-size:12px;padding-block:9px}
-.fld:focus,.field:focus{border-color:var(--gold)}
-.field{margin:8px 0 15px;font-size:16px}
-label{display:block;font-size:11px;color:var(--muted);margin-bottom:7px}
+/* SECTIONS */
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin:34px 0 15px}
+.section-head h2{margin:0;font-size:clamp(21px,3vw,29px)}
+.section-head p{margin:7px 0 0;color:var(--muted);font-size:13px}
+.section-meta{font-size:10px;color:var(--gold2);letter-spacing:2px;border:1px solid var(--line);border-radius:30px;padding:9px 12px;white-space:nowrap}
+.grid{display:grid;gap:14px}
+.market-grid,.stats-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.system-grid{grid-template-columns:repeat(3,1fr)}
+.card{position:relative;border:1px solid var(--line);border-radius:18px;padding:18px;background:linear-gradient(145deg,rgba(28,24,14,.88),rgba(12,12,15,.95) 68%);box-shadow:inset 0 1px rgba(255,255,255,.06),0 12px 30px rgba(0,0,0,.45);overflow:hidden;backdrop-filter:blur(12px);transition:transform .25s ease-out,border-color .2s}
+.card:hover{border-color:rgba(212,175,55,.65)}
+.market-card:before{content:"";position:absolute;width:100px;height:100px;inset-inline-end:-45px;top:-48px;border-radius:50%;background:radial-gradient(circle,rgba(212,175,55,.2),transparent 70%)}
+.market-top{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.symbol{font-weight:750;letter-spacing:.5px}
+.type{font-size:9px;letter-spacing:1.5px;color:var(--gold)}
+.price{font-size:26px;margin:17px 0 4px;color:var(--gold2)}
+.await{font-size:11px;color:var(--muted)}
+.two-col{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-top:20px}
+.panel-title{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}
+.panel-title h2{margin:0;font-size:19px}
+.panel-title span{font-size:9px;letter-spacing:2px;color:var(--gold)}
+.muted{color:var(--muted);font-size:13px;line-height:1.65}
+.field-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:17px}
+.field label{display:block;font-size:11px;color:var(--muted);margin-bottom:7px}
+.field select,.field input{width:100%;background:#0a0a0d;color:#f6f3ea;border:1px solid var(--line);border-radius:10px;padding:12px;font-size:16px;min-width:0}
+.upload{border:1px dashed var(--line2);border-radius:14px;padding:20px;margin-top:14px;text-align:center;background:rgba(212,175,55,.04)}
+.upload strong{display:block;color:var(--gold2);margin-bottom:7px}
+.upload small{color:var(--muted)}
+.upload input{max-width:100%;margin-top:12px;color:var(--muted);font-size:12px}
+.gold-btn{width:100%;border:1px solid var(--gold2);border-radius:11px;padding:13px;margin-top:13px;color:#1a1204;font-weight:800;background:linear-gradient(110deg,#a8841f,#f3dc8a,#c49a2a);box-shadow:0 7px 22px rgba(212,175,55,.25)}
+.gold-btn:disabled{opacity:.5}
+.signal-row{display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.signal-row:last-child{border:0}
+.signal-name{font-size:13px;font-weight:700}
+.signal-note{font-size:10px;color:var(--muted);margin-top:4px}
+.tag{font-size:10px;border:1px solid var(--line);border-radius:20px;padding:6px 10px;color:var(--muted)}
+.system-card{min-height:180px}
+.system-icon{font-size:27px;color:var(--gold2);margin-bottom:14px}
+.system-card h3{margin:0 0 8px;color:var(--gold2);font-size:20px}
+.level{display:inline-block;font-size:9px;letter-spacing:1.5px;color:var(--gold);border:1px solid var(--line);border-radius:20px;padding:6px 9px}
+.stat-label{font-size:11px;color:var(--muted)}
+.stat-value{font-size:28px;color:var(--gold2);margin:12px 0}
+.stat-note{font-size:10px;color:var(--muted)}
+.table-wrap{overflow-x:auto}
+.history{width:100%;border-collapse:collapse;min-width:580px;font-size:12px}
+.history th,.history td{text-align:start;padding:13px 10px;border-bottom:1px solid rgba(255,255,255,.07)}
+.history th{color:var(--gold);font-weight:500}
+.history td{color:#e4dfcf}
+.empty{text-align:center!important;color:var(--muted)!important;padding:25px!important}
+.footer{border-top:1px solid var(--line);padding:28px 20px;text-align:center;color:var(--muted);font-size:10px;letter-spacing:2px;background:rgba(7,7,10,.8)}
+.footer strong{display:block;color:var(--gold2);font-size:13px;letter-spacing:4px;margin-bottom:12px}
+.notice{font-size:11px;color:var(--muted);line-height:1.55;margin-top:12px}
 
-/* ===== PAGES ===== */
-.page{display:none}
-.page.active{display:block;animation:pin .35s ease}
-@keyframes pin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@keyframes flash{0%,100%{box-shadow:0 24px 60px rgba(0,0,0,.5)}50%{box-shadow:0 0 0 2px var(--gold2),0 0 46px rgba(217,184,108,.5)}}
-.flash{animation:flash 1.2s ease 1}
-.ph{margin:4px 0 18px}
-.ph h2{font-size:26px;margin-bottom:8px}
-.ph p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px;max-width:640px}
-.pill{display:inline-block;padding:5px 12px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:1px;background:rgba(217,184,108,.1);border:1px solid var(--line);color:var(--gold2)}
-.pill.soon{color:var(--muted)}
-.pill.off{color:var(--red);border-color:rgba(241,108,112,.35);background:rgba(241,108,112,.08)}
-.cardnote{font-size:12px;color:var(--muted);line-height:1.6}
-.tag{font-size:10px;letter-spacing:1.5px;color:var(--gold);font-weight:700}
-.cardtitle,.chd{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
-.cardtitle b,.chd h2{font-size:16px;font-weight:700}
-.link{color:var(--gold);font-size:12px;font-weight:600}
-.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;color:var(--muted);padding:30px 18px;min-height:130px}
-.empty strong{color:var(--text);font-size:15px}
-.empty span{font-size:12px;line-height:1.6;max-width:420px}
-.acts{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+/* OVERLAYS (login + language) */
+.overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.8);backdrop-filter:blur(12px);align-items:center;justify-content:center;padding:18px}
+.overlay.open{display:flex}
+.box{width:min(100%,440px);max-height:90vh;overflow:auto;background:linear-gradient(145deg,#1c170b,#0c0c0f);border:1px solid var(--line2);border-radius:22px;padding:25px;box-shadow:0 25px 80px #000}
+.box-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.box-top h2{margin:0;color:var(--gold2)}
+.auth-close{border:1px solid var(--line);background:#111114;color:var(--gold2);border-radius:50%;width:36px;height:36px}
+.auth-tabs{display:flex;gap:8px;margin:15px 0}
+.auth-tabs button{flex:1;padding:11px;border-radius:10px;border:1px solid var(--line);background:transparent;color:#ece6d2}
+.auth-tabs button.active{background:rgba(212,175,55,.16);color:var(--gold2)}
+.auth-field{margin:13px 0}
+.auth-field label{display:block;font-size:12px;color:var(--muted);margin-bottom:7px}
+.auth-field input{width:100%;padding:13px;border:1px solid var(--line);border-radius:10px;background:#09090c;color:#fff;font-size:16px}
+.auth-foot{font-size:10px;color:var(--muted);line-height:1.6;margin-top:15px}
+.auth-message{font-size:12px;color:var(--gold2);margin-top:12px;line-height:1.5}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.lang-btn{padding:15px 10px;border-radius:12px;border:1px solid var(--line);background:rgba(212,175,55,.05);color:#f1ecd9;font-size:16px}
+.lang-btn:hover,.lang-btn.sel{border-color:var(--gold);background:rgba(212,175,55,.16);color:var(--gold2)}
 
-/* ===== WELCOME ===== */
-.welcome{
-  position:relative;overflow:hidden;padding:24px;border-radius:24px;min-height:138px;
-  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
-}
-.ridge2{position:absolute;inset:auto 0 0 0;width:100%;height:85%;opacity:.85;pointer-events:none}
-.welcome>div{position:relative;z-index:1}
-.welcome h1{font-size:clamp(24px,3.6vw,36px);font-weight:800}
-.welcome h1 em{font-style:normal;color:var(--gold2)}
-.welcome .sub{font-size:13px;color:#c2c8d2;margin-top:8px;line-height:1.6}
-.wr{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.datebox{padding:10px 16px;border-radius:14px;border:1px solid var(--line);font-size:12px;font-variant-numeric:tabular-nums;background:rgba(0,0,0,.4)}
-.mstatus{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:14px;font-weight:700;font-size:13px;border:1px solid}
-.mstatus i{width:9px;height:9px;border-radius:50%;background:currentColor}
-.mstatus.open{color:var(--green);border-color:rgba(36,199,139,.5);background:rgba(36,199,139,.1)}
-.mstatus.closed{color:var(--red);border-color:rgba(241,108,112,.5);background:rgba(241,108,112,.1)}
-
-/* ===== PRICES / MARKETS ===== */
-.strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
-.pcard,.mcard{display:flex;flex-direction:column;gap:8px;padding:14px}
-.pt{display:flex;align-items:center;gap:10px}
-.pt b{font-size:14px}
-.pic{
-  width:34px;height:34px;border-radius:50%;display:grid;place-items:center;flex-shrink:0;
-  font-size:10px;font-weight:800;color:var(--gold2);border:1px solid var(--line);background:rgba(217,184,108,.08);
-}
-.mtype{margin-inline-start:auto;font-size:9px;letter-spacing:1.5px;color:var(--gold);font-weight:700}
-.pv{font-size:22px;font-weight:700;color:var(--dim)}
-.pl{height:0;border-top:1px dashed rgba(217,184,108,.3)}
-.pcard small,.mcard small{font-size:10px;color:var(--muted)}
-.mgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
-
-/* ===== HOME GRID ===== */
-.home2{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:16px;align-items:start}
-.col{display:flex;flex-direction:column;gap:16px;min-width:0}
-.chl{display:flex;align-items:center;gap:12px;min-width:0}
-.chl .ni{width:30px;height:30px;color:var(--gold2)}
-.chl p{font-size:12px;color:var(--muted);line-height:1.5;margin-top:3px}
-.sel3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.uprow{display:grid;grid-template-columns:minmax(0,1fr) auto 200px;gap:12px;align-items:center;margin-top:14px}
-.drop{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;
-  padding:22px 14px;border:1.5px dashed rgba(217,184,108,.5);border-radius:16px;background:rgba(255,255,255,.02);
-  cursor:pointer;transition:.2s;min-height:120px;
-}
-.drop:hover,.drop.over{background:rgba(217,184,108,.08);border-color:var(--gold2)}
-.drop .ni{width:34px;height:34px;color:var(--gold2)}
-.drop strong{font-size:15px;color:var(--gold2)}
-.drop small{font-size:11px;color:var(--muted)}
-.orx{color:var(--muted);font-size:12px}
-.pastebtn{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:16px 10px;min-height:92px;
-  border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.04);font-size:13px;font-weight:600;text-align:center;transition:.2s;
-}
-.pastebtn:hover{border-color:var(--gold);background:rgba(217,184,108,.08)}
-.pastebtn .ni{color:var(--gold2)}
-.cprev{display:none;align-items:center;gap:14px;margin-top:14px;padding:12px;border:1px solid var(--line);border-radius:14px;background:rgba(0,0,0,.3)}
-.cprev.on{display:flex}
-.cprev img{width:96px;height:64px;object-fit:cover;border-radius:10px;border:1px solid var(--line)}
-.cprev .meta{min-width:0;flex:1;font-size:11px;color:var(--muted)}
-.cprev .meta b{display:block;color:var(--text);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:3px}
-.rm{border:1px solid var(--line);color:var(--gold2);border-radius:20px;padding:6px 12px;font-size:11px}
-.goldbtn{
-  display:flex;align-items:center;justify-content:center;gap:10px;width:100%;margin-top:14px;padding:14px;border-radius:14px;
-  border:1px solid #e6ca83;background:linear-gradient(110deg,#9c7736,#f0d99b 55%,#a27d3d);color:#17130b;font-weight:800;font-size:15px;
-  box-shadow:0 10px 26px rgba(217,184,108,.22);
-}
-.goldbtn.inl{width:auto;margin-top:0;padding:12px 22px}
-.ghost{display:inline-flex;align-items:center;justify-content:center;padding:12px 22px;border-radius:14px;border:1px solid var(--gold);color:var(--gold2);font-weight:700;font-size:14px}
-.amsg{margin-top:12px;font-size:12px;line-height:1.6;color:var(--muted)}
-.amsg.err{color:var(--red)}
-.srow{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line2)}
-.srow:last-child{border-bottom:0}
-.srow b{font-size:13px}
-.srow small{display:block;font-size:10px;color:var(--muted);margin-top:4px}
-.tag2{border-radius:20px;padding:6px 11px;font-size:10px;border:1px solid var(--line);color:var(--muted)}
-.minis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.mini{padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(0,0,0,.25);display:flex;flex-direction:column;gap:8px;align-items:flex-start}
-.mini .ni{width:34px;height:34px;color:var(--gold2)}
-.mini b{font-size:15px;color:var(--gold2);letter-spacing:1px}
-.mini p{font-size:11px;color:var(--muted);line-height:1.6}
-
-/* ===== OTHER PAGES ===== */
-.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:16px}
-.stat small{display:block;font-size:11px;color:var(--muted)}
-.stat strong{display:block;font-size:26px;color:var(--gold2);margin:10px 0 6px}
-.stat span{font-size:10px;color:var(--dim)}
-.tablewrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:12px;min-width:560px}
-th{text-align:start;color:var(--gold);font-weight:600;padding:12px 10px;border-bottom:1px solid var(--line2)}
-td.emptyrow{padding:30px 10px;text-align:center;color:var(--muted)}
-.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.botname{font-size:24px;font-weight:700;margin:12px 0 8px;color:var(--gold2);letter-spacing:2px}
-.botdesc{font-size:12px;color:var(--muted);line-height:1.7;min-height:56px;margin-bottom:10px}
-.sbig .ni{width:36px;height:36px;color:var(--gold2)}
-
-/* ===== FOOTER ===== */
-.footer{border-top:1px solid var(--line);padding:18px 0 8px;color:var(--muted);font-size:11px;text-align:center;line-height:2}
-.footer b{display:block;letter-spacing:4px;color:var(--gold);font-weight:600;font-size:10px}
-
-/* ===== MOBILE BAR + DRAWER ===== */
-.tabbar{display:none}
-.scrim{display:none}
-[dir=rtl] .bell::after{right:auto;left:9px}
-
-/* ===== RESPONSIVE ===== */
-@media(max-width:1380px){.toplinks{display:none}}
-@media(max-width:1200px){
-  .home2{grid-template-columns:1fr}
-  .strip{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .mgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
-}
-@media(max-width:900px){
-  .shell{grid-template-columns:1fr;padding:10px;gap:10px}
-  .card{backdrop-filter:none;-webkit-backdrop-filter:none;background:linear-gradient(145deg,rgba(24,30,44,.92),rgba(10,14,22,.94))}
-  .sidebar{
-    position:fixed;top:10px;bottom:10px;inset-inline-start:10px;width:272px;height:auto;
-    transform:translateX(-120%);transition:transform .3s ease;z-index:60;background:rgba(8,13,22,.98);
-  }
-  [dir=rtl] .sidebar{transform:translateX(120%)}
-  body.drawer .sidebar{transform:none}
-  body.drawer .scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:55}
-  .topbar{top:10px;border-radius:20px;backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(8,13,22,.96)}
-  .burger{display:grid}
-  .mbrand{display:flex}
-  .topright{margin-inline-start:auto}
-  .search{order:10;flex:1 1 100%;max-width:none;margin:0}
-  .content{padding-bottom:88px}
-  .tabbar{
-    display:flex;position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:50;
-    padding:6px;border-radius:999px;gap:2px;background:rgba(8,13,22,.94);border:1px solid var(--line);
-    backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 14px 40px rgba(0,0,0,.6);
-  }
-  .tabbar .navbtn{flex:1 1 0;min-width:0;flex-direction:column;justify-content:center;gap:3px;padding:8px 2px;border-radius:999px;font-size:10px;white-space:nowrap}
-  .tabbar .navbtn.active{
-    background:linear-gradient(180deg,rgba(217,184,108,.28),rgba(217,184,108,.06));color:var(--gold2);
-    border-color:var(--gold);box-shadow:0 0 16px rgba(217,184,108,.35);
-  }
-  .grid3,.stats{grid-template-columns:1fr 1fr}
-  .grid3{grid-template-columns:1fr}
-  .minis{grid-template-columns:1fr}
-  .uprow{grid-template-columns:1fr}
-  .orx{text-align:center}
-}
+@media(max-width:900px){.market-grid,.stats-grid{grid-template-columns:repeat(2,1fr)}.two-col{grid-template-columns:1fr}.system-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){
-  .strip,.mgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .strip .pcard:last-child{grid-column:1/-1}
-  .sel3{grid-template-columns:1fr}
-  .welcome{padding:18px;border-radius:20px}
-  .zl{max-width:84px;padding-inline:8px 24px;font-size:11px}
-  .cprev img{width:70px;height:50px}
+ .header-inner{padding:8px 12px}.brand-mark{width:38px;height:38px;font-size:28px}
+ .brand-name{font-size:17px;letter-spacing:1px}.brand-name span{font-size:8px;letter-spacing:2px}.brand-sub{font-size:7px;letter-spacing:1.2px}
+ .account-button{font-size:11px;padding:8px 10px}.language-select{padding:8px 6px;font-size:12px}
+ .nav{padding:0 6px}.nav button{padding:8px 11px;font-size:11.5px;gap:5px}.nav button .ico{font-size:14px}
+ main{padding:14px 12px 38px}.hero{min-height:500px;border-radius:19px}.hero-content{padding:38px 22px 24px}.hero h1{font-size:42px}.hero p{font-size:14px;max-width:340px}
+ .market-grid,.stats-grid{gap:9px}.card{padding:14px;border-radius:15px}.price{font-size:22px}
+ .section-head{align-items:flex-start}.section-head p{max-width:240px}.section-meta{font-size:8px;padding:8px}
+ .field-grid,.system-grid{grid-template-columns:1fr}.signal-row{grid-template-columns:1fr auto}.signal-row .tag:last-child{grid-column:2}.box{padding:20px}
 }
-@media(max-height:760px){.globecard{display:none}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}html{scroll-behavior:auto}}
 </style>
 </head>
-<body>
+<body class="lock">
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <defs>
-    <linearGradient id="gz" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6e6b8"/><stop offset=".5" stop-color="#d9b66b"/><stop offset="1" stop-color="#8a6a32"/></linearGradient>
-    <linearGradient id="gc" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#28b8d5" stop-opacity="0"/><stop offset=".5" stop-color="#28b8d5"/><stop offset="1" stop-color="#7fe3f5"/></linearGradient>
-    <symbol id="zmark" viewBox="0 0 100 100">
-      <polygon points="12,16 92,16 92,27 46,73 92,73 92,84 8,84 8,73 54,27 12,27" fill="url(#gz)"/>
-      <path d="M4 62 Q48 96 98 20" fill="none" stroke="url(#gc)" stroke-width="3" stroke-linecap="round"/>
-    </symbol>
-    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-6h4v6"/></symbol>
-    <symbol id="i-bars" viewBox="0 0 24 24"><path d="M5 20v-8"/><path d="M10 20V6"/><path d="M15 20v-10"/><path d="M20 20V4"/></symbol>
-    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></symbol>
-    <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M2 12h5l3-8 4 16 3-8h5"/></symbol>
-    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></symbol>
-    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6c-2-1.5-5-2-9-2v14c4 0 7 .5 9 2 2-1.5 5-2 9-2V4c-4 0-7 .5-9 2z"/><path d="M12 6v14"/></symbol>
-    <symbol id="i-news" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h6M7 13h10M7 16h10"/></symbol>
-    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></symbol>
-    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></symbol>
-    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
-    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></symbol>
-    <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V7M8.5 10.5L12 7l3.5 3.5"/><path d="M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></symbol>
-    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M4 18l5-5 4 4 3-3 4 4"/></symbol>
-    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/></symbol>
-    <symbol id="i-nova" viewBox="0 0 24 24"><path d="M12 3l8 9-8 9-8-9 8-9z"/><path d="M12 8l3.5 4-3.5 4-3.5-4L12 8z"/></symbol>
-    <symbol id="i-crown" viewBox="0 0 24 24"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5L3 8z"/></symbol>
-    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></symbol>
-    <symbol id="i-bot" viewBox="0 0 24 24"><rect x="5" y="8" width="14" height="11" rx="3"/><circle cx="9.5" cy="13.5" r="1.2"/><circle cx="14.5" cy="13.5" r="1.2"/><path d="M12 4v4M9 19v2M15 19v2"/></symbol>
-    <symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 3v18M5 21h14"/><path d="M5 7h14"/><path d="M5 7l-3 7a3 3 0 0 0 6 0L5 7zM19 7l-3 7a3 3 0 0 0 6 0l-3-7z"/></symbol>
-    <symbol id="i-up" viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></symbol>
-    <linearGradient id="gridge" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d9b86c" stop-opacity=".5"/><stop offset="1" stop-color="#d9b86c" stop-opacity="0"/></linearGradient>
-    <radialGradient id="gg" cx="32%" cy="30%"><stop offset="0" stop-color="#f3dda0" stop-opacity=".6"/><stop offset=".6" stop-color="#d9b86c" stop-opacity=".12"/><stop offset="1" stop-color="#d9b86c" stop-opacity="0"/></radialGradient>
-  </defs>
-</svg>
+<canvas id="bg" aria-hidden="true"></canvas>
 
-<div class="shell">
-
-  <!-- ================= SIDEBAR ================= -->
-  <aside class="sidebar glass" id="sidebar">
-    <div class="slogo">
-      <svg class="zlogo"><use href="#zmark"/></svg>
-      <div class="sname">ZAIRVÉN</div>
-      <div class="sname2">AI PRO</div>
-      <div class="stag">GLOBAL FINANCIAL TECHNOLOGY</div>
-    </div>
-    <nav class="snav">
-      <button class="navbtn active" data-page="home"><svg class="ni"><use href="#i-home"/></svg><span>Dashboard</span></button>
-      <button class="navbtn" data-page="markets"><svg class="ni"><use href="#i-bars"/></svg><span>Markets</span></button>
-      <button class="navbtn" data-page="analyser"><svg class="ni"><use href="#i-target"/></svg><span>AI Chart Analyser</span></button>
-      <button class="navbtn" data-page="signals"><svg class="ni"><use href="#i-pulse"/></svg><span>Trading Signals</span></button>
-      <button class="navbtn" data-page="systems"><svg class="ni"><use href="#i-layers"/></svg><span>Trading Systems</span></button>
-      <button class="navbtn" data-page="academy"><svg class="ni"><use href="#i-book"/></svg><span>Academy</span></button>
-      <button class="navbtn" data-page="news"><svg class="ni"><use href="#i-news"/></svg><span>NewsIQ</span></button>
-      <button class="navbtn" data-page="account"><svg class="ni"><use href="#i-user"/></svg><span>My Account</span></button>
-    </nav>
-    <div class="globecard">
-      <svg viewBox="0 0 200 200" aria-hidden="true">
-        <circle cx="100" cy="100" r="92" fill="url(#gg)"/>
-        <g fill="none" stroke="#d9b86c" stroke-opacity=".55" stroke-width=".8">
-          <circle cx="100" cy="100" r="92"/>
-          <ellipse cx="100" cy="100" rx="92" ry="34"/><ellipse cx="100" cy="100" rx="92" ry="64"/>
-          <ellipse cx="100" cy="100" rx="34" ry="92"/><ellipse cx="100" cy="100" rx="64" ry="92"/>
-          <line x1="8" y1="100" x2="192" y2="100"/><line x1="100" y1="8" x2="100" y2="192"/>
-        </g>
-      </svg>
-      <b>IN ALLAH<br>WE TRUST</b>
-    </div>
-  </aside>
-  <div class="scrim" id="scrim"></div>
-
-  <div class="content">
-
-    <!-- ================= TOP BAR ================= -->
-    <header class="topbar glass">
-      <button class="burger" id="burger" aria-label="Menu"><svg class="ni"><use href="#i-menu"/></svg></button>
-      <div class="mbrand"><svg class="zlogo"><use href="#zmark"/></svg><span>ZAIRVÉN</span></div>
-      <nav class="toplinks">
-        <button data-go="analyser">AI Trading</button>
-        <button data-go="markets">Market Intelligence</button>
-        <button data-go="systems">Automation</button>
-        <button data-go="academy">Education</button>
-      </nav>
-      <div class="search" id="searchbox">
-        <svg class="ni si"><use href="#i-search"/></svg>
-        <input id="q" type="search" autocomplete="off" data-ph="Search market, pair, or feature…" placeholder="Search market, pair, or feature…">
-        <kbd id="kbd">Ctrl K</kbd>
-        <div class="sres" id="sres"></div>
-      </div>
-      <div class="topright">
-        <button class="bell" aria-label="Notifications"><svg class="ni"><use href="#i-bell"/></svg></button>
-        <button class="avatar" data-go="account" aria-label="Profile"><svg class="ni"><use href="#i-user"/></svg></button>
-      </div>
-    </header>
-
-    <!-- ================= DASHBOARD ================= -->
-    <section class="page active" id="home">
-      <div class="welcome glass">
-        <svg class="ridge2" viewBox="0 0 1200 110" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M600 110 L700 62 L780 84 L880 28 L980 76 L1070 40 L1200 70 L1200 110 Z" fill="url(#gridge)"/>
-          <path d="M600 110 L700 62 L780 84 L880 28 L980 76 L1070 40 L1200 70" fill="none" stroke="#d9b86c" stroke-width="1.4" opacity=".7"/>
-        </svg>
-        <div>
-          <h1><span>Welcome back</span>, <em>Founder</em></h1>
-          <div class="sub">Market Intelligence • AI Analysis • Trading Systems • All in One</div>
-        </div>
-        <div class="wr">
-          <span class="datebox" id="clock"></span>
-          <span class="mstatus open" id="mstatus"><i></i><span id="mtext">Markets Open</span></span>
-          <span class="pill">In development</span>
-        </div>
-      </div>
-
-      <div class="strip" id="strip" style="margin:16px 0"></div>
-
-      <div class="home2">
-        <div class="col">
-          <!-- AI CHART ANALYSER -->
-          <section class="card" id="analyser">
-            <div class="chd">
-              <div class="chl">
-                <svg class="ni"><use href="#i-layers"/></svg>
-                <div><h2>AI Chart Analyser</h2><p>Upload a trading chart for structured analysis: bias, key levels and a trade plan.</p></div>
-              </div>
-              <span class="pill off">AI BACKEND NOT CONNECTED</span>
-            </div>
-            <div class="sel3">
-              <div><label for="mkt">Market</label>
-                <select class="fld" id="mkt"><option value="Forex">Forex</option><option value="Metals">Metals</option><option value="Crypto">Crypto</option><option value="Indices">Indices</option><option value="Synthetic">Synthetic</option></select></div>
-              <div><label for="pair">Trading Pair</label><select class="fld" id="pair"></select></div>
-              <div><label for="tf">Timeframe</label>
-                <select class="fld" id="tf"><option>M5</option><option>M15</option><option>M30</option><option selected>H1</option><option>H4</option><option>D1</option></select></div>
-            </div>
-            <div class="uprow">
-              <label class="drop" id="drop" for="chartfile" style="margin:0">
-                <svg class="ni"><use href="#i-upload"/></svg>
-                <strong>Upload Chart Image</strong>
-                <small>PNG, JPG or WebP · Max 10 MB</small>
-              </label>
-              <input type="file" id="chartfile" accept="image/png,image/jpeg,image/webp" hidden>
-              <span class="orx">or</span>
-              <button type="button" class="pastebtn" id="pastebtn"><svg class="ni"><use href="#i-image"/></svg><span>Paste Chart (Screenshot)</span></button>
-            </div>
-            <div class="cprev" id="cprev">
-              <img id="cimg" alt="">
-              <div class="meta"><span>Selected chart</span><b id="cname"></b></div>
-              <button type="button" class="rm" id="rmbtn">Remove</button>
-            </div>
-            <button type="button" class="goldbtn" id="analyseBtn"><svg class="ni"><use href="#i-spark"/></svg><span>Analyse Chart</span></button>
-            <div class="amsg" id="amsg" role="status" aria-live="polite"></div>
-            <p class="cardnote" style="margin-top:10px">Analysis connection is not active yet. This dashboard does not generate fake trading advice.</p>
-          </section>
-
-          <!-- TRADING SYSTEMS -->
-          <section class="card">
-            <div class="chd">
-              <div class="chl"><svg class="ni"><use href="#i-layers"/></svg>
-                <div><h2>Trading Systems</h2><p>Our structured trading engines for every trader.</p></div></div>
-              <button class="link" data-go="systems">View All</button>
-            </div>
-            <div class="minis">
-              <div class="mini"><svg class="ni"><use href="#i-nova"/></svg><b>NOVA</b><span class="tag">BEGINNER</span><p>Guided trading tools and essential risk controls.</p><span class="pill soon">COMING SOON</span></div>
-              <div class="mini"><svg class="ni"><use href="#i-crown"/></svg><b>APEX</b><span class="tag">PROFESSIONAL</span><p>Advanced strategy options, scanning and trade management.</p><span class="pill soon">COMING SOON</span></div>
-              <div class="mini"><svg class="ni"><use href="#i-shield"/></svg><b>SOVEREIGN</b><span class="tag">ADVANCED</span><p>Multi-system intelligence and advanced risk management.</p><span class="pill soon">COMING SOON</span></div>
-            </div>
-          </section>
-        </div>
-
-        <div class="col">
-          <!-- LIVE SIGNALS -->
-          <section class="card">
-            <div class="chd">
-              <div class="chl"><svg class="ni"><use href="#i-pulse"/></svg><h2>Live Trading Signals</h2></div>
-              <button class="link" data-go="signals">View All</button>
-            </div>
-            <div class="siglist"></div>
-            <p class="cardnote" style="margin-top:12px">Signals will appear here after the signal engine is connected and tested.</p>
-          </section>
-
-          <!-- NEWSIQ -->
-          <section class="card">
-            <div class="chd">
-              <div class="chl"><svg class="ni"><use href="#i-news"/></svg><h2>Market NewsIQ</h2></div>
-              <button class="link" data-go="news">View All</button>
-            </div>
-            <div class="empty" style="padding:18px">
-              <strong>News feed not connected</strong>
-              <span>High-impact events such as CPI and FOMC will appear here.</span>
-            </div>
-          </section>
-        </div>
-      </div>
-    </section>
-
-    <!-- ================= MARKETS ================= -->
-    <section class="page" id="markets">
-      <div class="ph">
-        <h2>Market Overview</h2>
-        <p>Global market monitoring across our supported instruments.</p>
-        <span class="pill off">DATA FEED NOT CONNECTED</span>
-        <span class="cardnote" style="margin-inline-start:10px">12 selected instruments · Data not connected</span>
-      </div>
-      <div class="mgrid" id="mgrid"></div>
-    </section>
-
-    <!-- ================= SIGNALS ================= -->
-    <section class="page" id="signals">
-      <div class="ph">
-        <h2>Trading Signals</h2>
-        <p>Verified setups, trade levels and transparent signal history.</p>
-      </div>
-      <div class="stats">
-        <div class="card stat"><small>Today's Signals</small><strong>—</strong><span>Awaiting signal engine</span></div>
-        <div class="card stat"><small>Active Bots</small><strong>—</strong><span>Awaiting bot connection</span></div>
-        <div class="card stat"><small>Win Rate (30D)</small><strong>—</strong><span>No verified results yet</span></div>
-        <div class="card stat"><small>Avg. R:R</small><strong>—</strong><span>Awaiting verified history</span></div>
-      </div>
-      <div class="card" style="margin-bottom:16px">
-        <div class="chd"><h2>Live Trading Signals</h2></div>
-        <div class="siglist"></div>
-      </div>
-      <div class="card">
-        <div class="chd"><h2>Signal Track Record</h2><span class="tag">TRANSPARENT HISTORY</span></div>
-        <div class="tablewrap">
-          <table>
-            <thead><tr><th>Instrument</th><th>Direction</th><th>Entry</th><th>Stop Loss</th><th>Take Profit</th><th>Result</th></tr></thead>
-            <tbody><tr><td class="emptyrow" colspan="6">No verified signal history available yet.</td></tr></tbody>
-          </table>
-        </div>
-        <p class="cardnote" style="margin-top:12px">Winning and losing outcomes will both remain in the permanent performance record.</p>
-      </div>
-    </section>
-
-    <!-- ================= SYSTEMS ================= -->
-    <section class="page" id="systems">
-      <div class="ph">
-        <h2>ZAIRVÉN Trading Systems</h2>
-        <p>Trading automation products for Forex, Gold and Volatility 75.</p>
-      </div>
-      <div class="grid3">
-        <div class="card sbig"><svg class="ni"><use href="#i-nova"/></svg><div class="botname">NOVA</div><span class="tag">BEGINNER</span><p class="botdesc" style="margin-top:10px">Guided trading tools and essential risk controls.</p><div class="cardnote" style="margin-bottom:12px">Forex · Gold · Volatility 75</div><span class="pill soon">COMING SOON</span></div>
-        <div class="card sbig"><svg class="ni"><use href="#i-crown"/></svg><div class="botname">APEX</div><span class="tag">PROFESSIONAL</span><p class="botdesc" style="margin-top:10px">Advanced strategy options, scanning and trade management.</p><div class="cardnote" style="margin-bottom:12px">Forex · Gold · Volatility 75</div><span class="pill soon">COMING SOON</span></div>
-        <div class="card sbig"><svg class="ni"><use href="#i-shield"/></svg><div class="botname">SOVEREIGN</div><span class="tag">ADVANCED</span><p class="botdesc" style="margin-top:10px">Multi-system intelligence and advanced risk management.</p><div class="cardnote" style="margin-bottom:12px">Forex · Gold · Volatility 75</div><span class="pill soon">COMING SOON</span></div>
-      </div>
-      <p class="cardnote" style="margin:14px 0">Each tier is planned to support Forex, Gold and Volatility 75, subject to compatible data and broker support.</p>
-      <div class="card sbig" style="display:flex;gap:16px;align-items:center;flex-wrap:wrap">
-        <svg class="ni"><use href="#i-bot"/></svg>
-        <div style="flex:1;min-width:220px"><b style="font-size:16px">Automatic Trading</b><p class="cardnote" style="margin-top:6px">Automated execution is planned only after full testing and the required legal checks.</p></div>
-        <span class="pill soon">COMING SOON</span>
-      </div>
-    </section>
-
-    <!-- ================= ACADEMY ================= -->
-    <section class="page" id="academy">
-      <div class="ph">
-        <h2>ZAIRVÉN Academy</h2>
-        <p>Financial markets education, technical analysis, risk management and trading psychology.</p>
-      </div>
-      <div class="card empty"><strong>Academy coming soon</strong><span>Educational content is being developed.</span></div>
-    </section>
-
-    <!-- ================= NEWS ================= -->
-    <section class="page" id="news">
-      <div class="ph">
-        <h2>NewsIQ</h2>
-        <p>Economic calendar, major announcements and market-risk intelligence.</p>
-      </div>
-      <div class="card empty"><strong>News feed not connected</strong><span>Economic events and verified market information will appear here once connected.</span></div>
-    </section>
-
-    <!-- ================= ACCOUNT ================= -->
-    <section class="page" id="account">
-      <div class="ph">
-        <h2>My Account</h2>
-        <p>Client accounts, preferences and subscription management.</p>
-      </div>
-      <div class="card empty">
-        <strong>Client portal in development</strong>
-        <span>Account registration and secure sign-in will be added later.</span>
-        <div class="acts"><a class="goldbtn inl" href="login.html">Create Account</a><a class="ghost" href="login.html#signin">Sign In</a></div>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <span>© 2026 ZAIRVÉN · GLOBAL FINANCIAL TECHNOLOGY</span><br>
-      <span>Trading involves risk. Nothing here is financial advice.</span>
-      <b>INTELLIGENCE · PRECISION · DISCIPLINE</b>
-    </footer>
-  </div>
+<div class="intro" id="intro">
+ <svg viewBox="0 0 100 100" aria-hidden="true">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3dc8a"/><stop offset="1" stop-color="#b8901f"/></linearGradient></defs>
+  <circle class="ring" cx="50" cy="50" r="46" pathLength="1"/>
+  <path class="z" d="M28 30 H72 L28 70 H72" pathLength="1"/>
+ </svg>
+ <div class="word">ZAIRVÉN</div>
+ <div class="sub">AI PRO</div>
+ <button class="skip" id="skipIntro" data-i18n="skip">Skip</button>
 </div>
 
-<nav class="tabbar" id="tabbar">
-  <button class="navbtn active" data-page="home"><svg class="ni"><use href="#i-home"/></svg><span>Home</span></button>
-  <button class="navbtn" data-page="markets"><svg class="ni"><use href="#i-bars"/></svg><span>Markets</span></button>
-  <button class="navbtn" data-page="analyser"><svg class="ni"><use href="#i-target"/></svg><span>Chart AI</span></button>
-  <button class="navbtn" data-page="signals"><svg class="ni"><use href="#i-pulse"/></svg><span>Signals</span></button>
-  <button class="navbtn" data-page="systems"><svg class="ni"><use href="#i-layers"/></svg><span>Systems</span></button>
-</nav>
+<div class="top">
+ <header class="header"><div class="header-inner">
+  <div class="brand"><div class="brand-mark">Z</div><div><div class="brand-name">ZAIRVÉN <span>AI PRO</span></div><div class="brand-sub" data-i18n="brandSub">GLOBAL FINANCIAL TECHNOLOGY</div></div></div>
+  <div class="header-actions">
+   <select class="language-select" id="languageSelect" aria-label="Language"></select>
+   <div class="account-wrap"><button class="account-button" id="accountButton" data-i18n="login">Login / Sign up</button>
+    <div class="account-menu" id="accountMenu"><button id="menuLogin" data-i18n="signin">Sign in</button><button id="menuSignup" data-i18n="signup">Create account</button><button id="menuLanguage" data-i18n="languageSettings">Language settings</button></div></div>
+  </div>
+ </div></header>
+ <nav class="nav-wrap"><div class="nav" id="nav">
+  <button class="active" data-target="home"><span class="ico">⌂</span><span data-i18n="home">Home</span></button>
+  <button data-target="markets"><span class="ico">▥</span><span data-i18n="markets">Markets</span></button>
+  <button data-target="chart-ai"><span class="ico">◎</span><span data-i18n="chart">Chart AI</span></button>
+  <button data-target="signals"><span class="ico">⌁</span><span data-i18n="signals">Signals</span></button>
+  <button data-target="systems"><span class="ico">◇</span><span data-i18n="systems">Systems</span></button>
+  <button data-target="academy"><span class="ico">▤</span><span data-i18n="academy">Academy</span></button>
+  <button data-target="newsiq"><span class="ico">▣</span><span data-i18n="newsiq">NewsIQ</span></button>
+ </div></nav>
+</div>
+
+<main id="home">
+<section class="hero"><div class="hero-art"></div><div class="candles" id="candles"></div><div class="hero-content">
+ <div class="eyebrow" data-i18n="welcome">WELCOME TO ZAIRVÉN</div>
+ <h1><span data-i18n="heroTitle">Intelligence for a</span> <span data-i18n="heroAccent">global market.</span></h1>
+ <p data-i18n="heroDesc"></p>
+ <div class="hero-pills"><span class="pill" data-i18n="pill1"></span><span class="pill" data-i18n="pill2"></span><span class="pill" data-i18n="pill3"></span></div>
+</div></section>
+
+<section id="markets"><div class="section-head"><div><h2 data-i18n="marketTitle"></h2><p data-i18n="marketDesc"></p></div><span class="section-meta" data-i18n="marketTag"></span></div><div class="grid market-grid" id="marketGrid"></div></section>
+
+<section class="two-col">
+ <div class="card" id="chart-ai"><div class="panel-title"><h2 data-i18n="chartTitle"></h2><span>ZAIRVÉN INTELLIGENCE</span></div><p class="muted" data-i18n="chartDesc"></p>
+  <div class="field-grid">
+   <div class="field"><label data-i18n="marketGroup"></label><select id="marketSelect"><option>Forex</option><option>Gold</option><option>Synthetic</option></select></div>
+   <div class="field"><label data-i18n="instrument"></label><select id="pairSelect"><option>EURUSD</option><option>GBPUSD</option><option>XAUUSD</option><option>Volatility 75</option></select></div>
+   <div class="field"><label data-i18n="timeframe"></label><select id="timeframeSelect"><option>M5</option><option>M15</option><option>M30</option><option>H1</option><option>H4</option><option>D1</option></select></div>
+  </div>
+  <div class="upload"><strong data-i18n="uploadTitle"></strong><small data-i18n="uploadDesc"></small><br><input type="file" id="chartFile" accept="image/png,image/jpeg,image/webp"><div class="notice" id="fileName"></div><img id="chartPreview" alt="" hidden style="max-width:100%;max-height:240px;margin:12px auto 0;border-radius:10px"></div>
+  <button class="gold-btn" id="analyseBtn" data-i18n="analyse"></button><div class="notice" id="analysisNotice" data-i18n="analysisNotice"></div>
+ </div>
+ <div class="card" id="signals"><div class="panel-title"><h2 data-i18n="signalTitle"></h2></div><div id="signalList"></div><div class="notice" data-i18n="signalNotice"></div></div>
+</section>
+
+<section id="systems"><div class="section-head"><div><h2 data-i18n="systemTitle"></h2><p data-i18n="systemDesc"></p></div></div>
+ <div class="grid system-grid">
+  <div class="card system-card"><div class="system-icon">◈</div><h3>NOVA</h3><span class="level" data-i18n="beginner"></span><p class="muted" data-i18n="novaDesc"></p></div>
+  <div class="card system-card"><div class="system-icon">♛</div><h3>APEX</h3><span class="level" data-i18n="professional"></span><p class="muted" data-i18n="apexDesc"></p></div>
+  <div class="card system-card"><div class="system-icon">♜</div><h3>SOVEREIGN</h3><span class="level" data-i18n="advanced"></span><p class="muted" data-i18n="sovereignDesc"></p></div>
+ </div>
+</section>
+
+<section><div class="section-head"><div><h2 data-i18n="platformTitle"></h2><p data-i18n="platformDesc"></p></div></div>
+ <div class="grid stats-grid">
+  <div class="card stat-card"><div class="stat-label" data-i18n="todaySignals"></div><div class="stat-value">—</div><div class="stat-note" data-i18n="awaitSignal"></div></div>
+  <div class="card stat-card"><div class="stat-label" data-i18n="activeBots"></div><div class="stat-value">—</div><div class="stat-note" data-i18n="awaitBots"></div></div>
+  <div class="card stat-card"><div class="stat-label" data-i18n="winRate"></div><div class="stat-value">—</div><div class="stat-note" data-i18n="noResults"></div></div>
+  <div class="card stat-card"><div class="stat-label" data-i18n="averageRR"></div><div class="stat-value">—</div><div class="stat-note" data-i18n="awaitHistory"></div></div>
+ </div>
+</section>
+
+<section class="card" style="margin-top:18px"><div class="panel-title"><h2 data-i18n="historyTitle"></h2></div>
+ <div class="table-wrap"><table class="history"><thead><tr><th data-i18n="instrument"></th><th data-i18n="direction"></th><th data-i18n="entry"></th><th data-i18n="stopLoss"></th><th data-i18n="takeProfit"></th><th data-i18n="result"></th></tr></thead><tbody><tr><td colspan="6" class="empty" data-i18n="emptyHistory"></td></tr></tbody></table></div>
+</section>
+
+<section class="two-col">
+ <div class="card" id="academy"><div class="panel-title"><h2 data-i18n="academyTitle"></h2></div><p class="muted" data-i18n="academyDesc"></p><span class="level" data-i18n="development"></span></div>
+ <div class="card" id="newsiq"><div class="panel-title"><h2 data-i18n="newsTitle"></h2></div><p class="muted" data-i18n="newsDesc"></p><span class="level" data-i18n="development"></span></div>
+</section>
+<p class="notice" style="margin-top:20px" data-i18n="dataDisclaimer"></p>
+</main>
+
+<footer class="footer"><strong>IN ALLAH WE TRUST</strong>ZAIRVÉN AI PRO<br><br><span data-i18n="footerRisk"></span></footer>
+
+<div class="overlay" id="authOverlay"><div class="box">
+ <div class="box-top"><h2 id="authTitle"></h2><button class="auth-close" id="authClose">✕</button></div>
+ <div class="auth-tabs"><button class="active" id="signInTab" data-i18n="signin"></button><button id="signUpTab" data-i18n="signup"></button></div>
+ <p class="muted" id="authSubtitle"></p>
+ <form id="authForm">
+  <div class="auth-field" id="nameField" hidden><label for="authName" data-i18n="fullName"></label><input id="authName" type="text" data-ph="yourName" autocomplete="name"></div>
+  <div class="auth-field"><label for="authEmail" data-i18n="email"></label><input id="authEmail" type="email" placeholder="name@example.com" autocomplete="email" required></div>
+  <div class="auth-field"><label for="authPassword" data-i18n="password"></label><input id="authPassword" type="password" data-ph="passwordHint" minlength="8" autocomplete="current-password" required></div>
+  <button class="gold-btn" id="authSubmit" type="submit"></button>
+  <div class="auth-message" id="authMessage" role="status"></div>
+ </form>
+ <div class="auth-foot" data-i18n="authFoot"></div>
+</div></div>
+
+<div class="overlay" id="langOverlay"><div class="box">
+ <div class="box-top"><h2 data-i18n="pickLang">Choose your language</h2><button class="auth-close" id="langClose">✕</button></div>
+ <p class="muted" data-i18n="pickLangDesc"></p>
+ <div class="lang-grid" id="langGrid"></div>
+</div></div>
 
 <script>
-(function(){
-  /* ---------- data ---------- */
-  var INSTR=[["EUR/USD","FOREX","EU"],["GBP/USD","FOREX","GB"],["USD/JPY","FOREX","JP"],["GBP/JPY","FOREX","GJ"],["EUR/GBP","FOREX","EG"],["EUR/JPY","FOREX","EJ"],["XAU/USD","GOLD","Au"],["XAG/USD","SILVER","Ag"],["BTC/USD","CRYPTO","BTC"],["NAS100","INDEX","NQ"],["Volatility 75","SYNTHETIC","V75"],["Boom 500","SYNTHETIC","B5"]];
-  var STRIP=["XAU/USD","EUR/USD","GBP/USD","USD/JPY","Volatility 75"];
-  var SIG=["XAU/USD","EUR/USD","GBP/USD","BTC/USD","Volatility 75"];
-  var PAGES=[["home","Dashboard"],["markets","Markets"],["analyser","AI Chart Analyser"],["signals","Trading Signals"],["systems","Trading Systems"],["academy","Academy"],["news","NewsIQ"],["account","My Account"]];
-  function inst(s){for(var i=0;i<INSTR.length;i++){if(INSTR[i][0]===s){return INSTR[i];}}return [s,"",""];}
-  function el(tag,cls,html){var e=document.createElement(tag);if(cls){e.className=cls;}if(html){e.innerHTML=html;}return e;}
+"use strict";
+const T={
+en:{home:"Home",markets:"Markets",chart:"Chart AI",signals:"Signals",systems:"Systems",academy:"Academy",newsiq:"NewsIQ",welcome:"WELCOME TO ZAIRVÉN",heroTitle:"Intelligence for a",heroAccent:"global market.",heroDesc:"A unified financial technology environment for market intelligence, AI-assisted chart analysis, trading systems and disciplined execution.",pill1:"GLOBAL MARKET INTELLIGENCE",pill2:"AI-ASSISTED ANALYSIS",pill3:"IN DEVELOPMENT PREVIEW",marketTitle:"Global Market Overview",marketDesc:"Selected launch instruments · awaiting authorised market feeds",marketTag:"LAUNCH MARKETS",awaitData:"Awaiting authorised data",chartTitle:"✧ AI Chart Analyser",chartDesc:"Upload a chart screenshot for structured analysis when the secure AI service is connected. This preview does not generate trading recommendations.",marketGroup:"Market group",instrument:"Instrument",timeframe:"Timeframe",uploadTitle:"＋ Upload Chart Image",uploadDesc:"PNG, JPG or WebP · Choose a chart screenshot",analyse:"✧ Prepare Chart for Analysis",analysisNotice:"Secure analysis service is not connected yet.",signalTitle:"Live Trading Signals",signalNotice:"Signals will appear after the strategy engine, data source and tracking service are connected and tested.",pending:"Pending",awaiting:"Awaiting verified data",systemTitle:"ZAIRVÉN Trading Systems",systemDesc:"Three product levels · all launch markets supported",beginner:"BEGINNER",professional:"PROFESSIONAL",advanced:"ADVANCED",novaDesc:"Guided trading tools, clear explanations and essential risk controls.",apexDesc:"Multi-market scanning, advanced strategy options and structured trade management.",sovereignDesc:"Multi-system intelligence with advanced analysis, execution and portfolio risk tools.",platformTitle:"Platform Overview",platformDesc:"Verified performance figures appear only after connection and testing",todaySignals:"Today's Signals",activeBots:"Active Bots",winRate:"Win Rate (30D)",averageRR:"Average R:R",awaitSignal:"Awaiting signal engine",awaitBots:"Awaiting bot connection",noResults:"No verified results yet",awaitHistory:"Awaiting verified history",historyTitle:"Signal Track Record",direction:"Direction",entry:"Entry",stopLoss:"Stop Loss",takeProfit:"Take Profit",result:"Result",emptyHistory:"No verified signal history available yet.",academyTitle:"ZAIRVÉN Academy",academyDesc:"A structured learning environment from beginner foundations to advanced trading knowledge, risk and trading psychology.",development:"IN DEVELOPMENT",newsTitle:"Market NewsIQ",newsDesc:"Economic calendar, important market events and AI-assisted news summaries with event-risk awareness.",dataDisclaimer:"All market prices and trading signals are intentionally blank until authorised, verified data services are connected.",footerRisk:"Trading involves risk. Nothing here is financial advice.",signin:"Sign in",signup:"Create account",languageSettings:"Language settings",authWelcome:"Welcome back",authSigninDesc:"Sign in to access your ZAIRVÉN client space.",authSignupDesc:"Set up your client profile to get started.",fullName:"Full name",email:"Email address",password:"Password",authFoot:"Account access is a preview interface. Secure sign-in, password recovery and account creation will activate after the authentication service is connected. This form does not send or save your password.",previewOnly:"Preview only: authentication is not connected. Nothing has been sent or saved. Do not enter a real password.",login:"Login / Sign up",brandSub:"GLOBAL FINANCIAL TECHNOLOGY",close:"Close",yourName:"Your full name",passwordHint:"At least 8 characters",chartSelected:"Chart selected",pleaseSelect:"Please select a chart image first.",serviceMissing:"The secure AI analysis connection must be enabled before analysis can run.",selected:"Selected",skip:"Skip",pickLang:"Choose your language",pickLangDesc:"You can change it any time from the header."},
+ar:{home:"الرئيسية",markets:"الأسواق",chart:"تحليل الرسم",signals:"الإشارات",systems:"الأنظمة",academy:"الأكاديمية",newsiq:"أخبار السوق",welcome:"مرحباً بك في ZAIRVÉN",heroTitle:"ذكاء للأسواق في",heroAccent:"سوق عالمي.",heroDesc:"بيئة موحدة للتكنولوجيا المالية تجمع معلومات الأسواق وتحليل الرسوم بمساعدة الذكاء الاصطناعي وأنظمة التداول والتنفيذ المنضبط.",pill1:"معلومات الأسواق العالمية",pill2:"تحليل بمساعدة الذكاء الاصطناعي",pill3:"نسخة قيد التطوير",marketTitle:"نظرة عامة على الأسواق العالمية",marketDesc:"الأدوات المختارة · بانتظار بيانات سوق معتمدة",marketTag:"أسواق الإطلاق",awaitData:"بانتظار بيانات معتمدة",chartTitle:"✧ محلل الرسوم بالذكاء الاصطناعي",chartDesc:"ارفع صورة الرسم البياني للتحليل بعد ربط خدمة الذكاء الاصطناعي الآمنة. هذه نسخة تجريبية ولا تقدم توصيات تداول.",marketGroup:"مجموعة السوق",instrument:"الأداة",timeframe:"الإطار الزمني",uploadTitle:"＋ تحميل صورة الرسم",uploadDesc:"PNG أو JPG أو WebP · اختر صورة للرسم البياني",analyse:"✧ تجهيز الرسم للتحليل",analysisNotice:"خدمة التحليل الآمنة غير متصلة بعد.",signalTitle:"إشارات التداول",signalNotice:"ستظهر الإشارات بعد ربط الأنظمة واختبارها.",pending:"قيد الانتظار",awaiting:"بانتظار بيانات موثوقة",systemTitle:"أنظمة ZAIRVÉN للتداول",systemDesc:"ثلاثة مستويات للمنتجات · جميع أسواق الإطلاق مدعومة",beginner:"مبتدئ",professional:"احترافي",advanced:"متقدم",novaDesc:"أدوات تداول إرشادية وشرح واضح وضوابط أساسية للمخاطر.",apexDesc:"فحص أسواق متعددة وإدارة منظمة للصفقات.",sovereignDesc:"أدوات متقدمة للتحليل والتنفيذ وإدارة مخاطر المحفظة.",platformTitle:"نظرة عامة على المنصة",platformDesc:"ستظهر أرقام الأداء الموثوقة بعد الربط والاختبار",todaySignals:"إشارات اليوم",activeBots:"الروبوتات النشطة",winRate:"نسبة النجاح (30 يوماً)",averageRR:"متوسط العائد إلى المخاطرة",awaitSignal:"بانتظار محرك الإشارات",awaitBots:"بانتظار ربط الروبوتات",noResults:"لا توجد نتائج موثقة",awaitHistory:"بانتظار سجل موثوق",historyTitle:"سجل الإشارات",direction:"الاتجاه",entry:"الدخول",stopLoss:"وقف الخسارة",takeProfit:"جني الأرباح",result:"النتيجة",emptyHistory:"لا يوجد سجل إشارات موثوق بعد.",academyTitle:"أكاديمية ZAIRVÉN",academyDesc:"بيئة تعليمية منظمة من الأساسيات إلى المعرفة المتقدمة وإدارة المخاطر وعلم نفس التداول.",development:"قيد التطوير",newsTitle:"أخبار السوق NewsIQ",newsDesc:"تقويم اقتصادي وأحداث سوق مهمة وملخصات أخبار بمساعدة الذكاء الاصطناعي.",dataDisclaimer:"لن تظهر الأسعار والإشارات حتى يتم ربط مصادر بيانات موثوقة ومعتمدة.",footerRisk:"التداول ينطوي على مخاطر. هذا المحتوى ليس نصيحة مالية.",signin:"تسجيل الدخول",signup:"إنشاء حساب",languageSettings:"إعدادات اللغة",authWelcome:"مرحباً بعودتك",authSigninDesc:"سجل الدخول للوصول إلى مساحة ZAIRVÉN الخاصة بك.",authSignupDesc:"أنشئ ملف العميل الخاص بك للبدء.",fullName:"الاسم الكامل",email:"البريد الإلكتروني",password:"كلمة المرور",authFoot:"واجهة تجريبية. سيتم تفعيل الدخول الآمن وإنشاء الحساب بعد ربط خدمة المصادقة. هذا النموذج لا يرسل كلمة المرور ولا يحفظها.",previewOnly:"معاينة فقط: المصادقة غير متصلة. لم يتم إرسال أو حفظ أي شيء. لا تُدخل كلمة مرور حقيقية.",login:"دخول / تسجيل",brandSub:"تكنولوجيا مالية عالمية",close:"إغلاق",yourName:"اسمك الكامل",passwordHint:"ثمانية أحرف على الأقل",chartSelected:"تم اختيار الرسم",pleaseSelect:"يرجى اختيار صورة الرسم أولاً.",serviceMissing:"يجب ربط خدمة الذكاء الاصطناعي الآمنة قبل التحليل.",skip:"تخطي",pickLang:"اختر لغتك",pickLangDesc:"يمكنك تغييرها في أي وقت من أعلى الصفحة."},
+sw:{home:"Nyumbani",markets:"Masoko",chart:"Chati AI",signals:"Ishara",systems:"Mifumo",academy:"Chuo",newsiq:"Habari",welcome:"KARIBU ZAIRVÉN",heroTitle:"Akili kwa",heroAccent:"soko la dunia.",heroDesc:"Jukwaa la teknolojia ya kifedha linalounganisha taarifa za masoko, uchambuzi wa chati kwa AI, mifumo ya biashara na utekelezaji wenye nidhamu.",pill1:"TAARIFA ZA MASOKO YA DUNIA",pill2:"UCHAMBUZI KWA AI",pill3:"BADO LINATENGENEZWA",marketTitle:"Muhtasari wa Masoko ya Dunia",marketDesc:"Masoko yaliyochaguliwa · yanasubiri data iliyoidhinishwa",marketTag:"MASOKO YA AWALI",awaitData:"Inasubiri data iliyoidhinishwa",chartTitle:"✧ Mchambuzi wa Chati wa AI",chartDesc:"Pakia picha ya chati kwa uchambuzi baada ya huduma salama ya AI kuunganishwa. Huu ni mwonekano wa majaribio.",marketGroup:"Kundi la soko",instrument:"Chombo cha biashara",timeframe:"Muda wa chati",uploadTitle:"＋ Pakia Picha ya Chati",uploadDesc:"PNG, JPG au WebP · Chagua picha ya chati",analyse:"✧ Andaa Chati kwa Uchambuzi",analysisNotice:"Huduma salama ya uchambuzi bado haijaunganishwa.",signalTitle:"Ishara za Biashara",signalNotice:"Ishara zitaonekana baada ya mifumo kuunganishwa na kupimwa.",pending:"Inasubiri",awaiting:"Inasubiri data iliyothibitishwa",systemTitle:"Mifumo ya Biashara ya ZAIRVÉN",systemDesc:"Viwango vitatu vya bidhaa · masoko yote ya awali yanaungwa mkono",beginner:"MWANZO",professional:"KITAALAMU",advanced:"KINA",novaDesc:"Zana za biashara zinazoelekezwa, maelezo rahisi na udhibiti wa hatari.",apexDesc:"Uchanganuzi wa masoko mengi na usimamizi wa biashara uliopangwa.",sovereignDesc:"Uchambuzi wa juu, utekelezaji na zana za kudhibiti hatari za uwekezaji.",platformTitle:"Muhtasari wa Jukwaa",platformDesc:"Takwimu zilizothibitishwa zitaonekana baada ya kuunganishwa na kupimwa",todaySignals:"Ishara za Leo",activeBots:"Boti Zinazotumika",winRate:"Kiwango cha Ushindi (Siku 30)",averageRR:"Uwiano wa Faida na Hatari",awaitSignal:"Inasubiri injini ya ishara",awaitBots:"Inasubiri muunganisho wa boti",noResults:"Hakuna matokeo yaliyothibitishwa",awaitHistory:"Inasubiri historia iliyothibitishwa",historyTitle:"Historia ya Ishara",direction:"Mwelekeo",entry:"Bei ya Kuingia",stopLoss:"Stop Loss",takeProfit:"Take Profit",result:"Matokeo",emptyHistory:"Hakuna historia ya ishara iliyothibitishwa bado.",academyTitle:"Chuo cha ZAIRVÉN",academyDesc:"Mazingira ya kujifunza kutoka misingi hadi maarifa ya juu, usimamizi wa hatari na saikolojia ya biashara.",development:"INAENDELEZWA",newsTitle:"Habari za Soko NewsIQ",newsDesc:"Kalenda ya uchumi, matukio muhimu na muhtasari wa habari unaosaidiwa na AI.",dataDisclaimer:"Bei na ishara hazitaonyeshwa hadi huduma za data zilizoidhinishwa ziunganishwe.",footerRisk:"Biashara ina hatari. Haya siyo mashauri ya kifedha.",signin:"Ingia",signup:"Fungua akaunti",languageSettings:"Mipangilio ya lugha",authWelcome:"Karibu tena",authSigninDesc:"Ingia ili kufikia akaunti yako ya ZAIRVÉN.",authSignupDesc:"Tengeneza wasifu wako wa mteja ili kuanza.",fullName:"Jina kamili",email:"Barua pepe",password:"Nenosiri",authFoot:"Hii ni sehemu ya majaribio. Kuingia salama na usajili vitawezeshwa baada ya kuunganisha huduma ya uthibitishaji. Fomu hii haitumi wala kuhifadhi nenosiri lako.",previewOnly:"Majaribio tu: uthibitishaji haujaunganishwa. Hakuna kilichotumwa wala kuhifadhiwa. Usiweke nenosiri halisi.",login:"Ingia / Jisajili",brandSub:"TEKNOLOJIA YA FEDHA DUNIANI",close:"Funga",yourName:"Jina lako kamili",passwordHint:"Angalau herufi 8",chartSelected:"Chati imechaguliwa",pleaseSelect:"Tafadhali chagua picha ya chati kwanza.",serviceMissing:"Huduma salama ya AI lazima iunganishwe kabla ya uchambuzi.",skip:"Ruka",pickLang:"Chagua lugha yako",pickLangDesc:"Unaweza kubadilisha wakati wowote juu ya ukurasa."},
+fr:{home:"Accueil",markets:"Marchés",chart:"Analyse IA",signals:"Signaux",systems:"Systèmes",academy:"Académie",newsiq:"Actualités",welcome:"BIENVENUE CHEZ ZAIRVÉN",heroTitle:"L’intelligence au service du",heroAccent:"marché mondial.",heroDesc:"Un environnement unifié de technologie financière dédié à l’intelligence des marchés, à l’analyse graphique assistée par l’IA, aux systèmes de trading et à une exécution rigoureuse.",pill1:"INTELLIGENCE DES MARCHÉS MONDIAUX",pill2:"ANALYSE ASSISTÉE PAR L’IA",pill3:"APERÇU EN DÉVELOPPEMENT",marketTitle:"Vue d’ensemble des marchés mondiaux",marketDesc:"Instruments sélectionnés · en attente de flux autorisés",marketTag:"MARCHÉS DE LANCEMENT",awaitData:"En attente de données autorisées",chartTitle:"✧ Analyseur de graphiques IA",chartDesc:"Importez une capture d’écran pour une analyse structurée lorsque le service IA sécurisé sera connecté. Cet aperçu ne génère pas de recommandations.",marketGroup:"Groupe de marché",instrument:"Instrument",timeframe:"Unité de temps",uploadTitle:"＋ Importer une image",uploadDesc:"PNG, JPG ou WebP · Choisissez une capture d’écran",analyse:"✧ Préparer le graphique",analysisNotice:"Le service d’analyse sécurisé n’est pas encore connecté.",signalTitle:"Signaux de trading",signalNotice:"Les signaux apparaîtront lorsque les systèmes seront connectés et testés.",pending:"En attente",awaiting:"En attente de données vérifiées",systemTitle:"Systèmes de trading ZAIRVÉN",systemDesc:"Trois niveaux de produits · tous les marchés de lancement sont pris en charge",beginner:"DÉBUTANT",professional:"PROFESSIONNEL",advanced:"AVANCÉ",novaDesc:"Outils guidés, explications claires et contrôles essentiels des risques.",apexDesc:"Analyse multi-marchés et gestion structurée des transactions.",sovereignDesc:"Outils avancés d’analyse, d’exécution et de gestion des risques.",platformTitle:"Vue d’ensemble de la plateforme",platformDesc:"Les indicateurs vérifiés seront affichés après connexion et tests",todaySignals:"Signaux du jour",activeBots:"Bots actifs",winRate:"Taux de réussite (30 j)",averageRR:"Ratio rendement/risque moyen",awaitSignal:"En attente du moteur de signaux",awaitBots:"En attente de connexion des bots",noResults:"Aucun résultat vérifié",awaitHistory:"En attente d’un historique vérifié",historyTitle:"Historique des signaux",direction:"Direction",entry:"Entrée",stopLoss:"Stop-loss",takeProfit:"Take-profit",result:"Résultat",emptyHistory:"Aucun historique vérifié disponible.",academyTitle:"Académie ZAIRVÉN",academyDesc:"Un parcours structuré des bases aux connaissances avancées, à la gestion des risques et à la psychologie du trading.",development:"EN DÉVELOPPEMENT",newsTitle:"Actualités des marchés NewsIQ",newsDesc:"Calendrier économique, événements importants et résumés assistés par l’IA.",dataDisclaimer:"Les cours et signaux restent masqués jusqu’à la connexion de sources autorisées et vérifiées.",footerRisk:"Le trading comporte des risques. Ceci ne constitue pas un conseil financier.",signin:"Se connecter",signup:"Créer un compte",languageSettings:"Paramètres de langue",authWelcome:"Bon retour",authSigninDesc:"Connectez-vous à votre espace client ZAIRVÉN.",authSignupDesc:"Créez votre profil client pour commencer.",fullName:"Nom complet",email:"Adresse e-mail",password:"Mot de passe",authFoot:"Interface de démonstration. La connexion sécurisée et la création de compte seront activées après connexion du service d’authentification. Ce formulaire n’envoie ni n’enregistre votre mot de passe.",previewOnly:"Aperçu uniquement : l’authentification n’est pas connectée. Rien n’a été envoyé ni enregistré. N’entrez pas de vrai mot de passe.",login:"Connexion / Inscription",brandSub:"TECHNOLOGIE FINANCIÈRE MONDIALE",close:"Fermer",yourName:"Votre nom complet",passwordHint:"Au moins 8 caractères",chartSelected:"Graphique sélectionné",pleaseSelect:"Veuillez d’abord sélectionner une image.",serviceMissing:"Le service IA sécurisé doit être connecté avant l’analyse.",skip:"Passer",pickLang:"Choisissez votre langue",pickLangDesc:"Vous pouvez la modifier à tout moment depuis l’en-tête."},
+pt:{home:"Início",markets:"Mercados",chart:"Gráfico IA",signals:"Sinais",systems:"Sistemas",academy:"Academia",newsiq:"Notícias",welcome:"BEM-VINDO À ZAIRVÉN",heroTitle:"Inteligência para um",heroAccent:"mercado global.",heroDesc:"Um ambiente unificado de tecnologia financeira para inteligência de mercado, análise de gráficos com IA, sistemas de trading e execução disciplinada.",pill1:"INTELIGÊNCIA DE MERCADO GLOBAL",pill2:"ANÁLISE ASSISTIDA POR IA",pill3:"PRÉVIA EM DESENVOLVIMENTO",marketTitle:"Visão Geral do Mercado Global",marketDesc:"Instrumentos de lançamento · aguardando dados autorizados",marketTag:"MERCADOS DE LANÇAMENTO",awaitData:"Aguardando dados autorizados",chartTitle:"✧ Analisador de Gráficos IA",chartDesc:"Envie uma captura de tela do gráfico para análise estruturada quando o serviço seguro de IA estiver conectado. Esta prévia não gera recomendações.",marketGroup:"Grupo de mercado",instrument:"Instrumento",timeframe:"Período",uploadTitle:"＋ Enviar Imagem do Gráfico",uploadDesc:"PNG, JPG ou WebP · Escolha uma captura de tela",analyse:"✧ Preparar Gráfico para Análise",analysisNotice:"O serviço seguro de análise ainda não está conectado.",signalTitle:"Sinais de Trading",signalNotice:"Os sinais aparecerão depois que o motor de estratégia, a fonte de dados e o acompanhamento forem conectados e testados.",pending:"Pendente",awaiting:"Aguardando dados verificados",systemTitle:"Sistemas de Trading ZAIRVÉN",systemDesc:"Três níveis de produto · todos os mercados de lançamento suportados",beginner:"INICIANTE",professional:"PROFISSIONAL",advanced:"AVANÇADO",novaDesc:"Ferramentas guiadas, explicações claras e controles essenciais de risco.",apexDesc:"Varredura multimercado, estratégias avançadas e gestão estruturada de operações.",sovereignDesc:"Inteligência multissistema com análise avançada, execução e gestão de risco de carteira.",platformTitle:"Visão Geral da Plataforma",platformDesc:"Números de desempenho verificados aparecem somente após conexão e testes",todaySignals:"Sinais de Hoje",activeBots:"Bots Ativos",winRate:"Taxa de Acerto (30D)",averageRR:"R:R Médio",awaitSignal:"Aguardando motor de sinais",awaitBots:"Aguardando conexão dos bots",noResults:"Sem resultados verificados",awaitHistory:"Aguardando histórico verificado",historyTitle:"Histórico de Sinais",direction:"Direção",entry:"Entrada",stopLoss:"Stop Loss",takeProfit:"Take Profit",result:"Resultado",emptyHistory:"Nenhum histórico verificado disponível.",academyTitle:"Academia ZAIRVÉN",academyDesc:"Aprendizado estruturado, dos fundamentos ao conhecimento avançado, risco e psicologia do trading.",development:"EM DESENVOLVIMENTO",newsTitle:"Notícias de Mercado NewsIQ",newsDesc:"Calendário econômico, eventos importantes e resumos de notícias com IA e atenção ao risco.",dataDisclaimer:"Preços e sinais ficam em branco até que fontes de dados autorizadas e verificadas sejam conectadas.",footerRisk:"Trading envolve risco. Nada aqui é aconselhamento financeiro.",signin:"Entrar",signup:"Criar conta",languageSettings:"Idioma",authWelcome:"Bem-vindo de volta",authSigninDesc:"Entre para acessar seu espaço ZAIRVÉN.",authSignupDesc:"Crie seu perfil de cliente para começar.",fullName:"Nome completo",email:"E-mail",password:"Senha",authFoot:"Interface de demonstração. Login seguro e criação de conta serão ativados após a conexão do serviço de autenticação. Este formulário não envia nem salva sua senha.",previewOnly:"Somente prévia: a autenticação não está conectada. Nada foi enviado ou salvo. Não digite uma senha real.",login:"Entrar / Cadastrar",brandSub:"TECNOLOGIA FINANCEIRA GLOBAL",close:"Fechar",yourName:"Seu nome completo",passwordHint:"Pelo menos 8 caracteres",chartSelected:"Gráfico selecionado",pleaseSelect:"Selecione primeiro uma imagem do gráfico.",serviceMissing:"O serviço seguro de IA precisa estar conectado antes da análise.",skip:"Pular",pickLang:"Escolha seu idioma",pickLangDesc:"Você pode mudar a qualquer momento no cabeçalho."},
+es:{home:"Inicio",markets:"Mercados",chart:"Gráfico IA",signals:"Señales",systems:"Sistemas",academy:"Academia",newsiq:"Noticias",welcome:"BIENVENIDO A ZAIRVÉN",heroTitle:"Inteligencia para un",heroAccent:"mercado global.",heroDesc:"Un entorno unificado de tecnología financiera para inteligencia de mercado, análisis de gráficos con IA, sistemas de trading y ejecución disciplinada.",pill1:"INTELIGENCIA DE MERCADO GLOBAL",pill2:"ANÁLISIS ASISTIDO POR IA",pill3:"VISTA PREVIA EN DESARROLLO",marketTitle:"Resumen del Mercado Global",marketDesc:"Instrumentos de lanzamiento · en espera de datos autorizados",marketTag:"MERCADOS DE LANZAMIENTO",awaitData:"En espera de datos autorizados",chartTitle:"✧ Analizador de Gráficos IA",chartDesc:"Sube una captura del gráfico para un análisis estructurado cuando el servicio seguro de IA esté conectado. Esta vista previa no genera recomendaciones.",marketGroup:"Grupo de mercado",instrument:"Instrumento",timeframe:"Temporalidad",uploadTitle:"＋ Subir Imagen del Gráfico",uploadDesc:"PNG, JPG o WebP · Elige una captura de pantalla",analyse:"✧ Preparar Gráfico para Análisis",analysisNotice:"El servicio seguro de análisis aún no está conectado.",signalTitle:"Señales de Trading",signalNotice:"Las señales aparecerán cuando el motor de estrategia, la fuente de datos y el seguimiento estén conectados y probados.",pending:"Pendiente",awaiting:"En espera de datos verificados",systemTitle:"Sistemas de Trading ZAIRVÉN",systemDesc:"Tres niveles de producto · todos los mercados de lanzamiento compatibles",beginner:"PRINCIPIANTE",professional:"PROFESIONAL",advanced:"AVANZADO",novaDesc:"Herramientas guiadas, explicaciones claras y controles esenciales de riesgo.",apexDesc:"Escaneo multimercado, estrategias avanzadas y gestión estructurada de operaciones.",sovereignDesc:"Inteligencia multisistema con análisis avanzado, ejecución y gestión de riesgo de cartera.",platformTitle:"Resumen de la Plataforma",platformDesc:"Las cifras verificadas aparecen solo tras la conexión y las pruebas",todaySignals:"Señales de Hoy",activeBots:"Bots Activos",winRate:"Tasa de Acierto (30D)",averageRR:"R:R Promedio",awaitSignal:"En espera del motor de señales",awaitBots:"En espera de conexión de bots",noResults:"Sin resultados verificados",awaitHistory:"En espera de historial verificado",historyTitle:"Historial de Señales",direction:"Dirección",entry:"Entrada",stopLoss:"Stop Loss",takeProfit:"Take Profit",result:"Resultado",emptyHistory:"Aún no hay historial verificado.",academyTitle:"Academia ZAIRVÉN",academyDesc:"Aprendizaje estructurado desde lo básico hasta conocimiento avanzado, riesgo y psicología del trading.",development:"EN DESARROLLO",newsTitle:"Noticias de Mercado NewsIQ",newsDesc:"Calendario económico, eventos importantes y resúmenes de noticias con IA y conciencia del riesgo.",dataDisclaimer:"Los precios y señales permanecen en blanco hasta conectar fuentes de datos autorizadas y verificadas.",footerRisk:"El trading implica riesgo. Nada aquí es asesoramiento financiero.",signin:"Iniciar sesión",signup:"Crear cuenta",languageSettings:"Idioma",authWelcome:"Bienvenido de nuevo",authSigninDesc:"Inicia sesión para acceder a tu espacio ZAIRVÉN.",authSignupDesc:"Crea tu perfil de cliente para empezar.",fullName:"Nombre completo",email:"Correo electrónico",password:"Contraseña",authFoot:"Interfaz de demostración. El inicio de sesión seguro y la creación de cuentas se activarán al conectar el servicio de autenticación. Este formulario no envía ni guarda tu contraseña.",previewOnly:"Solo vista previa: la autenticación no está conectada. No se envió ni guardó nada. No escribas una contraseña real.",login:"Entrar / Registrarse",brandSub:"TECNOLOGÍA FINANCIERA GLOBAL",close:"Cerrar",yourName:"Tu nombre completo",passwordHint:"Al menos 8 caracteres",chartSelected:"Gráfico seleccionado",pleaseSelect:"Primero selecciona una imagen del gráfico.",serviceMissing:"El servicio seguro de IA debe estar conectado antes del análisis.",skip:"Omitir",pickLang:"Elige tu idioma",pickLangDesc:"Puedes cambiarlo en cualquier momento desde el encabezado."}
+};
+const LANGS=[["en","English"],["ar","العربية"],["sw","Kiswahili"],["fr","Français"],["pt","Português"],["es","Español"]];
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+let lang="en",authMode="signin";
+const tr=k=>(T[lang]&&T[lang][k])||T.en[k]||"";
 
-  /* ---------- price strip, market grid, signal lists ---------- */
-  var strip=document.getElementById("strip");
-  STRIP.forEach(function(s){
-    var d=el("div","card pcard",'<div class="pt"><span class="pic"></span><b></b></div><div class="pv">—</div><div class="pl"></div><small>Awaiting data</small>');
-    d.querySelector(".pic").textContent=inst(s)[2];
-    d.querySelector("b").textContent=s;
-    strip.appendChild(d);
-  });
-  var mg=document.getElementById("mgrid");
-  INSTR.forEach(function(i){
-    var d=el("div","card mcard",'<div class="pt"><span class="pic"></span><b></b><span class="mtype"></span></div><div class="pv">—</div><small>Awaiting verified data</small>');
-    d.setAttribute("data-sym",i[0]);
-    d.querySelector(".pic").textContent=i[2];
-    d.querySelector("b").textContent=i[0];
-    d.querySelector(".mtype").textContent=i[1];
-    mg.appendChild(d);
-  });
-  document.querySelectorAll(".siglist").forEach(function(box){
-    SIG.forEach(function(s){
-      var r=el("div","srow",'<span class="pic"></span><div><b></b><small>Awaiting verified data</small></div><span class="tag2">—</span><span class="tag2">Pending</span>');
-      r.querySelector(".pic").textContent=inst(s)[2];
-      r.querySelector("b").textContent=s;
-      box.appendChild(r);
-    });
-  });
+/* build dynamic content */
+[["EURUSD","FOREX"],["GBPUSD","FOREX"],["XAUUSD","GOLD"],["Volatility 75","SYNTHETIC"]].forEach(([n,t])=>{
+ const el=document.createElement("div");el.className="card market-card";
+ el.innerHTML='<div class="market-top"><span class="symbol"></span><span class="type"></span></div><div class="price">—</div><div class="await" data-i18n="awaitData"></div>';
+ el.querySelector(".symbol").textContent=n;el.querySelector(".type").textContent=t;$("#marketGrid").appendChild(el);
+ const row=document.createElement("div");row.className="signal-row";
+ row.innerHTML='<div><div class="signal-name"></div><div class="signal-note" data-i18n="awaiting"></div></div><span class="tag">—</span><span class="tag" data-i18n="pending"></span>';
+ row.querySelector(".signal-name").textContent=n;$("#signalList").appendChild(row);
+});
+LANGS.forEach(([c,name])=>{
+ const o=document.createElement("option");o.value=c;o.textContent=c.toUpperCase();$("#languageSelect").appendChild(o);
+ const b=document.createElement("button");b.className="lang-btn";b.dataset.code=c;b.textContent=name;
+ b.addEventListener("click",()=>{applyLanguage(c,true);closeLang()});$("#langGrid").appendChild(b);
+});
 
-  /* ---------- navigation ---------- */
-  function closeDrawer(){document.body.classList.remove("drawer");}
-  function go(id){
-    var page=(id==="analyser")?"home":id;
-    document.querySelectorAll(".page").forEach(function(p){p.classList.toggle("active",p.id===page);});
-    document.querySelectorAll("[data-page]").forEach(function(b){b.classList.toggle("active",b.dataset.page===id);});
-    closeDrawer();
-    if(id==="analyser"){
-      setTimeout(function(){
-        var a=document.getElementById("analyser");
-        a.scrollIntoView({behavior:"smooth",block:"start"});
-        a.classList.remove("flash");void a.offsetWidth;a.classList.add("flash");
-      },80);
-    }else{window.scrollTo({top:0,behavior:"smooth"});}
-  }
-  document.querySelectorAll("[data-page]").forEach(function(b){b.addEventListener("click",function(){go(b.dataset.page);});});
-  document.querySelectorAll("[data-go]").forEach(function(b){b.addEventListener("click",function(){go(b.dataset.go);});});
-  document.getElementById("burger").addEventListener("click",function(){document.body.classList.toggle("drawer");});
-  document.getElementById("scrim").addEventListener("click",closeDrawer);
+/* language */
+function renderAuth(){const s=authMode==="signup";$("#authTitle").textContent=tr(s?"signup":"authWelcome");$("#authSubtitle").textContent=tr(s?"authSignupDesc":"authSigninDesc");$("#authSubmit").textContent=tr(s?"signup":"signin")}
+function applyLanguage(code,save){
+ if(!T[code])code="en";lang=code;if(save)store.set("zv_lang",code);
+ document.documentElement.lang=code;document.documentElement.dir=code==="ar"?"rtl":"ltr";
+ $$("[data-i18n]").forEach(el=>{el.textContent=tr(el.dataset.i18n)});
+ $$("[data-ph]").forEach(el=>{el.placeholder=tr(el.dataset.ph)});
+ $("#languageSelect").value=code;$("#authClose").setAttribute("aria-label",tr("close"));
+ $$(".lang-btn").forEach(b=>b.classList.toggle("sel",b.dataset.code===code));
+ renderAuth();setTop();
+}
+function detect(){const l=(navigator.language||"en").slice(0,2).toLowerCase();return T[l]?l:"en"}
+function openLang(){$("#langOverlay").classList.add("open")}
+function closeLang(){store.set("zv_lang",lang);$("#langOverlay").classList.remove("open")}
+$("#languageSelect").addEventListener("change",e=>applyLanguage(e.target.value,true));
+$("#langClose").addEventListener("click",closeLang);
+$("#langOverlay").addEventListener("click",e=>{if(e.target.id==="langOverlay")closeLang()});
 
-  /* ---------- search ---------- */
-  var q=document.getElementById("q"),sres=document.getElementById("sres");
-  document.getElementById("kbd").textContent=/Mac|iPhone|iPad/.test(navigator.platform||"")?"⌘K":"Ctrl K";
-  function norm(s){return s.toLowerCase().replace(/[^a-z0-9]/g,"");}
-  function closeSearch(){sres.classList.remove("open");sres.innerHTML="";}
-  function flashSym(sym){
-    var c=document.querySelector('.mcard[data-sym="'+sym+'"]');
-    if(c){c.scrollIntoView({behavior:"smooth",block:"center"});c.classList.remove("flash");void c.offsetWidth;c.classList.add("flash");}
-  }
-  q.addEventListener("input",function(){
-    var v=norm(q.value);sres.innerHTML="";
-    if(!v){sres.classList.remove("open");return;}
-    var n=0;
-    PAGES.forEach(function(p){
-      if(n<8&&norm(p[1]).indexOf(v)>-1){
-        var b=el("button");var t=el("span");t.textContent=p[1];b.appendChild(t);
-        b.addEventListener("click",function(){go(p[0]);q.value="";closeSearch();});
-        sres.appendChild(b);n++;
-      }
-    });
-    INSTR.forEach(function(i){
-      if(n<8&&(norm(i[0]).indexOf(v)>-1||norm(i[1]).indexOf(v)>-1)){
-        var b=el("button");var t=el("span");t.textContent=i[0];var s=el("small");s.textContent=i[1];
-        b.appendChild(t);b.appendChild(s);
-        b.addEventListener("click",function(){go("markets");q.value="";closeSearch();setTimeout(function(){flashSym(i[0]);},120);});
-        sres.appendChild(b);n++;
-      }
-    });
-    if(!n){var d=el("div","nores");d.textContent="No results";sres.appendChild(d);}
-    sres.classList.add("open");
-  });
-  document.addEventListener("click",function(e){if(!document.getElementById("searchbox").contains(e.target)){closeSearch();}});
-  document.addEventListener("keydown",function(e){
-    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();q.focus();}
-    if(e.key==="Escape"){closeSearch();closeDrawer();q.blur();}
-  });
+/* header height for sticky offset */
+function setTop(){const t=$(".top");if(t)document.documentElement.style.setProperty("--topH",t.offsetHeight+"px")}
+addEventListener("resize",setTop);
 
-  /* ---------- clock + market status ---------- */
-  function tick(){
-    var d=new Date();
-    document.getElementById("clock").textContent=
-      d.toLocaleDateString("en-GB",{weekday:"short",day:"2-digit",month:"short",year:"numeric"})+"  "+
-      d.toLocaleTimeString("en-GB",{timeZoneName:"short"});
-    var day=d.getUTCDay(),h=d.getUTCHours();
-    var open=(day>=1&&day<=4)||(day===0&&h>=22)||(day===5&&h<22);
-    var m=document.getElementById("mstatus"),st=open?"open":"closed";
-    if(m.dataset.state!==st){
-      m.dataset.state=st;m.className="mstatus "+st;
-      document.getElementById("mtext").textContent=open?"Markets Open":"Markets Closed";
-    }
-  }
-  tick();setInterval(tick,1000);
+const saved=store.get("zv_lang");applyLanguage(saved&&T[saved]?saved:detect(),false);
 
-  /* ---------- analyser: pairs follow the market ---------- */
-  var MK={Forex:["EUR/USD","GBP/USD","USD/JPY","GBP/JPY","EUR/GBP","EUR/JPY"],Metals:["XAU/USD","XAG/USD"],Crypto:["BTC/USD"],Indices:["NAS100"],Synthetic:["Volatility 75","Boom 500"]};
-  var msel=document.getElementById("mkt"),psel=document.getElementById("pair");
-  function fillPairs(){
-    psel.innerHTML="";
-    MK[msel.value].forEach(function(p){var o=document.createElement("option");o.textContent=p;psel.appendChild(o);});
-  }
-  msel.addEventListener("change",fillPairs);fillPairs();
+/* intro */
+const intro=$("#intro");let introDone=false;
+function afterIntro(){document.body.classList.remove("lock");if(!store.get("zv_lang"))openLang()}
+function finishIntro(){if(introDone)return;introDone=true;intro.classList.add("out");setTimeout(()=>{intro.remove();afterIntro()},650)}
+let seen=false;try{seen=sessionStorage.getItem("zv_intro")==="1";sessionStorage.setItem("zv_intro","1")}catch(e){}
+if(seen||reduced){introDone=true;intro.remove();afterIntro()}else{setTimeout(finishIntro,3800)}
+$("#skipIntro")&&$("#skipIntro").addEventListener("click",finishIntro);
 
-  /* ---------- analyser: chart upload / drop / paste ---------- */
-  var file=null,url=null;
-  var drop=document.getElementById("drop"),inp=document.getElementById("chartfile"),prev=document.getElementById("cprev"),
-      img=document.getElementById("cimg"),nm=document.getElementById("cname"),amsg=document.getElementById("amsg");
-  function say(t,err){amsg.textContent=t;amsg.className="amsg"+(err?" err":"");}
-  function clearFile(){
-    if(url){URL.revokeObjectURL(url);url=null;}
-    file=null;inp.value="";prev.classList.remove("on");img.removeAttribute("src");nm.textContent="";
-  }
-  function setFile(f){
-    if(!f){return;}
-    if(["image/png","image/jpeg","image/webp"].indexOf(f.type)===-1){say("Please select a PNG, JPG or WebP image.",true);return;}
-    if(f.size>10*1024*1024){say("The image is larger than 10 MB.",true);return;}
-    clearFile();file=f;url=URL.createObjectURL(f);img.src=url;
-    nm.textContent=(f.name||"chart")+" · "+(f.size/1048576).toFixed(2)+" MB";
-    prev.classList.add("on");say("",false);
-  }
-  inp.addEventListener("change",function(){setFile(inp.files[0]);});
-  document.getElementById("rmbtn").addEventListener("click",function(){clearFile();say("",false);});
-  ["dragenter","dragover"].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.add("over");});});
-  ["dragleave","drop"].forEach(function(ev){drop.addEventListener(ev,function(e){e.preventDefault();drop.classList.remove("over");});});
-  drop.addEventListener("drop",function(e){setFile(e.dataTransfer.files[0]);});
-  document.addEventListener("paste",function(e){
-    if(!document.getElementById("home").classList.contains("active")){return;}
-    var items=(e.clipboardData&&e.clipboardData.items)||[];
-    for(var i=0;i<items.length;i++){
-      if(items[i].type.indexOf("image/")===0){setFile(items[i].getAsFile());e.preventDefault();return;}
-    }
-  });
-  document.getElementById("pastebtn").addEventListener("click",function(){
-    var hint="Press Ctrl+V (or ⌘V) to paste a screenshot of your chart.";
-    if(navigator.clipboard&&navigator.clipboard.read){
-      navigator.clipboard.read().then(function(items){
-        for(var i=0;i<items.length;i++){
-          var t=items[i].types.filter(function(x){return x.indexOf("image/")===0;})[0];
-          if(t){items[i].getType(t).then(function(b){setFile(new File([b],"pasted-chart."+(b.type.split("/")[1]||"png"),{type:b.type}));});return;}
-        }
-        say(hint,false);
-      }).catch(function(){say(hint,false);});
-    }else{say(hint,false);}
-  });
-  document.getElementById("analyseBtn").addEventListener("click",function(){
-    if(!file){say("Please add a chart image first.",true);return;}
-    say("Chart added. The AI analysis service is not connected yet, so no analysis was produced.",false);
-  });
-})();
-</script>
+/* live particle background */
+const cv=$("#bg"),ctx=cv.getContext("2d");let W=0,H=0,P=[];const mouse={x:-9999,y:-9999};
+const mk=()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.28,vy:(Math.random()-.5)*.28,r:Math.random()*1.5+.6});
+function sizeCanvas(){const d=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*d;cv.height=H*d;ctx.setTransform(d,0,0,d,0,0);const n=Math.round(Math.min(110,Math.max(38,W*H/16000)));while(P.length<n)P.push(mk());P.length=n}
+sizeCanvas();addEventListener("resize",sizeCanvas);
+function frame(){
+ ctx.clearRect(0,0,W,H);
+ for(const p of P){
+  const dx=mouse.x-p.x,dy=mouse.y-p.y,d=Math.hypot(dx,dy);
+  if(d<180&&d>1){p.x+=dx*.012;p.y+=dy*.012}
+  p.x+=p.vx;p.y+=p.vy;
+  if(p.x<0)p.x=W;else if(p.x>W)p.x=0;if(p.y<0)p.y=H;else if(p.y>H)p.y=0;
+ }
+ for(let i=0;i<P.length;i++){
+  const a=P[i];
+  ctx.fillStyle="rgba(243,220,138,.8)";ctx.beginPath();ctx.arc(a.x,a.y,a.r,0,6.283);ctx.fill();
+  for(let j=i+1;j<P.length;j++){const b=P[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<115){ctx.strokeStyle="rgba(212,175,55,"+(.2*(1-d/115)).toFixed(3)+")";ctx.lineWidth=.7;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke()}}
+  const md=Math.hypot(a.x-mouse.x,a.y-mouse.y);
+  if(md<170){ctx.strokeStyle="rgba(243,220,138,"+(.45*(1-md/170)).toFixed(3)+")";ctx.lineWidth=.9;ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(mouse.x,mouse.y);ctx.stroke()}
+ }
+}
+function loop(){if(!document.hidden)frame();requestAnimationFrame(loop)}
+if(reduced)frame();else loop();
 
-<script>
-/* ================= ZAIRVÉN LANGUAGES: six languages, built in ================= */
-(function () {
-  "use strict";
-  var KEY = "zairven_lang";
-  var ORDER = ["ar", "sw", "fr", "pt", "es"];
-  var LANGS = {
-    en: { name: "English", dir: "ltr" },
-    ar: { name: "العربية", dir: "rtl" },
-    sw: { name: "Kiswahili", dir: "ltr" },
-    fr: { name: "Français", dir: "ltr" },
-    pt: { name: "Português", dir: "ltr" },
-    es: { name: "Español", dir: "ltr" }
-  };
-  var SKIP = { SCRIPT: 1, STYLE: 1, NOSCRIPT: 1 };
-  var T = {};
-  var lang = "en";
+/* pointer: particles follow + parallax */
+addEventListener("pointermove",e=>{
+ mouse.x=e.clientX;mouse.y=e.clientY;
+ const s=document.documentElement.style;s.setProperty("--px",(e.clientX/innerWidth*2-1).toFixed(3));s.setProperty("--py",(e.clientY/innerHeight*2-1).toFixed(3));
+},{passive:true});
+addEventListener("pointerup",e=>{if(e.pointerType!=="mouse")setTimeout(()=>{mouse.x=mouse.y=-9999},900)});
+document.documentElement.addEventListener("mouseleave",()=>{mouse.x=mouse.y=-9999});
 
-  /* add({ "English text": [ar, sw, fr, pt, es] }) */
-  function add(d) { for (var k in d) { T[k] = d[k]; } }
+/* hero candles */
+const cd=$("#candles");
+for(let i=0;i<16;i++){
+ const w=document.createElement("div");w.className="candle";const up=Math.random()>.42,h=26+Math.random()*70;
+ w.style.cssText="left:"+(46+i*3.4)+"%;bottom:"+(12+Math.sin(i/2.2)*14+i*1.6).toFixed(1)+"%;--d:"+(6+Math.random()*22).toFixed(1);
+ w.innerHTML='<i class="c '+(up?"up":"dn")+'" style="--h:'+h.toFixed(0)+'px;animation-delay:'+(-Math.random()*6).toFixed(1)+'s"></i>';
+ cd.appendChild(w);
+}
 
-  add({
-    "AI Trading": ["التداول بالذكاء الاصطناعي", "Biashara ya AI", "Trading IA", "Trading com IA", "Trading con IA"],
-    "Market Intelligence": ["ذكاء السوق", "Akili ya Soko", "Intelligence de marché", "Inteligência de mercado", "Inteligencia de mercado"],
-    "Automation": ["الأتمتة", "Otomatiki", "Automatisation", "Automação", "Automatización"],
-    "Education": ["التعليم", "Elimu", "Éducation", "Educação", "Educación"],
-    "Search market, pair, or feature…": ["ابحث عن سوق أو زوج أو ميزة…", "Tafuta soko, jozi au kipengele…", "Rechercher un marché, une paire ou une fonction…", "Buscar mercado, par ou recurso…", "Buscar mercado, par o función…"],
-    "No results": ["لا توجد نتائج", "Hakuna matokeo", "Aucun résultat", "Nenhum resultado", "Sin resultados"],
-    "GLOBAL FINANCIAL TECHNOLOGY": ["التقنية المالية العالمية", "TEKNOLOJIA YA KIFEDHA YA KIMATAIFA", "TECHNOLOGIE FINANCIÈRE MONDIALE", "TECNOLOGIA FINANCEIRA GLOBAL", "TECNOLOGÍA FINANCIERA GLOBAL"],
+/* 3D tilt on small cards (desktop only) */
+if(matchMedia("(hover:hover) and (pointer:fine)").matches&&!reduced){
+ $$(".market-card,.system-card,.stat-card").forEach(c=>{
+  c.addEventListener("pointermove",e=>{const b=c.getBoundingClientRect(),x=(e.clientX-b.left)/b.width-.5,y=(e.clientY-b.top)/b.height-.5;c.style.transform="perspective(900px) rotateX("+(-y*7).toFixed(2)+"deg) rotateY("+(x*9).toFixed(2)+"deg) translateY(-3px)"});
+  c.addEventListener("pointerleave",()=>{c.style.transform=""});
+ });
+}
 
-    "Dashboard": ["لوحة التحكم", "Dashibodi", "Tableau de bord", "Painel", "Panel"],
-    "Markets": ["الأسواق", "Masoko", "Marchés", "Mercados", "Mercados"],
-    "AI Chart Analyser": ["محلل الرسوم البيانية بالذكاء الاصطناعي", "Kichambuzi cha Chati cha AI", "Analyseur de graphiques IA", "Analisador de gráficos com IA", "Analizador de gráficos con IA"],
-    "Trading Signals": ["إشارات التداول", "Ishara za Biashara", "Signaux de trading", "Sinais de trading", "Señales de trading"],
-    "Trading Systems": ["أنظمة التداول", "Mifumo ya Biashara", "Systèmes de trading", "Sistemas de trading", "Sistemas de trading"],
-    "Academy": ["الأكاديمية", "Akademia", "Académie", "Academia", "Academia"],
-    "My Account": ["حسابي", "Akaunti Yangu", "Mon compte", "Minha conta", "Mi cuenta"],
-    "Home": ["الرئيسية", "Nyumbani", "Accueil", "Início", "Inicio"],
-    "Chart AI": ["تحليل الرسوم", "Chati AI", "Graphique IA", "Gráfico IA", "Gráfico IA"],
-    "Signals": ["الإشارات", "Ishara", "Signaux", "Sinais", "Señales"],
-    "Systems": ["الأنظمة", "Mifumo", "Systèmes", "Sistemas", "Sistemas"],
+/* nav + scroll spy */
+const navBtns=$$(".nav button"),navBox=$("#nav");
+const targets=navBtns.map(b=>[b,document.getElementById(b.dataset.target)]);
+function setActive(btn){navBtns.forEach(b=>b.classList.toggle("active",b===btn));navBox.scrollTo({left:btn.offsetLeft-navBox.clientWidth/2+btn.clientWidth/2,behavior:"smooth"})}
+navBtns.forEach(b=>b.addEventListener("click",()=>{setActive(b);const t=document.getElementById(b.dataset.target);if(t)t.scrollIntoView({behavior:"smooth",block:"start"})}));
+let tick=false,lastActive=navBtns[0];
+addEventListener("scroll",()=>{if(tick)return;tick=true;requestAnimationFrame(()=>{tick=false;const line=$(".top").offsetHeight+140;let cur=targets[0];targets.forEach(t=>{if(t[1]&&t[1].getBoundingClientRect().top<line)cur=t});if(cur[0]!==lastActive){lastActive=cur[0];setActive(cur[0])}})},{passive:true});
 
-    "Welcome back": ["مرحبًا بعودتك", "Karibu tena", "Bon retour", "Bem-vindo de volta", "Bienvenido de nuevo"],
-    "Founder": ["المؤسس", "Mwanzilishi", "Fondateur", "Fundador", "Fundador"],
-    "Market Intelligence • AI Analysis • Trading Systems • All in One": [
-      "ذكاء السوق • تحليل بالذكاء الاصطناعي • أنظمة التداول • الكل في مكان واحد",
-      "Akili ya Soko • Uchambuzi wa AI • Mifumo ya Biashara • Yote Mahali Pamoja",
-      "Intelligence de marché • Analyse IA • Systèmes de trading • Tout-en-un",
-      "Inteligência de mercado • Análise com IA • Sistemas de trading • Tudo em um",
-      "Inteligencia de mercado • Análisis con IA • Sistemas de trading • Todo en uno"],
-    "Markets Open": ["الأسواق مفتوحة", "Masoko Yako Wazi", "Marchés ouverts", "Mercados abertos", "Mercados abiertos"],
-    "Markets Closed": ["الأسواق مغلقة", "Masoko Yamefungwa", "Marchés fermés", "Mercados fechados", "Mercados cerrados"],
-    "In development": ["قيد التطوير", "Inaendelezwa", "En développement", "Em desenvolvimento", "En desarrollo"],
-    "Awaiting data": ["في انتظار البيانات", "Inasubiri data", "En attente de données", "Aguardando dados", "Esperando datos"],
-    "Awaiting verified data": ["في انتظار بيانات موثّقة", "Inasubiri data iliyothibitishwa", "En attente de données vérifiées", "Aguardando dados verificados", "Esperando datos verificados"],
-    "Pending": ["قيد الانتظار", "Inasubiri", "En attente", "Pendente", "Pendiente"],
+/* chart upload */
+const fileInput=$("#chartFile");
+fileInput.addEventListener("change",()=>{
+ const f=fileInput.files&&fileInput.files[0],pv=$("#chartPreview");
+ $("#fileName").textContent=f?tr("selected")+": "+f.name:"";
+ if(pv.src&&pv.src.startsWith("blob:"))URL.revokeObjectURL(pv.src);
+ if(f&&["image/png","image/jpeg","image/webp"].includes(f.type)){pv.src=URL.createObjectURL(f);pv.hidden=false}else{pv.hidden=true}
+});
+$("#analyseBtn").addEventListener("click",()=>{const f=fileInput.files&&fileInput.files[0];$("#analysisNotice").textContent=f?tr("chartSelected")+": "+f.name+". "+tr("serviceMissing"):tr("pleaseSelect")});
 
-    "Upload a trading chart for structured analysis: bias, key levels and a trade plan.": [
-      "ارفع رسمًا بيانيًا للتداول للحصول على تحليل منظّم: الاتجاه والمستويات الرئيسية وخطة التداول.",
-      "Pakia chati ya biashara upate uchambuzi uliopangwa: mwelekeo, viwango muhimu na mpango wa biashara.",
-      "Téléversez un graphique de trading pour une analyse structurée : biais, niveaux clés et plan de trade.",
-      "Envie um gráfico de trading para uma análise estruturada: viés, níveis-chave e plano de operação.",
-      "Sube un gráfico de trading para un análisis estructurado: sesgo, niveles clave y plan de operación."],
-    "AI BACKEND NOT CONNECTED": ["نظام الذكاء الاصطناعي غير متصل", "MFUMO WA AI HAUJAUNGANISHWA", "SYSTÈME IA NON CONNECTÉ", "SISTEMA DE IA NÃO CONECTADO", "SISTEMA DE IA NO CONECTADO"],
-    "Market": ["السوق", "Soko", "Marché", "Mercado", "Mercado"],
-    "Trading Pair": ["زوج التداول", "Jozi ya Biashara", "Paire de trading", "Par de trading", "Par de trading"],
-    "Timeframe": ["الإطار الزمني", "Kipindi cha muda", "Unité de temps", "Período", "Temporalidad"],
-    "Metals": ["المعادن", "Metali", "Métaux", "Metais", "Metales"],
-    "Crypto": ["العملات الرقمية", "Kripto", "Crypto", "Cripto", "Cripto"],
-    "Indices": ["المؤشرات", "Faharasa", "Indices", "Índices", "Índices"],
-    "Synthetic": ["الاصطناعية", "Sintetiki", "Synthétiques", "Sintéticos", "Sintéticos"],
-    "Upload Chart Image": ["ارفع صورة الرسم البياني", "Pakia Picha ya Chati", "Téléverser l'image du graphique", "Enviar imagem do gráfico", "Subir imagen del gráfico"],
-    "PNG, JPG or WebP · Max 10 MB": ["PNG أو JPG أو WebP · الحد الأقصى 10 ميغابايت", "PNG, JPG au WebP · Upeo MB 10", "PNG, JPG ou WebP · 10 Mo max.", "PNG, JPG ou WebP · Máx. 10 MB", "PNG, JPG o WebP · Máx. 10 MB"],
-    "or": ["أو", "au", "ou", "ou", "o"],
-    "Paste Chart (Screenshot)": ["لصق الرسم (لقطة شاشة)", "Bandika Chati (Picha ya skrini)", "Coller le graphique (capture d'écran)", "Colar gráfico (captura de tela)", "Pegar gráfico (captura de pantalla)"],
-    "Selected chart": ["الرسم المحدد", "Chati iliyochaguliwa", "Graphique sélectionné", "Gráfico selecionado", "Gráfico seleccionado"],
-    "Remove": ["إزالة", "Ondoa", "Retirer", "Remover", "Quitar"],
-    "Analyse Chart": ["حلّل الرسم", "Changanua Chati", "Analyser le graphique", "Analisar gráfico", "Analizar gráfico"],
-    "Press Ctrl+V (or ⌘V) to paste a screenshot of your chart.": [
-      "اضغط Ctrl+V (أو ⌘V) للصق لقطة شاشة للرسم.",
-      "Bonyeza Ctrl+V (au ⌘V) kubandika picha ya skrini ya chati yako.",
-      "Appuyez sur Ctrl+V (ou ⌘V) pour coller une capture d'écran de votre graphique.",
-      "Pressione Ctrl+V (ou ⌘V) para colar uma captura de tela do seu gráfico.",
-      "Pulsa Ctrl+V (o ⌘V) para pegar una captura de pantalla de tu gráfico."],
-    "Please select a PNG, JPG or WebP image.": ["يرجى اختيار صورة بصيغة PNG أو JPG أو WebP.", "Tafadhali chagua picha ya PNG, JPG au WebP.", "Veuillez sélectionner une image PNG, JPG ou WebP.", "Selecione uma imagem PNG, JPG ou WebP.", "Selecciona una imagen PNG, JPG o WebP."],
-    "The image is larger than 10 MB.": ["حجم الصورة أكبر من 10 ميغابايت.", "Picha ni kubwa kuliko MB 10.", "L'image dépasse 10 Mo.", "A imagem é maior que 10 MB.", "La imagen supera los 10 MB."],
-    "Please add a chart image first.": ["يرجى إضافة صورة الرسم أولًا.", "Tafadhali ongeza picha ya chati kwanza.", "Veuillez d'abord ajouter une image du graphique.", "Adicione primeiro uma imagem do gráfico.", "Primero añade una imagen del gráfico."],
-    "Chart added. The AI analysis service is not connected yet, so no analysis was produced.": [
-      "تمت إضافة الرسم. خدمة التحليل بالذكاء الاصطناعي غير متصلة بعد، لذلك لم يتم إنتاج أي تحليل.",
-      "Chati imeongezwa. Huduma ya uchambuzi wa AI bado haijaunganishwa, kwa hivyo hakuna uchambuzi uliotolewa.",
-      "Graphique ajouté. Le service d'analyse IA n'est pas encore connecté : aucune analyse n'a été produite.",
-      "Gráfico adicionado. O serviço de análise com IA ainda não está conectado, então nenhuma análise foi produzida.",
-      "Gráfico añadido. El servicio de análisis con IA aún no está conectado, por lo que no se produjo ningún análisis."],
-    "Analysis connection is not active yet. This dashboard does not generate fake trading advice.": [
-      "اتصال التحليل غير مفعّل بعد. لا تُنتج هذه اللوحة نصائح تداول وهمية.",
-      "Muunganisho wa uchambuzi bado haujawashwa. Dashibodi hii haitoi ushauri wa biashara wa kubuni.",
-      "La connexion d'analyse n'est pas encore active. Ce tableau de bord ne génère pas de faux conseils de trading.",
-      "A conexão de análise ainda não está ativa. Este painel não gera conselhos de trading falsos.",
-      "La conexión de análisis aún no está activa. Este panel no genera consejos de trading falsos."],
-
-    "Our structured trading engines for every trader.": ["محركات التداول المنظّمة لدينا لكل متداول.", "Injini zetu za biashara zilizopangwa kwa kila mfanyabiashara.", "Nos moteurs de trading structurés pour chaque trader.", "Nossos mecanismos de trading estruturados para todo trader.", "Nuestros motores de trading estructurados para cada trader."],
-    "BEGINNER": ["مبتدئ", "MWANZO", "DÉBUTANT", "INICIANTE", "PRINCIPIANTE"],
-    "PROFESSIONAL": ["احترافي", "KITAALAMU", "PROFESSIONNEL", "PROFISSIONAL", "PROFESIONAL"],
-    "ADVANCED": ["متقدم", "KIWANGO CHA JUU", "AVANCÉ", "AVANÇADO", "AVANZADO"],
-    "COMING SOON": ["قريبًا", "INAKUJA HIVI KARIBUNI", "BIENTÔT DISPONIBLE", "EM BREVE", "PRÓXIMAMENTE"],
-    "Guided trading tools and essential risk controls.": ["أدوات تداول إرشادية وضوابط أساسية للمخاطر.", "Zana za biashara zinazoelekezwa na udhibiti wa msingi wa hatari.", "Outils de trading guidés et contrôles essentiels des risques.", "Ferramentas guiadas e controles essenciais de risco.", "Herramientas guiadas y controles esenciales de riesgo."],
-    "Advanced strategy options, scanning and trade management.": ["خيارات استراتيجية متقدمة وفحص وإدارة الصفقات.", "Mikakati ya hali ya juu, uchanganuzi na usimamizi wa biashara.", "Stratégies avancées, analyse et gestion des transactions.", "Estratégias avançadas, análise e gestão de operações.", "Estrategias avanzadas, análisis y gestión de operaciones."],
-    "Multi-system intelligence and advanced risk management.": ["ذكاء متعدد الأنظمة وإدارة متقدمة للمخاطر.", "Akili ya mifumo mingi na usimamizi wa hali ya juu wa hatari.", "Intelligence multi-systèmes et gestion avancée des risques.", "Inteligência multissistema e gestão avançada de risco.", "Inteligencia multisistema y gestión avanzada del riesgo."],
-
-    "Live Trading Signals": ["إشارات التداول المباشرة", "Ishara za Biashara za Moja kwa Moja", "Signaux de trading en direct", "Sinais de trading ao vivo", "Señales de trading en directo"],
-    "View All": ["عرض الكل", "Tazama Yote", "Tout voir", "Ver tudo", "Ver todo"],
-    "Signals will appear here after the signal engine is connected and tested.": ["ستظهر الإشارات هنا بعد ربط محرك الإشارات واختباره.", "Ishara zitaonekana hapa baada ya injini ya ishara kuunganishwa na kujaribiwa.", "Les signaux apparaîtront ici une fois le moteur de signaux connecté et testé.", "Os sinais aparecerão aqui após o mecanismo de sinais ser conectado e testado.", "Las señales aparecerán aquí cuando el motor de señales esté conectado y probado."],
-    "Market NewsIQ": ["أخبار السوق NewsIQ", "NewsIQ ya Soko", "NewsIQ du marché", "NewsIQ do mercado", "NewsIQ del mercado"],
-    "News feed not connected": ["خلاصة الأخبار غير متصلة", "Mlisho wa habari haujaunganishwa", "Flux d'actualités non connecté", "Feed de notícias não conectado", "Flujo de noticias no conectado"],
-    "High-impact events such as CPI and FOMC will appear here.": ["ستظهر هنا الأحداث عالية التأثير مثل مؤشر أسعار المستهلك (CPI) واجتماع FOMC.", "Matukio yenye athari kubwa kama CPI na FOMC yataonekana hapa.", "Les événements à fort impact, comme le CPI et la FOMC, apparaîtront ici.", "Eventos de alto impacto, como CPI e FOMC, aparecerão aqui.", "Los eventos de alto impacto, como el CPI y la FOMC, aparecerán aquí."],
-
-    "Market Overview": ["نظرة عامة على السوق", "Muhtasari wa Soko", "Aperçu du marché", "Visão geral do mercado", "Resumen del mercado"],
-    "Global market monitoring across our supported instruments.": ["متابعة الأسواق العالمية عبر الأدوات المالية المدعومة لدينا.", "Ufuatiliaji wa masoko ya dunia kwa vyombo vyote tunavyovisaidia.", "Suivi des marchés mondiaux sur l'ensemble de nos instruments pris en charge.", "Monitoramento dos mercados globais em todos os nossos instrumentos suportados.", "Seguimiento de los mercados globales en todos nuestros instrumentos compatibles."],
-    "DATA FEED NOT CONNECTED": ["مصدر البيانات غير متصل", "MLISHO WA DATA HAUJAUNGANISHWA", "FLUX DE DONNÉES NON CONNECTÉ", "FEED DE DADOS NÃO CONECTADO", "FLUJO DE DATOS NO CONECTADO"],
-    "12 selected instruments · Data not connected": ["12 أداة مختارة · البيانات غير متصلة", "Vyombo 12 vilivyochaguliwa · Data haijaunganishwa", "12 instruments sélectionnés · Données non connectées", "12 instrumentos selecionados · Dados não conectados", "12 instrumentos seleccionados · Datos no conectados"],
-    "GOLD": ["الذهب", "DHAHABU", "OR", "OURO", "ORO"],
-    "SILVER": ["الفضة", "FEDHA", "ARGENT", "PRATA", "PLATA"],
-    "CRYPTO": ["عملات رقمية", "KRIPTO", "CRYPTO", "CRIPTO", "CRIPTO"],
-    "INDEX": ["مؤشر", "FAHARASA", "INDICE", "ÍNDICE", "ÍNDICE"],
-    "SYNTHETIC": ["اصطناعي", "SINTETIKI", "SYNTHÉTIQUE", "SINTÉTICO", "SINTÉTICO"],
-
-    "Verified setups, trade levels and transparent signal history.": ["فرص تداول موثّقة ومستويات الصفقات وسجل إشارات شفاف.", "Mipangilio ya biashara iliyothibitishwa, viwango vya biashara na historia ya ishara iliyo wazi.", "Configurations vérifiées, niveaux de trade et historique des signaux transparent.", "Setups verificados, níveis de operação e histórico de sinais transparente.", "Setups verificados, niveles de operación e historial de señales transparente."],
-    "Today's Signals": ["إشارات اليوم", "Ishara za Leo", "Signaux du jour", "Sinais de hoje", "Señales de hoy"],
-    "Active Bots": ["الروبوتات النشطة", "Roboti Zinazofanya Kazi", "Robots actifs", "Bots ativos", "Bots activos"],
-    "Win Rate (30D)": ["نسبة الفوز (30 يومًا)", "Kiwango cha Ushindi (siku 30)", "Taux de réussite (30 j)", "Taxa de acerto (30 d)", "Tasa de acierto (30 d)"],
-    "Avg. R:R": ["متوسط R:R", "Wastani wa R:R", "R:R moyen", "R:R médio", "R:R medio"],
-    "Awaiting signal engine": ["في انتظار محرك الإشارات", "Inasubiri injini ya ishara", "En attente du moteur de signaux", "Aguardando o mecanismo de sinais", "Esperando el motor de señales"],
-    "Awaiting bot connection": ["في انتظار ربط الروبوتات", "Inasubiri muunganisho wa roboti", "En attente de connexion des robots", "Aguardando conexão dos bots", "Esperando conexión de los bots"],
-    "No verified results yet": ["لا توجد نتائج موثّقة بعد", "Bado hakuna matokeo yaliyothibitishwa", "Aucun résultat vérifié pour le moment", "Ainda não há resultados verificados", "Aún no hay resultados verificados"],
-    "Awaiting verified history": ["في انتظار سجل موثّق", "Inasubiri historia iliyothibitishwa", "En attente d'un historique vérifié", "Aguardando histórico verificado", "Esperando historial verificado"],
-    "Signal Track Record": ["سجل أداء الإشارات", "Rekodi ya Utendaji wa Ishara", "Historique des signaux", "Histórico de sinais", "Historial de señales"],
-    "TRANSPARENT HISTORY": ["سجل شفاف", "HISTORIA WAZI", "HISTORIQUE TRANSPARENT", "HISTÓRICO TRANSPARENTE", "HISTORIAL TRANSPARENTE"],
-    "Instrument": ["الأداة", "Chombo", "Instrument", "Instrumento", "Instrumento"],
-    "Direction": ["الاتجاه", "Mwelekeo", "Direction", "Direção", "Dirección"],
-    "Entry": ["الدخول", "Kuingia", "Entrée", "Entrada", "Entrada"],
-    "Stop Loss": ["وقف الخسارة", "Kikomo cha Hasara", "Stop Loss", "Stop Loss", "Stop Loss"],
-    "Take Profit": ["جني الأرباح", "Kuchukua Faida", "Take Profit", "Take Profit", "Take Profit"],
-    "Result": ["النتيجة", "Matokeo", "Résultat", "Resultado", "Resultado"],
-    "No verified signal history available yet.": ["لا يتوفر سجل إشارات موثّق بعد.", "Bado hakuna historia ya ishara iliyothibitishwa.", "Aucun historique de signaux vérifié pour le moment.", "Ainda não há histórico de sinais verificado.", "Aún no hay historial de señales verificado."],
-    "Winning and losing outcomes will both remain in the permanent performance record.": ["ستبقى النتائج الرابحة والخاسرة معًا في سجل الأداء الدائم.", "Matokeo ya ushindi na ya hasara yote yatabaki kwenye rekodi ya kudumu ya utendaji.", "Les résultats gagnants comme perdants resteront dans l'historique permanent des performances.", "Os resultados vencedores e perdedores permanecerão no registro permanente de desempenho.", "Los resultados ganadores y perdedores permanecerán en el registro permanente de rendimiento."],
-
-    "ZAIRVÉN Trading Systems": ["أنظمة تداول ZAIRVÉN", "Mifumo ya Biashara ya ZAIRVÉN", "Systèmes de trading ZAIRVÉN", "Sistemas de trading ZAIRVÉN", "Sistemas de trading ZAIRVÉN"],
-    "Trading automation products for Forex, Gold and Volatility 75.": ["منتجات أتمتة التداول للفوركس والذهب ومؤشر Volatility 75.", "Bidhaa za biashara ya kiotomatiki kwa Forex, Dhahabu na Volatility 75.", "Produits d'automatisation du trading pour le Forex, l'Or et le Volatility 75.", "Produtos de automação de trading para Forex, Ouro e Volatility 75.", "Productos de automatización de trading para Forex, Oro y Volatility 75."],
-    "Forex · Gold · Volatility 75": ["الفوركس · الذهب · Volatility 75", "Forex · Dhahabu · Volatility 75", "Forex · Or · Volatility 75", "Forex · Ouro · Volatility 75", "Forex · Oro · Volatility 75"],
-    "Each tier is planned to support Forex, Gold and Volatility 75, subject to compatible data and broker support.": [
-      "من المخطط أن تدعم جميع الفئات الفوركس والذهب وVolatility 75 وفقًا لتوافق البيانات والوسطاء.",
-      "Kila kiwango kimepangwa kusaidia Forex, dhahabu na Volatility 75 kulingana na data na madalali wanaoendana.",
-      "Chaque niveau est prévu pour prendre en charge le Forex, l'or et Volatility 75, selon la compatibilité des données et courtiers.",
-      "Todos os níveis estão planejados para Forex, ouro e Volatility 75, conforme a compatibilidade dos dados e corretores.",
-      "Todos los niveles están previstos para Forex, oro y Volatility 75, según la compatibilidad de datos y brokers."],
-    "Automatic Trading": ["التداول الآلي", "Biashara ya Kiotomatiki", "Trading automatique", "Trading automático", "Trading automático"],
-    "Automated execution is planned only after full testing and the required legal checks.": ["التنفيذ الآلي مخطط له فقط بعد اختبار شامل وإتمام الفحوصات القانونية المطلوبة.", "Utekelezaji wa kiotomatiki umepangwa tu baada ya majaribio kamili na ukaguzi wa kisheria unaohitajika.", "L'exécution automatique n'est prévue qu'après des tests complets et les vérifications juridiques requises.", "A execução automática só está prevista após testes completos e as verificações legais necessárias.", "La ejecución automática solo está prevista tras pruebas completas y las comprobaciones legales necesarias."],
-
-    "ZAIRVÉN Academy": ["أكاديمية ZAIRVÉN", "Akademia ya ZAIRVÉN", "Académie ZAIRVÉN", "Academia ZAIRVÉN", "Academia ZAIRVÉN"],
-    "Financial markets education, technical analysis, risk management and trading psychology.": ["تعليم الأسواق المالية والتحليل الفني وإدارة المخاطر وسيكولوجية التداول.", "Elimu ya masoko ya fedha, uchambuzi wa kiufundi, usimamizi wa hatari na saikolojia ya biashara.", "Éducation sur les marchés financiers, analyse technique, gestion du risque et psychologie du trading.", "Educação sobre mercados financeiros, análise técnica, gestão de risco e psicologia do trading.", "Educación sobre mercados financieros, análisis técnico, gestión del riesgo y psicología del trading."],
-    "Academy coming soon": ["الأكاديمية قريبًا", "Akademia inakuja hivi karibuni", "L'Académie arrive bientôt", "Academia em breve", "La Academia llegará pronto"],
-    "Educational content is being developed.": ["يجري إعداد المحتوى التعليمي.", "Maudhui ya elimu yanaandaliwa.", "Le contenu éducatif est en cours de développement.", "O conteúdo educacional está em desenvolvimento.", "El contenido educativo está en desarrollo."],
-
-    "Economic calendar, major announcements and market-risk intelligence.": ["التقويم الاقتصادي وأهم الإعلانات وذكاء مخاطر السوق.", "Kalenda ya uchumi, matangazo makuu na taarifa za hatari za soko.", "Calendrier économique, annonces majeures et intelligence des risques de marché.", "Calendário econômico, anúncios importantes e inteligência de risco de mercado.", "Calendario económico, anuncios importantes e inteligencia de riesgo de mercado."],
-    "Economic events and verified market information will appear here once connected.": ["ستظهر هنا الأحداث الاقتصادية ومعلومات السوق الموثّقة بعد الاتصال.", "Matukio ya kiuchumi na taarifa za soko zilizothibitishwa zitaonekana hapa baada ya kuunganishwa.", "Les événements économiques et les informations de marché vérifiées apparaîtront ici une fois connecté.", "Eventos econômicos e informações de mercado verificadas aparecerão aqui após a conexão.", "Los eventos económicos y la información de mercado verificada aparecerán aquí al conectarse."],
-
-    "Client accounts, preferences and subscription management.": ["حسابات العملاء والتفضيلات وإدارة الاشتراكات.", "Akaunti za wateja, mapendeleo na usimamizi wa usajili.", "Comptes clients, préférences et gestion des abonnements.", "Contas de clientes, preferências e gestão de assinaturas.", "Cuentas de clientes, preferencias y gestión de suscripciones."],
-    "Client portal in development": ["بوابة العملاء قيد التطوير", "Lango la wateja linaendelezwa", "Portail client en développement", "Portal do cliente em desenvolvimento", "Portal de clientes en desarrollo"],
-    "Account registration and secure sign-in will be added later.": ["سيتم إضافة تسجيل الحساب وتسجيل الدخول الآمن لاحقًا.", "Usajili wa akaunti na kuingia kwa usalama vitaongezwa baadaye.", "L'inscription et la connexion sécurisée seront ajoutées plus tard.", "O cadastro de conta e o login seguro serão adicionados mais tarde.", "El registro de cuenta y el inicio de sesión seguro se añadirán más adelante."],
-    "Create Account": ["إنشاء حساب", "Fungua Akaunti", "Créer un compte", "Criar conta", "Crear cuenta"],
-    "Sign In": ["تسجيل الدخول", "Ingia", "Se connecter", "Entrar", "Iniciar sesión"],
-    "Language Settings": ["إعدادات اللغة", "Mipangilio ya Lugha", "Paramètres de langue", "Configurações de idioma", "Configuración de idioma"],
-    "Choose your preferred language. It will be used across the whole ZAIRVÉN platform.": ["اختر لغتك المفضلة. ستُستخدم في منصة ZAIRVÉN بأكملها.", "Chagua lugha unayopendelea. Itatumika katika jukwaa zima la ZAIRVÉN.", "Choisissez votre langue préférée. Elle sera utilisée sur toute la plateforme ZAIRVÉN.", "Escolha seu idioma preferido. Ele será usado em toda a plataforma ZAIRVÉN.", "Elige tu idioma preferido. Se usará en toda la plataforma ZAIRVÉN."],
-    "Preferred language": ["اللغة المفضلة", "Lugha unayopendelea", "Langue préférée", "Idioma preferido", "Idioma preferido"],
-    "Your choice is saved on this device. It will be linked to your account when sign-in is available.": ["يتم حفظ اختيارك على هذا الجهاز، وسيُربط بحسابك عند توفر تسجيل الدخول.", "Chaguo lako limehifadhiwa kwenye kifaa hiki. Litaunganishwa na akaunti yako kuingia kutakapopatikana.", "Votre choix est enregistré sur cet appareil. Il sera lié à votre compte lorsque la connexion sera disponible.", "Sua escolha é salva neste dispositivo. Ela será vinculada à sua conta quando o login estiver disponível.", "Tu elección se guarda en este dispositivo. Se vinculará a tu cuenta cuando el inicio de sesión esté disponible."],
-
-    "© 2026 ZAIRVÉN · GLOBAL FINANCIAL TECHNOLOGY": ["© 2026 ZAIRVÉN · التقنية المالية العالمية", "© 2026 ZAIRVÉN · TEKNOLOJIA YA KIFEDHA YA KIMATAIFA", "© 2026 ZAIRVÉN · TECHNOLOGIE FINANCIÈRE MONDIALE", "© 2026 ZAIRVÉN · TECNOLOGIA FINANCEIRA GLOBAL", "© 2026 ZAIRVÉN · TECNOLOGÍA FINANCIERA GLOBAL"],
-    "Trading involves risk. Nothing here is financial advice.": ["ينطوي التداول على مخاطر. لا يُعدّ أي محتوى هنا نصيحة مالية.", "Biashara ina hatari. Hakuna chochote hapa ni ushauri wa kifedha.", "Le trading comporte des risques. Rien ici ne constitue un conseil financier.", "O trading envolve riscos. Nada aqui constitui aconselhamento financeiro.", "El trading conlleva riesgos. Nada aquí constituye asesoramiento financiero."],
-    "INTELLIGENCE · PRECISION · DISCIPLINE": ["الذكاء · الدقة · الانضباط", "AKILI · USAHIHI · NIDHAMU", "INTELLIGENCE · PRÉCISION · DISCIPLINE", "INTELIGÊNCIA · PRECISÃO · DISCIPLINA", "INTELIGENCIA · PRECISIÓN · DISCIPLINA"]
-  });
-
-  /* ---------- translation engine ---------- */
-  function apply(node) {
-    var p = node.parentNode;
-    if (!p || SKIP[p.nodeName]) { return; }
-    if (node.__en === undefined) {
-      if (!node.nodeValue.trim()) { return; }
-      node.__en = node.nodeValue;
-    }
-    var orig = node.__en;
-    var key = orig.trim();
-    var out = orig;
-    var entry = T[key];
-    if (lang !== "en" && entry) {
-      var v = entry[ORDER.indexOf(lang)];
-      if (v) { out = orig.replace(key, function () { return v; }); }
-    }
-    if (node.nodeValue !== out) { node.nodeValue = out; }
-  }
-
-  function translateTree(root) {
-    var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null, false);
-    var list = [];
-    while (w.nextNode()) { list.push(w.currentNode); }
-    list.forEach(apply);
-  }
-
-  function setPh() {
-    document.querySelectorAll("[data-ph]").forEach(function (el) {
-      var k = el.getAttribute("data-ph"), e = T[k], i = ORDER.indexOf(lang);
-      el.placeholder = (lang !== "en" && e && e[i]) ? e[i] : k;
-    });
-  }
-
-  function fixClock() {
-    var el = document.getElementById("clock");
-    if (!el || lang === "en") { return; }
-    var loc = { ar: "ar-u-nu-latn", sw: "sw", fr: "fr", pt: "pt", es: "es" }[lang];
-    var d = new Date();
-    var s;
-    try {
-      s = d.toLocaleDateString(loc, { weekday: "short", day: "2-digit", month: "short", year: "numeric" }) +
-          "  " + d.toLocaleTimeString(loc, { timeZoneName: "short" });
-    } catch (e) { return; }
-    if (el.textContent !== s) { el.textContent = s; }
-  }
-
-  function syncSelects() {
-    ["zl-header", "zl-account"].forEach(function (id) {
-      var s = document.getElementById(id);
-      if (s) { s.value = lang; }
-    });
-  }
-
-  function setLang(code) {
-    if (!LANGS[code]) { code = "en"; }
-    lang = code;
-    try { localStorage.setItem(KEY, code); } catch (e) {}
-    document.documentElement.lang = code;
-    document.documentElement.dir = LANGS[code].dir;
-    translateTree(document.body);
-    setPh();
-    syncSelects();
-    fixClock();
-  }
-
-  function initial() {
-    var c = null;
-    try { c = localStorage.getItem(KEY); } catch (e) {}
-    if (c && LANGS[c]) { return c; }
-    var n = (navigator.language || "en").slice(0, 2).toLowerCase();
-    return LANGS[n] ? n : "en";
-  }
-
-  function fillSelect(sel) {
-    Object.keys(LANGS).forEach(function (c) {
-      var o = document.createElement("option");
-      o.value = c;
-      o.textContent = LANGS[c].name;
-      sel.appendChild(o);
-    });
-    sel.addEventListener("change", function () { setLang(sel.value); });
-  }
-
-  function build() {
-    var top = document.querySelector(".topbar .topright");
-    if (top && !document.getElementById("zl-header")) {
-      var s = document.createElement("select");
-      s.id = "zl-header";
-      s.className = "zl";
-      s.setAttribute("aria-label", "Language");
-      fillSelect(s);
-      top.insertBefore(s, top.querySelector(".bell") || top.firstChild);
-    }
-    var acc = document.getElementById("account");
-    if (acc && !document.getElementById("zl-account")) {
-      var card = document.createElement("div");
-      card.className = "card";
-      card.style.marginTop = "14px";
-      card.innerHTML =
-        '<div class="cardtitle"><b>Language Settings</b></div>' +
-        '<p class="cardnote" style="margin-bottom:12px">Choose your preferred language. It will be used across the whole ZAIRVÉN platform.</p>' +
-        '<label for="zl-account">Preferred language</label>' +
-        '<select class="field" id="zl-account"></select>' +
-        '<div class="cardnote">Your choice is saved on this device. It will be linked to your account when sign-in is available.</div>';
-      acc.appendChild(card);
-      fillSelect(card.querySelector("select"));
-    }
-  }
-
-  /* keep translating text the page changes later */
-  var obs = new MutationObserver(function (muts) {
-    var clockTouched = false;
-    muts.forEach(function (m) {
-      m.addedNodes.forEach(function (n) {
-        if (n.nodeType === 3) { apply(n); }
-        else if (n.nodeType === 1) { translateTree(n); }
-      });
-      var t = m.target;
-      if (t && t.nodeType === 1 && (t.id === "clock" || (t.closest && t.closest("#clock")))) { clockTouched = true; }
-    });
-    if (clockTouched) { fixClock(); }
-  });
-
-  build();
-  obs.observe(document.body, { childList: true, subtree: true });
-  setLang(initial());
-  window.ZI18N = { add: add, setLang: setLang, langs: LANGS, refresh: function () { translateTree(document.body); } };
-})();
+/* account + auth */
+const accountButton=$("#accountButton"),accountMenu=$("#accountMenu"),authOverlay=$("#authOverlay");
+accountButton.addEventListener("click",()=>accountMenu.classList.toggle("open"));
+document.addEventListener("click",e=>{if(!accountMenu.contains(e.target)&&!accountButton.contains(e.target))accountMenu.classList.remove("open")});
+function setAuthMode(m){authMode=m;const s=m==="signup";$("#nameField").hidden=!s;$("#authName").required=s;$("#authPassword").autocomplete=s?"new-password":"current-password";$("#signInTab").classList.toggle("active",!s);$("#signUpTab").classList.toggle("active",s);$("#authMessage").textContent="";renderAuth()}
+function openAuth(m){accountMenu.classList.remove("open");authOverlay.classList.add("open");setAuthMode(m)}
+$("#menuLogin").addEventListener("click",()=>openAuth("signin"));
+$("#menuSignup").addEventListener("click",()=>openAuth("signup"));
+$("#menuLanguage").addEventListener("click",()=>{accountMenu.classList.remove("open");openLang()});
+$("#signInTab").addEventListener("click",()=>setAuthMode("signin"));
+$("#signUpTab").addEventListener("click",()=>setAuthMode("signup"));
+$("#authClose").addEventListener("click",()=>authOverlay.classList.remove("open"));
+authOverlay.addEventListener("click",e=>{if(e.target===authOverlay)authOverlay.classList.remove("open")});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){authOverlay.classList.remove("open");accountMenu.classList.remove("open");if($("#langOverlay").classList.contains("open"))closeLang()}});
+$("#authForm").addEventListener("submit",e=>{e.preventDefault();$("#authMessage").textContent=tr("previewOnly")});
 </script>
 </body>
 </html>
