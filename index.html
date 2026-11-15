@@ -141,7 +141,7 @@ main{min-width:0}
 .history td{color:#e4dfcf}
 .empty{text-align:center!important;color:var(--muted)!important;padding:26px!important}
 
-/* hero with the 3D ring */
+/* hero with the 3D ring: ring on the right on big screens, own space above the text on phones */
 .hero{padding:0;overflow:hidden;min-height:480px;background:linear-gradient(120deg,#0a0906,#16110a);border-color:var(--line2);-webkit-backdrop-filter:none;backdrop-filter:none}
 .hero::before{display:none}
 .ringhost{position:absolute;inset:0;z-index:0}
@@ -206,7 +206,12 @@ main{min-width:0}
 .lang-btn:hover,.lang-btn.sel{border-color:var(--gold);background:rgba(212,175,55,.14);color:var(--gold2)}
 
 @media(max-width:1180px){.app{grid-template-columns:92px minmax(0,1fr)}.rail{grid-column:2}.rail .card{position:relative;top:0}}
-@media(max-width:900px){.r4{grid-template-columns:repeat(2,minmax(0,1fr))}.r3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:900px){
+ .r4{grid-template-columns:repeat(2,minmax(0,1fr))}.r3{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .hero{min-height:0}
+ .ringhost{position:relative;inset:auto;height:270px}
+ .hero-in{padding-top:6px}
+}
 @media(max-width:700px){
  .topbar{height:calc(56px + env(safe-area-inset-top));padding:env(safe-area-inset-top) 12px 0}.brand-mark{width:34px;height:34px;font-size:24px}.brand-name{font-size:16px;letter-spacing:1px}.brand-name span{font-size:8px;letter-spacing:2px}
  .language-select{padding:8px;font-size:12px}.login-btn{padding:9px 12px;font-size:12px}
@@ -222,7 +227,8 @@ main{min-width:0}
  .tiers{grid-template-columns:minmax(0,1fr)}
  .r4{gap:12px}.row{gap:16px;margin-top:16px}
  .card{padding:16px}.price{font-size:22px}
- .hero{min-height:520px}.hero-in{padding:30px 20px}.hero p{font-size:14px}
+ .ringhost{height:250px}
+ .hero-in{padding:6px 20px 28px}.hero p{font-size:14px}
  .field-grid{grid-template-columns:1fr}.signal-row{grid-template-columns:1fr auto}.signal-row .tag:last-child{grid-column:2}
  .footer{padding-bottom:96px}
 }
@@ -596,7 +602,7 @@ addEventListener("pointermove",e=>{mouse.x=e.clientX;mouse.y=e.clientY},{passive
 addEventListener("pointerup",e=>{if(e.pointerType!=="mouse")setTimeout(()=>{mouse.x=mouse.y=-9999},900)});
 document.documentElement.addEventListener("mouseleave",()=>{mouse.x=mouse.y=-9999});
 
-/* 3D ring in the hero (Three.js) */
+/* 3D ring in the hero (Three.js): centred above the text on phones, on the right on big screens */
 function initRing(){
  if(typeof THREE==="undefined")return;
  const host=$("#ringHost");let R;
@@ -617,21 +623,30 @@ function initRing(){
  for(let i=0;i<N;i++){pos[i*3]=(Math.random()-.5)*40;pos[i*3+1]=(Math.random()-.5)*20;pos[i*3+2]=-4-Math.random()*26}
  const sg=new THREE.BufferGeometry();sg.setAttribute("position",new THREE.BufferAttribute(pos,3));
  const stars=new THREE.Points(sg,new THREE.PointsMaterial({color:0xf2ead0,size:.06,transparent:true,opacity:.7}));scene.add(stars);
- let tx=0,ty=0;
+ let tx=0,ty=0,lastMove=-99999;
  function size(){
   const w=host.clientWidth,h=host.clientHeight;if(!w||!h)return;
   R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();
-  const wide=w/h>1.15;group.position.set(wide?2.9:0,wide?0:-.3,0);group.scale.setScalar(wide?1:Math.min(.85,w/h*.9));
-  R.domElement.style.opacity=wide?"1":".6";
+  const big=matchMedia("(min-width:901px)").matches;
+  if(big){group.position.set(2.9,0,0);group.scale.setScalar(1)}
+  else{group.position.set(0,0,0);group.scale.setScalar(Math.min(1,.92*6.89*(w/h)/7.6))}
  }
  new ResizeObserver(size).observe(host);size();
- addEventListener("pointermove",e=>{const b=host.getBoundingClientRect();if(!b.width)return;tx=((e.clientX-b.left)/b.width-.5)*2;ty=((e.clientY-b.top)/b.height-.5)*2},{passive:true});
+ addEventListener("pointermove",e=>{
+  const b=host.getBoundingClientRect();if(!b.width)return;
+  tx=Math.max(-1.2,Math.min(1.2,((e.clientX-b.left)/b.width-.5)*2));
+  ty=Math.max(-1.2,Math.min(1.2,((e.clientY-b.top)/b.height-.5)*2));
+  lastMove=performance.now();
+ },{passive:true});
  (function loop(now){
   requestAnimationFrame(loop);
   if(document.hidden||!host.offsetParent)return;
   U.t.value=now/1000*(reduced?.15:1);
-  group.rotation.y+=(tx*.35-group.rotation.y)*.05;group.rotation.x+=(ty*.22-group.rotation.x)*.05;
-  stars.position.x=-tx*.8;stars.position.y=ty*.5;
+  /* follows your finger or mouse; when nobody touches it, it sways gently by itself */
+  const idle=reduced||now-lastMove>2200;
+  const ax=idle?Math.sin(now/2600)*.5:tx,ay=idle?Math.cos(now/3300)*.28:ty;
+  group.rotation.y+=(ax*.4-group.rotation.y)*.05;group.rotation.x+=(ay*.25-group.rotation.x)*.05;
+  stars.position.x=-ax*.8;stars.position.y=ay*.5;
   R.render(scene,cam);
  })(0);
 }
