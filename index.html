@@ -148,11 +148,11 @@ main{min-width:0}
 .hero-line{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:26px;font-size:10px;letter-spacing:.16em;color:var(--muted)}
 .hero-line span+span::before{content:"·";margin-right:18px;color:var(--gold)}
 
-/* Dubai clock card */
-.clock{margin-top:26px;width:min(100%,320px);background:rgba(38,41,50,.8);border:1px solid rgba(255,255,255,.08);border-radius:18px;padding:20px 24px;font-family:"Google Sans",Roboto,Inter,-apple-system,"Segoe UI",sans-serif}
-.clock .t{font-size:clamp(40px,10vw,54px);font-weight:400;line-height:1.1;letter-spacing:.5px;font-variant-numeric:tabular-nums;color:#eceef6;direction:ltr;text-align:start}
-.clock .d{margin-top:12px;font-size:14.5px;line-height:1.45;color:#c5c8d4}
-.clock .c{margin-top:2px;font-size:14.5px;color:#c5c8d4}
+/* time card, same black + gold look as the rest */
+.clock{margin-top:26px;width:min(100%,300px);background:rgba(8,8,11,.62);border:1px solid var(--line2);border-radius:16px;padding:16px 20px}
+.clock .t{font:300 clamp(34px,9vw,42px)/1.1 Inter,-apple-system,"Segoe UI",sans-serif;letter-spacing:.06em;font-variant-numeric:tabular-nums;color:var(--gold2);direction:ltr;text-align:start}
+.clock .d{margin-top:10px;font-size:11.5px;letter-spacing:.06em;line-height:1.5;color:var(--muted)}
+.clock .c{margin-top:2px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
 
 /* collections */
 .col-item{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid rgba(255,255,255,.07);font-size:14px}
@@ -313,8 +313,8 @@ main{min-width:0}
   <section class="page" data-page="chart-ai"><div class="narrow">
    <div class="card"><div class="panel-title"><h2 data-i18n="chartTitle"></h2></div><p class="muted" data-i18n="chartDesc"></p>
     <div class="field-grid">
-     <div class="field"><label data-i18n="marketGroup"></label><select id="marketSelect"><option>Forex</option><option>Gold</option><option>Synthetic</option></select></div>
-     <div class="field"><label data-i18n="instrument"></label><select id="pairSelect"><option>EURUSD</option><option>GBPUSD</option><option>XAUUSD</option><option>Volatility 75</option></select></div>
+     <div class="field"><label data-i18n="marketGroup"></label><select id="marketSelect"><option>Forex</option><option>Metals</option><option>Crypto</option><option>Synthetic</option></select></div>
+     <div class="field"><label data-i18n="instrument"></label><select id="pairSelect"></select></div>
      <div class="field"><label data-i18n="timeframe"></label><select id="timeframeSelect"><option>M5</option><option>M15</option><option>M30</option><option>H1</option><option>H4</option><option>D1</option></select></div>
     </div>
     <div class="upload"><strong data-i18n="uploadTitle"></strong><small data-i18n="uploadDesc"></small><br><input type="file" id="chartFile" accept="image/png,image/jpeg,image/webp"><div class="notice" id="fileName"></div><img id="chartPreview" alt="" hidden style="max-width:100%;max-height:240px;margin:12px auto 0;border-radius:10px"></div>
@@ -406,22 +406,24 @@ let lang="en",authMode="signin",introDone=false;
 const tr=k=>(T[lang]&&T[lang][k])||T.en[k]||"";
 
 /* data + renderers */
-const instruments=[["EURUSD","FOREX"],["GBPUSD","FOREX"],["XAUUSD","GOLD"],["Volatility 75","SYNTHETIC"]];
+const instruments=[["EURUSD","FOREX"],["GBPUSD","FOREX"],["USDJPY","FOREX"],["GBPJPY","FOREX"],["EURGBP","FOREX"],["EURJPY","FOREX"],["USDCAD","FOREX"],["USDCHF","FOREX"],["XAUUSD","GOLD"],["XAGUSD","SILVER"],["BTCUSD","CRYPTO"],["Volatility 75","SYNTHETIC"]];
+const featured=instruments.filter(([n])=>["EURUSD","GBPUSD","XAUUSD","Volatility 75"].includes(n));
 const systems=[["01","NOVA","beginner","novaDesc"],["02","APEX","professional","apexDesc"],["03","SOVEREIGN","advanced","sovereignDesc"]];
-function renderMarkets(box){instruments.forEach(([n,t])=>{const el=document.createElement("div");el.className="card market-card";el.innerHTML='<div class="market-top"><span class="symbol"></span><span class="type"></span></div><div class="price">—</div><div class="await" data-i18n="awaitData"></div>';el.querySelector(".symbol").textContent=n;el.querySelector(".type").textContent=t;box.appendChild(el)})}
-function renderSignals(box){instruments.forEach(([n])=>{const row=document.createElement("div");row.className="signal-row";row.innerHTML='<div><div class="signal-name"></div><div class="signal-note" data-i18n="awaiting"></div></div><span class="tag">—</span><span class="tag" data-i18n="pending"></span>';row.querySelector(".signal-name").textContent=n;box.appendChild(row)})}
+function renderMarkets(box,list){list.forEach(([n,t])=>{const el=document.createElement("div");el.className="card market-card";el.innerHTML='<div class="market-top"><span class="symbol"></span><span class="type"></span></div><div class="price">—</div><div class="await" data-i18n="awaitData"></div>';el.querySelector(".symbol").textContent=n;el.querySelector(".type").textContent=t;box.appendChild(el)})}
+function renderSignals(box,list){list.forEach(([n])=>{const row=document.createElement("div");row.className="signal-row";row.innerHTML='<div><div class="signal-name"></div><div class="signal-note" data-i18n="awaiting"></div></div><span class="tag">—</span><span class="tag" data-i18n="pending"></span>';row.querySelector(".signal-name").textContent=n;box.appendChild(row)})}
 function renderSystems(box){systems.forEach(([no,n,lv,ds])=>{const el=document.createElement("div");el.className="card system-card";el.innerHTML='<div class="system-icon"></div><h3></h3><span class="level" data-i18n="'+lv+'"></span><span class="level dim" data-i18n="development"></span><p class="muted" data-i18n="'+ds+'"></p>';el.querySelector(".system-icon").textContent="BOT "+no;el.querySelector("h3").textContent=n;box.appendChild(el)})}
-renderMarkets($("#homeMarkets"));renderMarkets($("#marketGrid"));
-renderSignals($("#homeSignals"));renderSignals($("#signalList"));
+renderMarkets($("#homeMarkets"),featured);renderMarkets($("#marketGrid"),instruments);
+renderSignals($("#homeSignals"),featured);renderSignals($("#signalList"),instruments);
 renderSystems($("#homeSystems"));renderSystems($("#systemGrid"));
+instruments.forEach(([n])=>{const o=document.createElement("option");o.textContent=n;$("#pairSelect").appendChild(o)});
 
 /* collections: real counts only */
-const counts={watch:instruments.length,sig:0,col:0};
+const counts={watch:featured.length,sig:0,col:0};
 $("#cWatch").textContent=counts.watch;$("#cSig").textContent=counts.sig;$("#cCol").textContent=counts.col;
 $("#chkSig").classList.toggle("on",counts.sig>0);$("#chkCol").classList.toggle("on",counts.col>0);
-instruments.forEach(([n])=>{const li=document.createElement("li");li.innerHTML='<span class="chk on">✓</span><span></span>';li.lastChild.textContent=n;$("#wl").appendChild(li)});
+featured.forEach(([n])=>{const li=document.createElement("li");li.innerHTML='<span class="chk on">✓</span><span></span>';li.lastChild.textContent=n;$("#wl").appendChild(li)});
 
-/* live Dubai clock: HH:MM:SS, full date with GMT+4, country */
+/* time card: HH:MM:SS, full date with GMT+4, country */
 const LOC={en:"en-GB",ar:"ar-u-nu-latn",sw:"sw",fr:"fr",pt:"pt",es:"es"};
 function tickClock(){
  const now=new Date();
@@ -476,7 +478,7 @@ document.addEventListener("click",e=>{const t=e.target.closest("[data-go]");if(!
 /* search bar */
 const PAGE_KEY={home:"home",markets:"markets","chart-ai":"chart",signals:"signals",systems:"systems",academy:"academy",newsiq:"newsiq",settings:"settings"};
 const PAGE_KW={markets:"forex gold market prices",systems:"bot bots robot automated automation nova apex sovereign",signals:"signal alerts buy sell","chart-ai":"chart analyser analyzer screenshot upload ai",academy:"learn course education lessons",newsiq:"news calendar economic events",settings:"language langue idioma lugha"};
-const MARKET_KW={"EURUSD":"euro dollar forex","GBPUSD":"pound sterling forex","XAUUSD":"gold xau","Volatility 75":"synthetic vix v75 volatility"};
+const MARKET_KW={"EURUSD":"euro dollar","GBPUSD":"pound sterling dollar","USDJPY":"dollar yen japan","GBPJPY":"pound yen japan","EURGBP":"euro pound","EURJPY":"euro yen japan","USDCAD":"dollar canada loonie","USDCHF":"dollar swiss franc","XAUUSD":"gold xau","XAGUSD":"silver xag","BTCUSD":"bitcoin btc crypto","Volatility 75":"synthetic vix v75 volatility"};
 const norm=s=>String(s).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 function searchItems(){
  const out=[];
@@ -490,7 +492,7 @@ function clearSearch(){sIn.value="";sOut.hidden=true;sOut.textContent=""}
 function doSearch(){
  const q=norm(sIn.value.trim());
  if(!q){sOut.hidden=true;sOut.textContent="";return}
- const hits=searchItems().filter(x=>x.hay.includes(q)).slice(0,6);
+ const hits=searchItems().filter(x=>x.hay.includes(q)).slice(0,8);
  sOut.textContent="";
  if(!hits.length){const d=document.createElement("div");d.className="none";d.textContent=tr("noMatch");sOut.appendChild(d)}
  hits.forEach(h=>{const b=document.createElement("button");b.type="button";b.dataset.go=h.go;const s=document.createElement("span");s.textContent=h.label;const m=document.createElement("small");m.textContent=h.hint;b.append(s,m);sOut.appendChild(b)});
